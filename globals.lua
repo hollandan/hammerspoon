@@ -34,3 +34,6 @@ grid = {
   centeredBig = '3,3 6x6',
   centeredSmall = '4,4 4x4',
 }
+
+-- Store window frames (by id) so we can toggle window size
+frameCache = {}

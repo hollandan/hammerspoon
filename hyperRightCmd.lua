@@ -33,6 +33,7 @@ rightCmd:bind(41):to('`', {'cmd', 'shift'})
 rightCmd:bind('j'):to('f4', {'ctrl', 'fn'})
 rightCmd:bind('k'):to('f4', {'ctrl', 'fn', 'shift'})
 rightCmd:bind('c'):to(function() centerWindow() end)
+rightCmd:bind('m'):to(function() toggleWindowMaximized() end)
 
 -- Move window to adjacent space
 rightCmd:bind('/'):to('pad2', {'cmd', 'alt', 'ctrl', 'shift'})
@@ -53,6 +54,25 @@ function centerWindow()
     local win = hs.window.frontmostWindow()
     win:centerOnScreen("Color LCD")
 end
+
+function centerWindow()
+    local win = hs.window.frontmostWindow()
+    win:centerOnScreen("Color LCD")
+end
+
+-- stolen and modified from https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
+function toggleWindowMaximized()
+    local win = hs.window.focusedWindow()
+    if frameCache[win:id()] then
+        win:setFrame(frameCache[win:id()])
+        frameCache[win:id()] = nil
+    else
+        frameCache[win:id()] = win:frame()
+        win:maximize()
+    end
+end
+
+
 
 
 function makeBagels()
