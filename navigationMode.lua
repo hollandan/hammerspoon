@@ -1,10 +1,6 @@
 local breakModes = nil
 local browserSwitch = nil
 
-local extraKeyCodes = {
-    semicolon = 41,
-}
-
 local fastKeyStroke = function(modifiers, character)
   local event = require('hs.eventtap').event
   event.newKeyEvent(modifiers, string.lower(character), true):post()
@@ -12,10 +8,10 @@ local fastKeyStroke = function(modifiers, character)
 end
 
 navigationMode = hs.hotkey.modal.new({}, 'F19')
-navigationMode:bind({}       , 'F19'    , function() end)
-navigationMode:bind({}       , 'F18'    , function() invokeFunctionMode() end)
-navigationMode:bind({}       , 'F17'    , function() navigationMode:exit() end)
-navigationMode:bind({}       , 'escape' , function() navigationMode:exit() end)
+navigationMode:bind({}, 'F19'    , function() end)
+navigationMode:bind({}, 'F18'    , function() invokeFunctionMode() end)
+navigationMode:bind({}, 'F17'    , function() navigationMode:exit() end)
+navigationMode:bind({}, 'escape' , function() navigationMode:exit() end)
 -- navigationMode:bind({'ctrl'} , 'space'  , function() navInvokeITerm() end)
 -- functions *are* sharing namespace among files
 -- so we either need one invokeIterm, or one for each mode...
@@ -24,12 +20,12 @@ navigationMode:bind({}       , 'escape' , function() navigationMode:exit() end)
 
 
 navigationMode:bind({}, 'a', function() fullLeft() end)
-navigationMode:bind({},  extraKeyCodes.semicolon, function() fullRight() end)
+navigationMode:bind({},  41, function() fullRight() end)
 navigationMode:bind({}, '`', function() fullUp() end)
 navigationMode:bind({}, '/', function() fullDown() end)
 
 navigationMode:bind({'shift'}, 'a', function() fullLeftAndSelect() end)
-navigationMode:bind({'shift'},  extraKeyCodes.semicolon, function() fullRightAndSelect() end)
+navigationMode:bind({'shift'},  41, function() fullRightAndSelect() end)
 navigationMode:bind({'shift'}, 'q', function() fullUpAndSelect() end)
 navigationMode:bind({'shift'}, '/', function() fullDownAndSelect() end)
 
@@ -70,6 +66,9 @@ navigationMode:bind({'cmd'}, 'f', function() findAndExit() end)
 navigationMode:bind({}, 'e', function() previousField() end)
 navigationMode:bind({}, 'i', function() nextField() end)
 
+navigationMode:bind({}, 't', function() take() end)
+navigationMode:bind({}, 'y', function() yank() end)
+
 function invokeFunctionMode()
     navigationMode:exit()
     -- hs.eventtap.keyStroke({}, 'f18')
@@ -82,11 +81,13 @@ end
 
 function navigationMode:entered()
     -- hs.alert.show(breakModes)
-    navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 6, 900})
+    -- navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 6, 900})
+    navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 1440, 900})
     navIndicator:setFill(true);
-    navIndicator:setFillColor({['red']=1,['blue']=0,['green']=0,['alpha']=1});
-    navIndicator:setStrokeColor({['red']=1,['blue']=0,['green']=0,['alpha']=1})
-    navIndicator:setStrokeWidth(1)
+    -- navIndicator:setFillColor({['red']=1,['blue']=0,['green']=0,['alpha']=1});
+    navIndicator:setFillColor({['red']=0,['blue']=0,['green']=0,['alpha']=0});
+    navIndicator:setStrokeColor({['red']=1,['blue']=0,['green']=0,['alpha']=.7})
+    navIndicator:setStrokeWidth(10)
 
     navIndicator:show()
 
@@ -217,6 +218,18 @@ end
 
 function deleteForward()
     fastKeyStroke({}, 'forwarddelete')
+end
+
+function take()
+    -- won't work unless done twice... why??
+    fastKeyStroke({'ctrl'}, 't')
+    fastKeyStroke({'ctrl'}, 't')
+end
+
+function yank()
+    -- won't work unless done twice... why??
+    fastKeyStroke({'ctrl'}, 'y')
+    fastKeyStroke({'ctrl'}, 'y')
 end
 
 

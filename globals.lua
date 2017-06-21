@@ -37,3 +37,9 @@ grid = {
 
 -- Store window frames (by id) so we can toggle window size
 frameCache = {}
+
+fastKeyStroke = function(modifiers, character)
+  local event = require("hs.eventtap").event
+  event.newKeyEvent(modifiers, string.lower(character), true):post()
+  event.newKeyEvent(modifiers, string.lower(character), false):post()
+end

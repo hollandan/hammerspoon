@@ -7,3 +7,8 @@ end
 hs.hotkey.bind({'ctrl'}, 'g', function()
     fastKeyStroke({}, 'forwarddelete')
 end)
+
+-- clever way to prevent system beeps from tapping right_command when not in navigationMode
+hs.hotkey.bind({}, 'f17', function()
+    fastKeyStroke({}, 'eisu')
+end)
