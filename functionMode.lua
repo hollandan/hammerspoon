@@ -12,12 +12,8 @@ functionMode:bind({}       , "f18"    , function() functionMode:exit() end)
 functionMode:bind({}       , "f17"    , function() functionMode:exit() end)
 functionMode:bind({'ctrl'} , "space"  , function() invokeITerm() end)
 
-
-functionMode:bind({} , "d" , function() showDesktop() end)
-functionMode:bind({} , "w" , function() showApplicationWindows() end)
+--should these be in windowTossing?
 functionMode:bind({} , "m" , function() showMissionControl() end)
-
-
 functionMode:bind({} , "1" , function() goToDesktopOne() end)
 functionMode:bind({} , "2" , function() goToDesktopTwo() end)
 functionMode:bind({} , "3" , function() goToDesktopThree() end)
@@ -56,33 +52,6 @@ function functionMode:exited()
     urltodomain:disable()
     urltocontentpages:disable()
     urltospecificcontentpage:disable()
-end
-
-
-
-function showApplicationWindows()
-    fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f10')
-    -- local currentapp = hs.application.frontmostApplication();
-    -- hs.alert.show(currentapp)
-    functionMode:exit()
-    navigationMode:enter()
-end
-function showDesktop()
-    functionMode:exit()
-    fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f11')
-
-    -- if the current app is finder
-        -- hit command tab to go back to original app
-    -- else, tell application finder to activate
-    -- local currentapp = hs.application.frontmostApplication();
-    -- hs.alert.show(currentapp)
-    -- if string.find(currentapp, 'Finder') then
-    --     hs.applescript.applescript([[
-    --         tell application "Finder" to activate
-    --     ]])
-    -- else
-    --     hs.eventtap.keyStroke({'cmd'}, 'tab')
-    -- end
 end
 
 function showMissionControl()

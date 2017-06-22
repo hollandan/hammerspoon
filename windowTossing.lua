@@ -43,52 +43,129 @@ chain = (function(movements)
   end
 end)
 
---
--- Key bindings.
---
-local extraKeyCodes = {
-  semicolon = 41,
-}
+-- hs.hotkey.bind(right_command, 'f', chain({
+--     grid.fullScreen
+-- }))
 
-hs.hotkey.bind({'ctrl', 'rightcmd'}, 'return', chain({
-    grid.fullScreen
-}))
-
-hs.hotkey.bind({'ctrl', 'rightcmd'}, 'a', chain({
+hs.hotkey.bind(right_command, 'a', chain({
   grid.leftHalf,
   grid.leftThird,
   grid.leftTwoThirds,
 }))
 
-hs.hotkey.bind({'ctrl', 'rightcmd'}, extraKeyCodes.semicolon, chain({
+hs.hotkey.bind(right_command, "\'", chain({
   grid.rightHalf,
   grid.rightThird,
   grid.rightTwoThirds,
 }))
 
-hs.hotkey.bind({'ctrl', 'rightcmd'}, 'r', chain({
+hs.hotkey.bind(right_command, 'r', chain({
   grid.topHalf,
   grid.topThird,
   grid.topTwoThirds,
 }))
 
 
-hs.hotkey.bind({'ctrl', 'rightcmd'}, 'm', chain({
+hs.hotkey.bind(right_command, 'm', chain({
   grid.bottomHalf,
   grid.bottomThird,
   grid.bottomTwoThirds,
 }))
 
 
-hs.hotkey.bind({'ctrl', 'rightcmd'}, 'q', chain({
+hs.hotkey.bind(right_command, 'q', chain({
   grid.topLeft,
-  grid.topRight,
-  grid.bottomRight,
-  grid.bottomLeft,
+  grid.topLeftSplitTop,
+  grid.topLeftSplitBottom
 }))
 
-hs.hotkey.bind({'ctrl', 'rightcmd'}, ',', chain({
+hs.hotkey.bind(right_command, 'z', chain({
+  grid.bottomLeft,
+  grid.bottomLeftSplitTop,
+  grid.bottomLeftSplitBottom
+}))
+
+hs.hotkey.bind(right_command, 'p', chain({
+  grid.topRight,
+  grid.topRightSplitTop,
+  grid.topRightSplitBottom
+}))
+
+hs.hotkey.bind(right_command, '/', chain({
+  grid.bottomRight,
+  grid.bottomRightSplitTop,
+  grid.bottomRightSplitBottom
+}))
+
+
+hs.hotkey.bind(right_command, ',', chain({
   grid.fullScreen,
   grid.centeredBig,
   grid.centeredSmall,
 }))
+
+-- stolen and modified from https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
+function toggleWindowMaximized()
+    local win = hs.window.focusedWindow()
+    if frameCache[win:id()] then
+        win:setFrame(frameCache[win:id()])
+        frameCache[win:id()] = nil
+    else
+        frameCache[win:id()] = win:frame()
+        win:maximize()
+    end
+end
+function toggleCenterWindow()
+    local win = hs.window.focusedWindow()
+    if frameCache[win:id()] then
+        win:setFrame(frameCache[win:id()])
+        frameCache[win:id()] = nil
+    else
+        frameCache[win:id()] = win:frame()
+        win:centerOnScreen("Color LCD")
+    end
+end
+
+hs.hotkey.bind(right_command, 'c', function()
+    toggleCenterWindow()
+end)
+hs.hotkey.bind(right_command, 'f', function()
+    toggleWindowMaximized()
+end)
+
+hs.hotkey.bind(right_command, 'd', function()
+    showDesktop()
+end)
+
+hs.hotkey.bind(right_command, 'w', function()
+    showApplicationWindows()
+end)
+
+function showApplicationWindows()
+    fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f10')
+    -- local currentapp = hs.application.frontmostApplication();
+    -- hs.alert.show(currentapp)
+    functionMode:exit()
+    navigationMode:enter()
+end
+function showDesktop()
+    functionMode:exit()
+    fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f11')
+
+    -- if the current app is finder
+        -- hit command tab to go back to original app
+    -- else, tell application finder to activate
+    -- local currentapp = hs.application.frontmostApplication();
+    -- hs.alert.show(currentapp)
+    -- if string.find(currentapp, 'Finder') then
+    --     hs.applescript.applescript([[
+    --         tell application "Finder" to activate
+    --     ]])
+    -- else
+    --     hs.eventtap.keyStroke({'cmd'}, 'tab')
+    -- end
+end
+
+hs.hotkey.bind(right_command, 'tab', function()
+    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
+end)

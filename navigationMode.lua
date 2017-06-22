@@ -80,6 +80,8 @@ end
 -- end
 
 function navigationMode:entered()
+    -- Just in case window mode causes the indicator to perpetually stick (by invoking another instance we can delete)
+    navIndicator:delete()
     -- hs.alert.show(breakModes)
     -- navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 6, 900})
     navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 1440, 900})
