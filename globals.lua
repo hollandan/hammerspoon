@@ -1,15 +1,17 @@
 right_command = {'alt', 'ctrl', 'shift'}
+double_command = {'cmd', 'alt', 'ctrl', 'shift'}
 
 -- Indicators
 navIndicator      = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 
 -- nsgMenu
-urltoadmin                = hs.hotkey.bind({}, 'pad*', function() end)
-urltostructuredcontent    = hs.hotkey.bind({}, 'pad*', function() end)
-urltocontentpages         = hs.hotkey.bind({}, 'pad*', function() end)
-urltospecificcontentpage  = hs.hotkey.bind({}, 'pad*', function() end)
-urltodomain               = hs.hotkey.bind({}, 'pad*', function() end)
+urltoadmin                     = hs.hotkey.bind({}, 'pad*', function() end)
+urltostructuredcontent         = hs.hotkey.bind({}, 'pad*', function() end)
+urltocontentpages              = hs.hotkey.bind({}, 'pad*', function() end)
+urltospecificcontentpage       = hs.hotkey.bind({}, 'pad*', function() end)
+urltospecificstructuredcontent = hs.hotkey.bind({}, 'pad*', function() end)
+urltodomain                    = hs.hotkey.bind({}, 'pad*', function() end)
  
 hs.grid.setGrid('12x12') -- allows us to place on quarters, thirds and halves
 hs.grid.MARGINX = 0
@@ -47,6 +49,7 @@ grid = {
 
 -- Store window frames (by id) so we can toggle window size
 frameCache = {}
+markedFrameCache = {}
 
 fastKeyStroke = function(modifiers, character)
   local event = require("hs.eventtap").event

@@ -25,8 +25,29 @@ functionMode:bind({} , "u" , function() uppercaseWord() end)
 
 functionMode:bind({} , "a" , function() appendText() end)
 
+functionMode:bind({'shift'} , "t" , function() timeStamp() end)
+functionMode:bind({}        , "d" , function() dateStamp() end)
+functionMode:bind({}        , "t" , function() showTime() end)
+
+function timeStamp()
+    stamp = hs.execute("date +'%d-%m-%Y %H:%M' | tr -d '\n' | pbcopy")
+    hs.eventtap.keyStroke({'cmd'}, 'v')
+end
+
+function dateStamp()
+    stamp = hs.execute("date +'%d-%m-%Y' | tr -d '\n' | pbcopy")
+    hs.eventtap.keyStroke({'cmd'}, 'v')
+end
+
+function showTime()
+    stamp = hs.execute("date +'%A %I:%M:%S %p' | tr -d '\n'")
+    local style = hs.styledtext.new(stamp,{font={size=48}})
+    -- local pos = hs.geometry.rect{0, 0, 300, 300}
+    hs.alert.show(style, pos, 3)
+    functionMode:exit()
+end
+
 functionMode:bind({} , "space" , function() dotSpaceDash() end)
-functionMode:bind({} , "y"     , function() urlToAdmin() end)
 
 
 function functionMode:entered()
@@ -51,6 +72,7 @@ function functionMode:exited()
     urltostructuredcontent:disable()
     urltodomain:disable()
     urltocontentpages:disable()
+    urltospecificstructuredcontent:disable()
     urltospecificcontentpage:disable()
 end
 
@@ -83,20 +105,22 @@ end
 
 
 function capitalizeWord()
-    fastKeyStroke({'ctrl', 'shift'}, "\\")
-    fastKeyStroke({}, "c")
+    hs.eventtap.keyStroke({'ctrl', 'shift'}, "\\")
+    -- wtf? we can't have an empty modifier here. If we do, the following eventtap just doesn't fire
+        -- so... let's use fn as a modifier, since it doesn't effectively change the key
+    hs.eventtap.keyStroke({'fn'}, "c")
     functionMode:exit()
 end
 
 function lowercaseWord()
-    fastKeyStroke({'ctrl', 'shift'}, "\\")
-    fastKeyStroke({}, "l")
+    hs.eventtap.keyStroke({'ctrl', 'shift'}, "\\")
+    hs.eventtap.keyStroke({'fn'}, "l")
     functionMode:exit()
 end
 
 function uppercaseWord()
-    fastKeyStroke({'ctrl', 'shift'}, "\\")
-    fastKeyStroke({}, "u")
+    hs.eventtap.keyStroke({'ctrl', 'shift'}, "\\")
+    hs.eventtap.keyStroke({'fn'}, "u")
     functionMode:exit()
 end
 
@@ -153,47 +177,90 @@ end
 
 functionMode:bind({} , 'n' , function() nsgMenu() end)
 function nsgMenu()
-    urltoadmin                = hs.hotkey.bind({}, 'a', function() urlToAdmin() end)
-    urltostructuredcontent    = hs.hotkey.bind({}, 's', function() urlToStructuredContent() end)
-    urltodomain               = hs.hotkey.bind({}, 'd', function() urlToDomain() end)
-    urltocontentpages         = hs.hotkey.bind({}, 'c', function() urlToContentPages() end)
-    urltospecificcontentpage   = hs.hotkey.bind({'shift'}, 'c', function() urlToSpecificContentPage() end)
+    urltoadmin                     = hs.hotkey.bind({}, 'a', function() urlToAdmin() end)
+    urltostructuredcontent         = hs.hotkey.bind({}, 's', function() urlToStructuredContent() end)
+    urltodomain                    = hs.hotkey.bind({}, 'd', function() urlToDomain() end)
+    urltocontentpages              = hs.hotkey.bind({}, 'c', function() urlToContentPages() end)
+    urltospecificstructuredcontent = hs.hotkey.bind({}, 't', function() urlToSpecificStructuredContent() end)
+    urltospecificcontentpage       = hs.hotkey.bind({}, 'p', function() urlToSpecificContentPage() end)
 end
 
 function urlToAdmin()
     hs.eventtap.keyStroke({'cmd'}, 'x')
-    -- os.execute('sleep 1')
+    local currentapp = hs.application.frontmostApplication();
+    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+        fastKeyStroke({'cmd'}, 't')
+        fastKeyStroke({'cmd'}, 'l')
+    end
     os.execute('python /Users/dan/pyscript/urltoadmin.py')
-    -- os.execute('sleep 1')
     hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
 end
 
 function urlToStructuredContent()
     hs.eventtap.keyStroke({'cmd'}, 'x')
+    local currentapp = hs.application.frontmostApplication();
+    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+        fastKeyStroke({'cmd'}, 't')
+        fastKeyStroke({'cmd'}, 'l')
+    end
     os.execute('python /Users/dan/pyscript/urltostructuredcontent.py')
     hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.eventtap.keyStroke({}, 'return')
+    functionMode:exit()
+end
+
+function urlToSpecificStructuredContent()
+    hs.eventtap.keyStroke({'cmd'}, 'x')
+    local currentapp = hs.application.frontmostApplication();
+    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+        fastKeyStroke({'cmd'}, 't')
+        fastKeyStroke({'cmd'}, 'l')
+    end
+    os.execute('python /Users/dan/pyscript/urltostructuredcontent.py')
+    hs.eventtap.keyStroke({'cmd'}, 'v')
+    fastKeyStroke({'cmd'}, 'right')
     functionMode:exit()
 end
 
 function urlToDomain()
     hs.eventtap.keyStroke({'cmd'}, 'x')
+    local currentapp = hs.application.frontmostApplication();
+    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+        fastKeyStroke({'cmd'}, 't')
+        fastKeyStroke({'cmd'}, 'l')
+    end
     os.execute('python /Users/dan/pyscript/urltodomain.py')
     hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
 end
 
 function urlToContentPages()
     hs.eventtap.keyStroke({'cmd'}, 'x')
+    local currentapp = hs.application.frontmostApplication();
+    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+        fastKeyStroke({'cmd'}, 't')
+        fastKeyStroke({'cmd'}, 'l')
+    end
     os.execute('python /Users/dan/pyscript/urltocontentpages.py')
     hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
 end
 
 function urlToSpecificContentPage()
     hs.eventtap.keyStroke({'cmd'}, 'x')
-    os.execute('python /Users/dan/pyscript/urltospecificcontentpage.py')
+    local currentapp = hs.application.frontmostApplication();
+    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+        fastKeyStroke({'cmd'}, 't')
+        fastKeyStroke({'cmd'}, 'l')
+    end
+    -- os.execute('python /Users/dan/pyscript/urltospecificcontentpage.py')
+    os.execute('python /Users/dan/pyscript/urltocontentpages.py')
     hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.eventtap.keyStroke({'cmd'}, 'right')
     functionMode:exit()
 end
 --- ==========

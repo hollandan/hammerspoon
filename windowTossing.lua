@@ -67,8 +67,8 @@ hs.hotkey.bind(right_command, 'r', chain({
 
 
 hs.hotkey.bind(right_command, 'm', chain({
-  grid.bottomHalf,
   grid.bottomThird,
+  grid.bottomHalf,
   grid.bottomTwoThirds,
 }))
 
@@ -81,8 +81,8 @@ hs.hotkey.bind(right_command, 'q', chain({
 
 hs.hotkey.bind(right_command, 'z', chain({
   grid.bottomLeft,
+  grid.bottomLeftSplitBottom,
   grid.bottomLeftSplitTop,
-  grid.bottomLeftSplitBottom
 }))
 
 hs.hotkey.bind(right_command, 'p', chain({
@@ -93,8 +93,8 @@ hs.hotkey.bind(right_command, 'p', chain({
 
 hs.hotkey.bind(right_command, '/', chain({
   grid.bottomRight,
+  grid.bottomRightSplitBottom,
   grid.bottomRightSplitTop,
-  grid.bottomRightSplitBottom
 }))
 
 
@@ -150,22 +150,64 @@ function showApplicationWindows()
 end
 function showDesktop()
     functionMode:exit()
+    -- Systemwide keystoke I set in System Preferences to Show Desktop
     fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f11')
 
-    -- if the current app is finder
-        -- hit command tab to go back to original app
-    -- else, tell application finder to activate
-    -- local currentapp = hs.application.frontmostApplication();
-    -- hs.alert.show(currentapp)
-    -- if string.find(currentapp, 'Finder') then
-    --     hs.applescript.applescript([[
-    --         tell application "Finder" to activate
-    --     ]])
-    -- else
-    --     hs.eventtap.keyStroke({'cmd'}, 'tab')
-    -- end
+    -- Show Desktop is kind of stupid in that it does not automatically change
+    -- the current app to the Finder
+    local currentapp = hs.application.frontmostApplication();
+    if (currentapp:name() == "Finder") then
+        -- so, if we're in the finder, cmd-tab back from where we came
+        hs.eventtap.keyStroke({'cmd'}, 'tab')
+    else
+        -- otherwise, set the current app to the finder, so we can manipulate
+        -- it with the keyboard
+        hs.applescript.applescript([[
+            tell application "Finder" to activate
+        ]])
+    end
 end
 
 hs.hotkey.bind(right_command, 'tab', function()
     os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
 end)
+
+hs.hotkey.bind(right_command, 'g', function()
+    markWindow()
+end)
+function markWindow()
+    local win = hs.window.focusedWindow()
+    if markedFrameCache[win:id()] then
+        -- win:setFrame(frameCache[win:id()])
+        -- remove mark
+        markedFrameCache[win:id()] = nil
+        border:delete()
+    else
+        -- add mark
+        markedFrameCache[win:id()] = win:frame()
+        -- shamelessly stolen from https://gist.github.com/koekeishiya/dc48db74f4fdbfbf5648
+        local f = win:frame()
+        local fx = f.x - 2
+        local fy = f.y - 2
+        local fw = f.w + 4
+        local fh = f.h + 4
+
+        border = hs.drawing.rectangle(hs.geometry.rect(fx, fy, fw, fh))
+        border:setStrokeWidth(3)
+        border:setStrokeColor({["red"]=0.75,["blue"]=0.14,["green"]=0.83,["alpha"]=0.80})
+        border:setRoundedRectRadii(5.0, 5.0)
+        border:setStroke(true):setFill(false)
+        border:setLevel("floating")
+        border:show()
+    end
+end
+
+hs.hotkey.bind(right_command, 'y', function()
+    identifyMarkedWindows()
+end)
+function identifyMarkedWindows()
+    for id,win in pairs(markedFrameCache) do
+        hs.alert.show(id)
+        hs.alert.show(win)
+    end
+end

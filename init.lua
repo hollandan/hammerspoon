@@ -11,13 +11,19 @@ local functionMode      = require 'functionMode'
 local karabinerRightCmd = require 'karabinerRightCmd'
 local hyperRightShift   = require 'hyperRightShift'
 
--- gonna need:
---  windowMode
+-- See windowTossing.lua -> markWindow
+    -- so, we can mark one window
+    -- now, the question is, how do we associate that border with each window id?
+    -- so, we can have multiple borders that can be deleted when unmarked?
+    -- then the fun stuff begins
+        --  how can we do cool shit to the windows we've marked?
 
--- hs.hotkey.bind({'cmd', 'ctrl'}, "b", function()
---     hs.alert.show("happened")
---     os.execute("/Users/dan/pyscript/dotSpaceDash.py")
--- end)
+-- HERE'S A THOUGHT!
+    -- Maybe navigation mode should draw a border around the CURRENT WINDOW
+        -- not the entire screen
+    -- that might be easier to see, and perhaps more intuitive
 
--- local vimouse = require('vimouse')
---    vimouse('rightcmd', 'm')
+
+-- Don't forget about this?
+    -- local vimouse = require('vimouse')
+    --    vimouse('rightcmd', 'm')
