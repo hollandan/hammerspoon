@@ -43,10 +43,6 @@ chain = (function(movements)
   end
 end)
 
--- hs.hotkey.bind(right_command, 'f', chain({
---     grid.fullScreen
--- }))
-
 hs.hotkey.bind(right_command, 'a', chain({
   grid.leftHalf,
   grid.leftThird,
@@ -137,14 +133,14 @@ hs.hotkey.bind(right_command, 'd', function()
     showDesktop()
 end)
 
-hs.hotkey.bind(right_command, 'w', function()
+-- Essentially: right_command+left_command
+hs.hotkey.bind({'ctrl', 'alt', 'shift', 'cmd'}, 'w', function()
     showApplicationWindows()
 end)
 
 function showApplicationWindows()
+    -- Systemwide keystoke I set in System Preferences to Show Application Windows
     fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f10')
-    -- local currentapp = hs.application.frontmostApplication();
-    -- hs.alert.show(currentapp)
     functionMode:exit()
     navigationMode:enter()
 end
@@ -161,17 +157,14 @@ function showDesktop()
         hs.eventtap.keyStroke({'cmd'}, 'tab')
     else
         -- otherwise, set the current app to the finder, so we can manipulate
-        -- it with the keyboard
+        -- the desktop with the keyboard
         hs.applescript.applescript([[
             tell application "Finder" to activate
         ]])
     end
 end
 
-hs.hotkey.bind(right_command, 'tab', function()
-    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
-end)
-
+-- Below in development
 hs.hotkey.bind(right_command, 'g', function()
     markWindow()
 end)

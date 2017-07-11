@@ -30,12 +30,12 @@ functionMode:bind({}        , "d" , function() dateStamp() end)
 functionMode:bind({}        , "t" , function() showTime() end)
 
 function timeStamp()
-    stamp = hs.execute("date +'%d-%m-%Y %H:%M' | tr -d '\n' | pbcopy")
+    stamp = hs.execute("date +'%m-%d-%Y %H:%M' | tr -d '\n' | pbcopy")
     hs.eventtap.keyStroke({'cmd'}, 'v')
 end
 
 function dateStamp()
-    stamp = hs.execute("date +'%d-%m-%Y' | tr -d '\n' | pbcopy")
+    stamp = hs.execute("date +'%m-%d-%Y' | tr -d '\n' | pbcopy")
     hs.eventtap.keyStroke({'cmd'}, 'v')
 end
 
@@ -53,7 +53,7 @@ functionMode:bind({} , "space" , function() dotSpaceDash() end)
 function functionMode:entered()
     -- if we can set and delete a rect... we can either use that or set another flag
     -- to tell if we were last in a certain mode, and make decisions
-        -- for instnace, go back to nav mode after function mode is done
+        -- for instance, go back to nav mode after function mode is done
     functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 6, 900})
     functionIndicator:setFill(true);
     functionIndicator:setFillColor({["red"]=0,["blue"]=1,["green"]=0,["alpha"]=1});
@@ -132,22 +132,11 @@ end
 
 function dotSpaceDash()
 
-    --check out hs.eventtap.keyStrokes() for this..
-    -- http://www.hammerspoon.org/docs/hs.eventtap.html#keyStrokes
-
-    -- preserve the pasteboard?
-    -- local pasteboard = hs.pasteboard.getContents()
-
-    --select the text on the line
-    -- hs.eventtap.keyStrokes('abcd')
-    -- fastKeyStroke({'cmd'}, 'right')
-    -- fastKeyStroke({'cmd', 'shift'}, 'left')
-    -- fastKeyStroke({'cmd'}, 'c')
-    -- os.execute("sleep 2")
-
-    -- local text = hs.uielement.focusedElement():selectedText()
-
     local text = hs.pasteboard.getContents()
+
+    hs.eventtap.keyStroke({'cmd'}, 'c')
+    hs.eventtap.keyStroke({'cmd'}, 'left')
+    hs.eventtap.keyStroke({'cmd', 'shift'}, 'right')
 
     local _, dash = string.gsub(text, "%-", "")
     local _, space = string.gsub(text, " ", "")
@@ -164,13 +153,8 @@ function dotSpaceDash()
         text = string.gsub(text, "-", " ")
     end
 
-    -- is there a better way than occupying the pasteboard?
     hs.pasteboard.setContents(string.lower(text))
-    -- fastKeyStroke({'cmd'}, 'right')
-    -- fastKeyStroke({'cmd', 'shift'}, 'left')
     hs.eventtap.keyStroke({'cmd'}, 'v')
-
-    -- hs.pasteboard.setContents(pasteboard)
     functionMode:exit()
 end
 
@@ -186,9 +170,15 @@ function nsgMenu()
 end
 
 function urlToAdmin()
+
+    local pasteboard = hs.pasteboard.getContents()
+
     hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
-    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+    hs.alert.show(currentapp:name())
+
+    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
+        fastKeyStroke({'cmd'}, 'v')
         fastKeyStroke({'cmd'}, 't')
         fastKeyStroke({'cmd'}, 'l')
     end
@@ -196,12 +186,17 @@ function urlToAdmin()
     hs.eventtap.keyStroke({'cmd'}, 'v')
     hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
+
+    hs.pasteboard.setContents(pasteboard)
 end
 
 function urlToStructuredContent()
+    local pasteboard = hs.pasteboard.getContents()
+
     hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
-    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
+        fastKeyStroke({'cmd'}, 'v')
         fastKeyStroke({'cmd'}, 't')
         fastKeyStroke({'cmd'}, 'l')
     end
@@ -209,12 +204,16 @@ function urlToStructuredContent()
     hs.eventtap.keyStroke({'cmd'}, 'v')
     hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
+
+    hs.pasteboard.setContents(pasteboard)
 end
 
 function urlToSpecificStructuredContent()
+    local pasteboard = hs.pasteboard.getContents()
     hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
-    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
+        fastKeyStroke({'cmd'}, 'v')
         fastKeyStroke({'cmd'}, 't')
         fastKeyStroke({'cmd'}, 'l')
     end
@@ -222,12 +221,17 @@ function urlToSpecificStructuredContent()
     hs.eventtap.keyStroke({'cmd'}, 'v')
     fastKeyStroke({'cmd'}, 'right')
     functionMode:exit()
+
+    hs.pasteboard.setContents(pasteboard)
 end
 
 function urlToDomain()
+    local pasteboard = hs.pasteboard.getContents()
+
     hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
-    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
+        fastKeyStroke({'cmd'}, 'v')
         fastKeyStroke({'cmd'}, 't')
         fastKeyStroke({'cmd'}, 'l')
     end
@@ -235,12 +239,17 @@ function urlToDomain()
     hs.eventtap.keyStroke({'cmd'}, 'v')
     hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
+
+    hs.pasteboard.setContents(pasteboard)
 end
 
 function urlToContentPages()
+    local pasteboard = hs.pasteboard.getContents()
+
     hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
-    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
+        fastKeyStroke({'cmd'}, 'v')
         fastKeyStroke({'cmd'}, 't')
         fastKeyStroke({'cmd'}, 'l')
     end
@@ -248,19 +257,25 @@ function urlToContentPages()
     hs.eventtap.keyStroke({'cmd'}, 'v')
     hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
+
+    hs.pasteboard.setContents(pasteboard)
 end
 
 function urlToSpecificContentPage()
+    local pasteboard = hs.pasteboard.getContents()
+
     hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
-    if (currentapp:name() == 'Safari' or currentapp:name() == 'Firefox' or currentapp.name() == 'Chrome') then
+    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
+        fastKeyStroke({'cmd'}, 'v')
         fastKeyStroke({'cmd'}, 't')
         fastKeyStroke({'cmd'}, 'l')
     end
-    -- os.execute('python /Users/dan/pyscript/urltospecificcontentpage.py')
     os.execute('python /Users/dan/pyscript/urltocontentpages.py')
     hs.eventtap.keyStroke({'cmd'}, 'v')
     hs.eventtap.keyStroke({'cmd'}, 'right')
     functionMode:exit()
+
+    hs.pasteboard.setContents(pasteboard)
 end
 --- ==========

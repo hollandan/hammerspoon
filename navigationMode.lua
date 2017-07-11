@@ -1,6 +1,7 @@
 local breakModes = nil
 local browserSwitch = nil
 
+-- NOTE: this is also in globalBindings... shouldn't be in two places
 local fastKeyStroke = function(modifiers, character)
   local event = require('hs.eventtap').event
   event.newKeyEvent(modifiers, string.lower(character), true):post()
@@ -11,6 +12,7 @@ navigationMode = hs.hotkey.modal.new({}, 'F19')
 navigationMode:bind({}, 'F19'    , function() end)
 navigationMode:bind({}, 'F18'    , function() invokeFunctionMode() end)
 navigationMode:bind({}, 'F17'    , function() navigationMode:exit() end)
+navigationMode:bind({'shift'}, 'F17'    , function() navigationMode:exit() end)
 navigationMode:bind({}, 'escape' , function() navigationMode:exit() end)
 -- navigationMode:bind({'ctrl'} , 'space'  , function() navInvokeITerm() end)
 -- functions *are* sharing namespace among files
@@ -102,6 +104,7 @@ function navigationMode:entered()
 
     navIndicator:show()
 
+    -- If we're in iTerm, don't do any navigation remapping
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'iTerm2')) then
         navigationMode:exit()

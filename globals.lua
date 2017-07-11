@@ -1,3 +1,14 @@
+-- Karabiner Elements Mappings
+-- right_command
+    -- control+option+shift when held
+    -- f17 when tapped to exit navigationMode
+-- caps_lock
+    -- control when used as modifier
+    -- f19 when tapped to enter navigationMode
+-- return
+    -- control when used as modifier
+    -- return when used alone
+
 right_command = {'alt', 'ctrl', 'shift'}
 double_command = {'cmd', 'alt', 'ctrl', 'shift'}
 
@@ -56,3 +67,6 @@ fastKeyStroke = function(modifiers, character)
   event.newKeyEvent(modifiers, string.lower(character), true):post()
   event.newKeyEvent(modifiers, string.lower(character), false):post()
 end
+
+-- use this as a placeholder to retain clipboard contents when performing copy/pastes in scripts
+pasteboard = ""

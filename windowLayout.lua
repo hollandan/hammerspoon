@@ -1,17 +1,3 @@
--- left25
--- left30
--- left50
--- left70
--- left75
--- maximized
--- right25
--- right30
--- right50
--- right70
--- right75
-
---http://www.hammerspoon.org/docs/hs.layout.html
-                                        -- (x      y      h      w )
 local topHalf            = hs.geometry.rect(0   , 0   , 1500 , 450)
 local bottomHalf         = hs.geometry.rect(0   , 450 , 1500 , 450)
 local topLeftQuarter     = hs.geometry.rect(0   , 0   , 750  , 450)
@@ -36,11 +22,6 @@ hs.hotkey.bind({}, "pad1", function()
 end)
 
 windowList = function() getWindowList() end
-
--- function cycleWindows()
---     table.insert(windowList, 1, windowList[#windowList])
---     table.remove(windowList, #windowList)
--- end
 
 function getWindowList()
     local windows = hs.window.allWindows()
