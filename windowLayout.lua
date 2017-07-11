@@ -9,15 +9,15 @@ local topThird           = hs.geometry.rect(0   , 0   , 1500 , 600)
 local bottomLeftThird    = hs.geometry.rect(0   , 600 , 750  , 300)
 local bottomRightThird   = hs.geometry.rect(750 , 600 , 750  , 300)
 
-local laptopScreen = "Color LCD"
+local laptopScreen = 'Color LCD'
 
 local balanceFlag = false
 local alterFlag = false
 
-hs.hotkey.bind({}, "pad0", function()
+hs.hotkey.bind({}, 'pad0', function()
     balanceWindows()
 end)
-hs.hotkey.bind({}, "pad1", function()
+hs.hotkey.bind({}, 'pad1', function()
     alterWindows()
 end)
 
@@ -27,13 +27,13 @@ function getWindowList()
     local windows = hs.window.allWindows()
     windowlist = {}
     for _,win in pairs(windows) do
-        -- hs.alert.show(win:id() .. ": " .. win:title() .. " | " .. win:application():name())
+        -- hs.alert.show(win:id() .. ': ' .. win:title() .. ' | ' .. win:application():name())
         local app = win:application():name()
         if (app == 'SimpleFloatingClock') then
             -- hs.alert.show('clock')
-        elseif (app == "Hammerspoon") then
+        elseif (app == 'Hammerspoon') then
             -- hs.alert.show('spoon')
-        elseif (app == "iTerm2") then
+        elseif (app == 'iTerm2') then
             -- hs.alert.show('term')
         else
             table.insert(windowlist, win)
@@ -45,7 +45,7 @@ end
 
 function showWindowList()
     for _,win in pairs(windowList) do
-        hs.alert.show(win:id() .. ": " .. win:title() .. " | " .. win:application():name())
+        hs.alert.show(win:id() .. ': ' .. win:title() .. ' | ' .. win:application():name())
     end
 end
 
@@ -164,11 +164,11 @@ function alterWindows()
 end
 
 
-hs.hotkey.bind({'cmd', 'ctrl'}, "z", function()
+hs.hotkey.bind({'cmd', 'ctrl'}, 'z', function()
     resizeLayout()
 end)
 
-hs.hotkey.bind({'cmd', 'ctrl'}, "x", function()
+hs.hotkey.bind({'cmd', 'ctrl'}, 'x', function()
     resizeLayoutReverse()
 end)
 
@@ -180,7 +180,7 @@ function resizeLayout()
     local count = #appWindows
 
     if (balanceFlag) then
-        -- hs.alert.show("balance")
+        -- hs.alert.show('balance')
         if (count == 2) then
             local other = appWindows[2]
             local op    = appWindows[1]
@@ -198,7 +198,7 @@ function resizeLayout()
         end
     end
     if (alterFlag) then
-        -- hs.alert.show("alter")
+        -- hs.alert.show('alter')
         if (count == 2) then
             local other = appWindows[2]
             local op    = appWindows[1]
@@ -225,7 +225,7 @@ function resizeLayoutReverse()
     local count = #appWindows
 
     if (balanceFlag) then
-        -- hs.alert.show("balance")
+        -- hs.alert.show('balance')
         if (count == 2) then
             local other = appWindows[2]
             local op    = appWindows[1]
@@ -243,7 +243,7 @@ function resizeLayoutReverse()
         end
     end
     if (alterFlag) then
-        -- hs.alert.show("alter")
+        -- hs.alert.show('alter')
         if (count == 2) then
             local other = appWindows[2]
             local op    = appWindows[1]

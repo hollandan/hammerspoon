@@ -60,14 +60,14 @@ function makeBagels()
 end
 
 -- Invoke context menu (from center window iosition)
-hs.hotkey.bind(right_command, "`", function()
+hs.hotkey.bind(right_command, '`', function()
     local currentapp = hs.application.frontmostApplication();
 
     os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
     hs.eventtap.rightClick(hs.mouse.getAbsolutePosition())
 
     if (string.match(currentapp:name(), 'iTerm')) then
-        hs.eventtap.keyStroke({}, "s");
-        hs.eventtap.keyStroke({}, "return");
+        hs.eventtap.keyStroke({}, 's');
+        hs.eventtap.keyStroke({}, 'return');
     end
 end)

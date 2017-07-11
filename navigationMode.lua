@@ -156,9 +156,9 @@ end
 
 function pageUp()
     local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), "Safari") or
-        string.match(currentapp:name(), "Chrome") or
-        string.match(currentapp:name(), "Firefox"))
+    if (string.match(currentapp:name(), 'Safari') or
+        string.match(currentapp:name(), 'Chrome') or
+        string.match(currentapp:name(), 'Firefox'))
     then
         hs.eventtap.keyStroke({'fn'}, 'pageup')
     else
@@ -168,9 +168,9 @@ end
 
 function pageDown()
     local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), "Safari") or
-        string.match(currentapp:name(), "Chrome") or
-        string.match(currentapp:name(), "Firefox"))
+    if (string.match(currentapp:name(), 'Safari') or
+        string.match(currentapp:name(), 'Chrome') or
+        string.match(currentapp:name(), 'Firefox'))
     then
         hs.eventtap.keyStroke({'fn'}, 'pagedown')
     else
@@ -250,7 +250,7 @@ end
 
 function previousTab()
     local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), "Safari") or string.match(currentapp:name(), "Chrome") or string.match(currentapp:name(), "Firefox")) then
+    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
         fastKeyStroke({'ctrl', 'shift'}, 'tab')
     else
         -- fastKeyStroke({'ctrl'}, 'w')
@@ -262,7 +262,7 @@ end
 
 function nextTab()
     local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), "Safari") or string.match(currentapp:name(), "Chrome") or string.match(currentapp:name(), "Firefox")) then
+    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
         fastKeyStroke({'ctrl'}, 'tab')
     else
         -- fastKeyStroke({'ctrl'}, 'o')

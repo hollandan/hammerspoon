@@ -23,6 +23,7 @@ urltocontentpages              = hs.hotkey.bind({}, 'pad*', function() end)
 urltospecificcontentpage       = hs.hotkey.bind({}, 'pad*', function() end)
 urltospecificstructuredcontent = hs.hotkey.bind({}, 'pad*', function() end)
 urltodomain                    = hs.hotkey.bind({}, 'pad*', function() end)
+urltouri                       = hs.hotkey.bind({}, 'pad*', function() end)
  
 hs.grid.setGrid('12x12') -- allows us to place on quarters, thirds and halves
 hs.grid.MARGINX = 0

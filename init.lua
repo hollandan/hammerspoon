@@ -13,9 +13,6 @@ local hyperRightShift   = require 'hyperRightShift'
 local fuckYouXfinity    = require 'fuckYouXfinity'
 local chooser           = require 'chooser'
 
--- Use chooser to:
-    -- select a specific app by typing
-    -- get list of windows and choose by typing
 -- See windowTossing.lua -> markWindow
     -- so, we can mark one window
     -- now, the question is, how do we associate that border with each window id?
@@ -27,7 +24,6 @@ local chooser           = require 'chooser'
     -- Maybe navigation mode should draw a border around the CURRENT WINDOW
         -- not the entire screen
     -- that might be easier to see, and perhaps more intuitive
-
 
 -- Don't forget about this?
 -- local vimouse = require('notused/vimouse')

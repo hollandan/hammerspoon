@@ -118,7 +118,7 @@ function toggleCenterWindow()
         frameCache[win:id()] = nil
     else
         frameCache[win:id()] = win:frame()
-        win:centerOnScreen("Color LCD")
+        win:centerOnScreen('Color LCD')
     end
 end
 
@@ -152,7 +152,7 @@ function showDesktop()
     -- Show Desktop is kind of stupid in that it does not automatically change
     -- the current app to the Finder
     local currentapp = hs.application.frontmostApplication();
-    if (currentapp:name() == "Finder") then
+    if (string.match(currentapp:name(), 'Finder')) then
         -- so, if we're in the finder, cmd-tab back from where we came
         hs.eventtap.keyStroke({'cmd'}, 'tab')
     else
@@ -187,10 +187,10 @@ function markWindow()
 
         border = hs.drawing.rectangle(hs.geometry.rect(fx, fy, fw, fh))
         border:setStrokeWidth(3)
-        border:setStrokeColor({["red"]=0.75,["blue"]=0.14,["green"]=0.83,["alpha"]=0.80})
+        border:setStrokeColor({['red']=0.75,['blue']=0.14,['green']=0.83,['alpha']=0.80})
         border:setRoundedRectRadii(5.0, 5.0)
         border:setStroke(true):setFill(false)
-        border:setLevel("floating")
+        border:setLevel('floating')
         border:show()
     end
 end

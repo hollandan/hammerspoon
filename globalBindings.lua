@@ -1,5 +1,5 @@
 local fastKeyStroke = function(modifiers, character)
-  local event = require("hs.eventtap").event
+  local event = require('hs.eventtap').event
   event.newKeyEvent(modifiers, string.lower(character), true):post()
   event.newKeyEvent(modifiers, string.lower(character), false):post()
 end

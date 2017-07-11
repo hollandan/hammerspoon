@@ -59,6 +59,11 @@ local apps = {
       ["subText"] = "Preview",
       ["action"]  = "l"
     },
+    {
+      ["text"]     = "R",
+      ["subText"]  = "open -a /Applications/Safari.app https://www.mixcloud.com/mountainchill/",
+      ["action"]  = "e"
+    },
     { ["text"]    = "S",
       ["subText"] = "Safari",
       ["action"]  = "l"
