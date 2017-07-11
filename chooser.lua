@@ -91,8 +91,9 @@ hs.hotkey.bind(right_command, 'f19', function()
     else
         appChooser:choices(apps)
         appChooser:rows(5)
-        appChooser:show()
         navigationMode:exit()
+        appChooser:show()
+        hs.eventtap.keyStroke({}, "delete")
         -- ?? enter a mode here, where:
             -- pressing letter keys sends the letter, then enter
             -- pressing cmd+w, right_shift sends escape
@@ -135,8 +136,8 @@ hs.hotkey.bind(right_command, 'w', function()
         windowChooser:choices(getWindowList())
         navigationMode:exit()
         windowChooser:show()
-        -- Unfortuantly, we don't seem to be able to clear the last search...
-        -- windowChooser:query(nil)
-        -- windowChooser:refreshChoicesCallback()
+        -- Unfortuantly, we don't seem to be able to clear the last search with windowChooser:query(nil) ...
+        -- But, this works!
+        hs.eventtap.keyStroke({}, "delete")
     end
 end)
