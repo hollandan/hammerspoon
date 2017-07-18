@@ -39,6 +39,7 @@ end
 function invokeSpotlight()
     fastKeyStroke({'cmd'}, 'space')
     navigationMode:exit()
+    redrawBorder()
 end
 
 function findShit()
@@ -59,7 +60,7 @@ function makeBagels()
     ex:show()
 end
 
--- Invoke context menu (from center window iosition)
+-- Invoke context menu (from center window position)
 hs.hotkey.bind(right_command, '`', function()
     local currentapp = hs.application.frontmostApplication();
 

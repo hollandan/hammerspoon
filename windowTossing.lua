@@ -104,22 +104,22 @@ hs.hotkey.bind(right_command, ',', chain({
 -- stolen and modified from https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
 function toggleWindowMaximized()
     local win = hs.window.focusedWindow()
-    if frameCache[win:id()] then
-        win:setFrame(frameCache[win:id()])
-        frameCache[win:id()] = nil
+    if fullFrameCache[win:id()] then
+        win:setFrame(fullFrameCache[win:id()])
+        fullFrameCache[win:id()] = nil
     else
-        frameCache[win:id()] = win:frame()
+        fullFrameCache[win:id()] = win:frame()
         win:maximize()
     end
     redrawBorder()
 end
 function toggleCenterWindow()
     local win = hs.window.focusedWindow()
-    if frameCache[win:id()] then
-        win:setFrame(frameCache[win:id()])
-        frameCache[win:id()] = nil
+    if centeredFrameCache[win:id()] then
+        win:setFrame(centeredFrameCache[win:id()])
+        centeredFrameCache[win:id()] = nil
     else
-        frameCache[win:id()] = win:frame()
+        centeredFrameCache[win:id()] = win:frame()
         win:centerOnScreen('Color LCD')
     end
     redrawBorder()

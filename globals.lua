@@ -1,3 +1,4 @@
+-- ~/.config/karabiner/karabiner.json
 -- Karabiner Elements Mappings
 -- right_command
     -- control+option+shift when held
@@ -11,6 +12,10 @@
 
 right_command = {'alt', 'ctrl', 'shift'}
 double_command = {'cmd', 'alt', 'ctrl', 'shift'}
+
+hs.hotkey.bind(double_command, 'h', function()
+    hs.reload()
+end)
 
 -- Indicators (deprecated?)
 -- navIndicator      = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
@@ -60,7 +65,8 @@ grid = {
 }
 
 -- Store window frames (by id) so we can toggle window size
-frameCache = {}
+fullFrameCache = {}
+centeredFrameCache = {}
 markedFrameCache = {}
 
 fastKeyStroke = function(modifiers, character)
@@ -72,9 +78,12 @@ end
 -- use this as a placeholder to retain clipboard contents when performing copy/pastes in scripts
 pasteboard = ""
 
+-- for color ideas: http://www.rapidtables.com/web/color/RGB_Color.htm
+-- focusedBorder    = {["red"]=0,["blue"]=.4,["green"]=.8,["alpha"]=0.9}
 focusedBorder    = {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
 navigationBorder = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
 functionBorder   = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
+emptyBorder      = nil
 
 currentBorder    = focusedBorder
 
@@ -83,19 +92,25 @@ currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 function redrawBorder()
     win = hs.window.focusedWindow()
 
-    if not string.match(win:application():name(), 'iTerm') then
-        if win ~= nil then
-            top_left = win:topLeft()
-            size = win:size()
-            if currentIndicator ~= nil then
-                currentIndicator:delete()
-            end
-            currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
-            currentIndicator:setStrokeColor(currentBorder)
-            currentIndicator:setFill(false)
-            currentIndicator:setStrokeWidth(8)
-            currentIndicator:show()
+    if win ~= nil then
+        top_left = win:topLeft()
+        size = win:size()
+        if currentIndicator ~= nil then
+            currentIndicator:delete()
         end
+        currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
+        currentIndicator:setStrokeColor(currentBorder)
+        currentIndicator:setFill(false)
+        currentIndicator:setStrokeWidth(8)
+        currentIndicator:setRoundedRectRadii(5.0, 5.0)
+
+        if string.match(win:application():name(), 'iTerm') then
+            currentIndicator:setStrokeColor(emptyBorder)
+        end
+
+        currentIndicator:show()
+
+        -- hs.alert.show(win:id())
     end
 end
 
