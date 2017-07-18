@@ -67,7 +67,8 @@ end
 
 function functionMode:exited()
     -- functionIndicator:delete()
-    currentIndicator:setStrokeColor(focusedBorder);
+    currentBorder = focusedBorder
+    currentIndicator:setStrokeColor(currentBorder);
 
     -- -- This is probably a dumb way to do this... Is there a better way?
     -- nsgMenu Variables

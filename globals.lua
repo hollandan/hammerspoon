@@ -72,8 +72,8 @@ end
 -- use this as a placeholder to retain clipboard contents when performing copy/pastes in scripts
 pasteboard = ""
 
-focusedBorder    =  {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
-navigationBorder =  {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
+focusedBorder    = {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
+navigationBorder = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
 functionBorder   = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
 
 currentBorder    = focusedBorder

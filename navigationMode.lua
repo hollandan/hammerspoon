@@ -114,7 +114,8 @@ end
 
 function navigationMode:exited()
     -- navIndicator:delete()
-    currentIndicator:setStrokeColor(focusedBorder)
+    currentBorder = focusedBorder
+    currentIndicator:setStrokeColor(currentBorder);
 end
 
 function fullLeft()
