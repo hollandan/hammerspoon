@@ -18,7 +18,7 @@ function ssidChangedCallback()
 
     -- for now, just tell me when I connect to xfinity
     if (newSSID == "xfinitywifi") then
-        hs.alert.show("xfinity hijacked your wifi connection", 8)
+        hs.alert.show("xfinity hijacked your wifi connection", 10)
     end
 
     lastSSID = newSSID

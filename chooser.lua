@@ -22,7 +22,7 @@ local apps = {
       ["action"]  = "l"
     },
     { ["text"]    = "E",
-      ["subText"] = "Karabiner-EventViewer",
+      ["subText"] = "TextEdit",
       ["action"]  = "l"
     },
     { ["text"]    = "I",
@@ -72,6 +72,10 @@ local apps = {
       ["subText"] = "iTerm",
       ["action"]  = "l"
     },
+    { ["text"]    = "V",
+      ["subText"] = "Karabiner-EventViewer",
+      ["action"]  = "l"
+    },
     {
       ["text"]     = "W",
       ["subText"]  = "open -a /Applications/Safari.app https://weather.com/weather/hourbyhour/l/USMI0028:1:US",
@@ -113,7 +117,7 @@ function getWindowList()
         -- Get Browser tabs
         -- Get windows from all spaces?
             -- see http://www.hammerspoon.org/docs/hs.window.filter.html
-        -- Filter windows we'll never want
+        -- Ignore windows we'll never want
     local windows = hs.window.allWindows()
     windowlist = {}
     for _,win in pairs(windows) do

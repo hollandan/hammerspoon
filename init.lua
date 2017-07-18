@@ -1,6 +1,5 @@
 -- hs.inspect(hs.keycodes.map)
-
-globals = require 'globals'
+globals                 = require 'globals'
 
 local autoload          = require 'autoload'
 local globalBindings    = require 'globalBindings'
@@ -23,7 +22,10 @@ local chooser           = require 'chooser'
 -- HERE'S A THOUGHT!
     -- Maybe navigation mode should draw a border around the CURRENT WINDOW
         -- not the entire screen
-    -- that might be easier to see, and perhaps more intuitive
+        -- that might be easier to see, and perhaps more intuitive
+    -- Red Border: Navigation mode
+    -- Blue Border: Function mode
+    -- Black Border?: Window's selected, that's all
 
 -- Don't forget about this?
 -- local vimouse = require('notused/vimouse')

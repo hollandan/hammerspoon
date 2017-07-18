@@ -1,4 +1,4 @@
--- shamelessly stolen from Greg Hurrel
+-- chain functionality shamelessly stolen from Greg Hurrel
 -- -- https://github.com/wincent/wincent/tree/35d430520d525e8ac4c829f4436e5b42c8df5dd8/roles/dotfiles/files/.hammerspoon
 -- and of course modified for my own purposes
 local lastSeenChain = nil
@@ -39,6 +39,7 @@ chain = (function(movements)
     lastSeenWindow = id
 
     hs.grid.set(win, movements[sequenceNumber], screen)
+    -- redrawBorder()
     sequenceNumber = sequenceNumber % cycleLength + 1
   end
 end)
@@ -110,6 +111,7 @@ function toggleWindowMaximized()
         frameCache[win:id()] = win:frame()
         win:maximize()
     end
+    -- redrawBorder()
 end
 function toggleCenterWindow()
     local win = hs.window.focusedWindow()
@@ -120,6 +122,7 @@ function toggleCenterWindow()
         frameCache[win:id()] = win:frame()
         win:centerOnScreen('Color LCD')
     end
+    -- redrawBorder()
 end
 
 hs.hotkey.bind(right_command, 'c', function()
@@ -202,5 +205,24 @@ function identifyMarkedWindows()
     for id,win in pairs(markedFrameCache) do
         hs.alert.show(id)
         hs.alert.show(win)
+    end
+end
+
+
+-- https://github.com/jwkvam/hammerspoon-config/blob/master/init.lua#L233
+global_border = nil
+function redrawBorder()
+    win = hs.window.focusedWindow()
+    if win ~= nil then
+        top_left = win:topLeft()
+        size = win:size()
+        if global_border ~= nil then
+            global_border:delete()
+        end
+        global_border = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
+        global_border:setStrokeColor({["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.8})
+        global_border:setFill(false)
+        global_border:setStrokeWidth(8)
+        global_border:show()
     end
 end
