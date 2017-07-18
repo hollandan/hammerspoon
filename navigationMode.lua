@@ -101,8 +101,9 @@ function navigationMode:entered()
     navIndicator:setFillColor({['red']=0,['blue']=0,['green']=0,['alpha']=0});
     navIndicator:setStrokeColor({['red']=1,['blue']=0,['green']=0,['alpha']=.7})
     navIndicator:setStrokeWidth(10)
-
     navIndicator:show()
+
+    currentIndicator:setStrokeColor(navBorder);
 
     -- If we're in iTerm, don't do any navigation remapping
     local currentapp = hs.application.frontmostApplication();
@@ -114,6 +115,7 @@ end
 
 function navigationMode:exited()
     navIndicator:delete()
+    currentIndicator:setStrokeColor(focusedBorder)
 end
 
 function fullLeft()
@@ -305,23 +307,30 @@ end
 
 -- Define a callback function to be called when application events happen
 function applicationWatcherCallback(appName, eventType, appObject)
-  if (appName == 'iTerm2') then
-    if (eventType == hs.application.watcher.activated) then
-        navigationMode:exit()
-        functionMode:exit()
-        breakModes = true
-    else
-        breakModes = false
-    end
-  end
 
-  if (appName == 'Safari') then
-      if (eventType == hs.application.watcher.activated) then
-          browserSwitch = true
-      else
-          browserSwitch = false
-      end
-  end
+    -- hs.alert.show(appName)
+    -- hs.alert.show(eventType)
+    -- hs.alert.show(appObject)
+
+    if (appName == 'iTerm2') then
+        if (eventType == hs.application.watcher.activated) then
+            navigationMode:exit()
+            functionMode:exit()
+            breakModes = true
+            currentIndicator:hide()
+        else
+            breakModes = false
+            currentIndicator:show()
+        end
+    end
+
+    if (appName == 'Safari') then
+        if (eventType == hs.application.watcher.activated) then
+            browserSwitch = true
+        else
+            browserSwitch = false
+        end
+    end
 end
 
 -- Create and start the application event watcher

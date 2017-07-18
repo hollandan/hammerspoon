@@ -59,12 +59,14 @@ function functionMode:entered()
     functionIndicator:setFillColor({['red']=0,['blue']=1,['green']=0,['alpha']=1});
     functionIndicator:setStrokeColor({['red']=0,['blue']=1,['green']=0,['alpha']=1})
     functionIndicator:setStrokeWidth(1)
-
     functionIndicator:show()
+
+    currentIndicator:setStrokeColor(functionBorder);
 end
 
 function functionMode:exited()
     functionIndicator:delete()
+    currentIndicator:setStrokeColor(focusedBorder);
 
     -- -- This is probably a dumb way to do this... Is there a better way?
     -- nsgMenu Variables

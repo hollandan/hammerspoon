@@ -12,6 +12,11 @@
 right_command = {'alt', 'ctrl', 'shift'}
 double_command = {'cmd', 'alt', 'ctrl', 'shift'}
 
+focusedBorder =  {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
+navBorder     =  {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.6}
+functionBorder = {['red']=0,['blue']=1,['green']=0,['alpha']=0.6}
+-- currentIndicator = nil
+currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 -- Indicators
 navIndicator      = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
@@ -71,3 +76,31 @@ end
 
 -- use this as a placeholder to retain clipboard contents when performing copy/pastes in scripts
 pasteboard = ""
+
+-- https://github.com/jwkvam/hammerspoon-config/blob/master/init.lua#L233
+function redrawBorder()
+    win = hs.window.focusedWindow()
+
+    if not string.match(win:application():name(), 'iTerm') then
+        if win ~= nil then
+            top_left = win:topLeft()
+            size = win:size()
+            if currentIndicator ~= nil then
+                currentIndicator:delete()
+            end
+            currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
+            currentIndicator:setStrokeColor(focusedBorder)
+            currentIndicator:setFill(false)
+            currentIndicator:setStrokeWidth(8)
+            currentIndicator:show()
+        end
+    end
+end
+
+redrawBorder()
+
+allwindows = hs.window.filter.new(nil)
+allwindows:subscribe(hs.window.filter.windowCreated, function () redrawBorder() end)
+allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() end)
+allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
+allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
