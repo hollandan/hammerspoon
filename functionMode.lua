@@ -54,18 +54,19 @@ function functionMode:entered()
     -- if we can set and delete a rect... we can either use that or set another flag
     -- to tell if we were last in a certain mode, and make decisions
         -- for instance, go back to nav mode after function mode is done
-    functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 6, 900})
-    functionIndicator:setFill(true);
-    functionIndicator:setFillColor({['red']=0,['blue']=1,['green']=0,['alpha']=1});
-    functionIndicator:setStrokeColor({['red']=0,['blue']=1,['green']=0,['alpha']=1})
-    functionIndicator:setStrokeWidth(1)
-    functionIndicator:show()
+    -- functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 6, 900})
+    -- functionIndicator:setFill(true);
+    -- functionIndicator:setFillColor({['red']=0,['blue']=1,['green']=0,['alpha']=1});
+    -- functionIndicator:setStrokeColor({['red']=0,['blue']=1,['green']=0,['alpha']=1})
+    -- functionIndicator:setStrokeWidth(1)
+    -- functionIndicator:show()
 
-    currentIndicator:setStrokeColor(functionBorder);
+    currentBorder = functionBorder
+    currentIndicator:setStrokeColor(currentBorder);
 end
 
 function functionMode:exited()
-    functionIndicator:delete()
+    -- functionIndicator:delete()
     currentIndicator:setStrokeColor(focusedBorder);
 
     -- -- This is probably a dumb way to do this... Is there a better way?

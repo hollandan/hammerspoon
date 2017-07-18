@@ -91,19 +91,18 @@ end
 -- end
 
 function navigationMode:entered()
-    -- Just in case window mode causes the indicator to perpetually stick (by invoking another instance we can delete)
-    navIndicator:delete()
-    -- hs.alert.show(breakModes)
-    -- navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 6, 900})
-    navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 1440, 900})
-    navIndicator:setFill(true);
-    -- navIndicator:setFillColor({['red']=1,['blue']=0,['green']=0,['alpha']=1});
-    navIndicator:setFillColor({['red']=0,['blue']=0,['green']=0,['alpha']=0});
-    navIndicator:setStrokeColor({['red']=1,['blue']=0,['green']=0,['alpha']=.7})
-    navIndicator:setStrokeWidth(10)
-    navIndicator:show()
 
-    currentIndicator:setStrokeColor(navBorder);
+    -- -- Just in case window mode causes the indicator to perpetually stick (by invoking another instance we can delete)
+    -- navIndicator:delete()
+    -- navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 1440, 900})
+    -- navIndicator:setFill(true);
+    -- navIndicator:setFillColor({['red']=0,['blue']=0,['green']=0,['alpha']=0});
+    -- navIndicator:setStrokeColor({['red']=1,['blue']=0,['green']=0,['alpha']=.7})
+    -- navIndicator:setStrokeWidth(10)
+    -- navIndicator:show()
+
+    currentBorder = navigationBorder
+    currentIndicator:setStrokeColor(currentBorder);
 
     -- If we're in iTerm, don't do any navigation remapping
     local currentapp = hs.application.frontmostApplication();
@@ -114,7 +113,7 @@ function navigationMode:entered()
 end
 
 function navigationMode:exited()
-    navIndicator:delete()
+    -- navIndicator:delete()
     currentIndicator:setStrokeColor(focusedBorder)
 end
 

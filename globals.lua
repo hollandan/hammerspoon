@@ -12,14 +12,9 @@
 right_command = {'alt', 'ctrl', 'shift'}
 double_command = {'cmd', 'alt', 'ctrl', 'shift'}
 
-focusedBorder =  {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
-navBorder     =  {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.6}
-functionBorder = {['red']=0,['blue']=1,['green']=0,['alpha']=0.6}
--- currentIndicator = nil
-currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
--- Indicators
-navIndicator      = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
-functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
+-- Indicators (deprecated?)
+-- navIndicator      = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
+-- functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 
 -- nsgMenu
 urltoadmin                     = hs.hotkey.bind({}, 'pad*', function() end)
@@ -77,6 +72,13 @@ end
 -- use this as a placeholder to retain clipboard contents when performing copy/pastes in scripts
 pasteboard = ""
 
+focusedBorder    =  {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
+navigationBorder =  {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
+functionBorder   = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
+
+currentBorder    = focusedBorder
+
+currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 -- https://github.com/jwkvam/hammerspoon-config/blob/master/init.lua#L233
 function redrawBorder()
     win = hs.window.focusedWindow()
@@ -89,7 +91,7 @@ function redrawBorder()
                 currentIndicator:delete()
             end
             currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
-            currentIndicator:setStrokeColor(focusedBorder)
+            currentIndicator:setStrokeColor(currentBorder)
             currentIndicator:setFill(false)
             currentIndicator:setStrokeWidth(8)
             currentIndicator:show()
