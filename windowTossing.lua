@@ -125,6 +125,22 @@ function toggleCenterWindow()
     redrawBorder()
 end
 
+
+-- Toggle Center And Zoom
+hs.hotkey.bind(double_command, 'space', function()
+    local win = hs.window.focusedWindow()
+    if centeredFrameCache[win:id()] then
+        win:setFrame(centeredFrameCache[win:id()])
+        centeredFrameCache[win:id()] = nil
+    else
+        centeredFrameCache[win:id()] = win:frame()
+        hs.grid.set(win, grid.centeredBig, win:screen())
+    end
+    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
+    hs.eventtap.keyStroke({'cmd', 'alt'}, '8')
+end)
+
+
 hs.hotkey.bind(right_command, 'c', function()
     toggleCenterWindow()
 end)
