@@ -5,25 +5,37 @@ local topRightQuarter    = hs.geometry.rect(750 , 0   , 750  , 450)
 local bottomLeftQuarter  = hs.geometry.rect(0   , 450 , 750  , 450)
 local bottomRightQuarter = hs.geometry.rect(750 , 450 , 750  , 450)
 
+local topTwoThirds       = hs.geometry.rect(0   , 0   , 1500 , 600)
 local topThird           = hs.geometry.rect(0   , 0   , 1500 , 600)
+local bottomThird        = hs.geometry.rect(0   , 600 , 1500 , 300)
 local bottomLeftThird    = hs.geometry.rect(0   , 600 , 750  , 300)
 local bottomRightThird   = hs.geometry.rect(750 , 600 , 750  , 300)
+
+local leftTwoThirds      = hs.geometry.rect(0   , 0   , 1000 , 900)
+local rightTwoThirds     = hs.geometry.rect(450 , 0   , 1000 , 900)
+local leftThird          = hs.geometry.rect(0   , 0   , 450  , 900)
+local rightThird         = hs.geometry.rect(900 , 0   , 450  , 900)
+
+local leftQuarter        = hs.geometry.rect(0    , 0  , 375 , 900)
+local leftMidQuarter     = hs.geometry.rect(375  , 0  , 375 , 900)
+local rightMidQuarter    = hs.geometry.rect(750  , 0  , 375 , 900)
+local rightQuarter       = hs.geometry.rect(1125 , 0  , 375 , 900)
 
 local laptopScreen = 'Color LCD'
 
 local balanceFlag = false
 local alterFlag = false
 
-hs.hotkey.bind({}, 'pad0', function()
+hs.hotkey.bind({}, 'pad2', function()
     balanceWindows()
 end)
 hs.hotkey.bind({}, 'pad1', function()
     alterWindows()
 end)
 
-windowList = function() getWindowList() end
+-- windowList = function() getWindowList() end
 
-function getWindowList()
+function getLayoutWindowList()
     local windows = hs.window.allWindows()
     windowlist = {}
     for _,win in pairs(windows) do
@@ -43,8 +55,8 @@ function getWindowList()
     return windowlist
 end
 
-function showWindowList()
-    for _,win in pairs(windowList) do
+function showLayoutWindowList()
+    for _,win in pairs(getLayoutWindowList()) do
         hs.alert.show(win:id() .. ': ' .. win:title() .. ' | ' .. win:application():name())
     end
 end
@@ -70,8 +82,10 @@ function balanceWindows()
     elseif (count == 2) then
 
         local twoWindows = {
-            {thisapp, appWindows[1]:title(), laptopScreen, hs.layout.left50, nil, nil},
-            {thisapp, appWindows[2]:title(), laptopScreen, hs.layout.right50, nil, nil}
+            -- {thisapp, appWindows[1]:title(), laptopScreen, hs.layout.left50, nil, nil},
+            -- {thisapp, appWindows[2]:title(), laptopScreen, hs.layout.right50, nil, nil}
+            {thisapp, appWindows[1]:title(), laptopScreen, nil, nil, leftThird},
+            {thisapp, appWindows[2]:title(), laptopScreen, nil, nil, rightTwoThirds}
         }
         hs.layout.apply(twoWindows)
 
@@ -99,7 +113,7 @@ function balanceWindows()
 end
 
 function getAppWindows()
-    windowList = getWindowList()
+    windowList = getLayoutWindowList()
 
     local count = 0
     local appWindows = {}
@@ -135,8 +149,10 @@ function alterWindows()
     elseif (count == 2) then
 
         local twoWindows = {
-            {thisapp, appWindows[1]:title(), laptopScreen, nil, nil, topHalf},
-            {thisapp, appWindows[2]:title(), laptopScreen, nil, nil, bottomHalf}
+            -- {thisapp, appWindows[1]:title(), laptopScreen, nil, nil, topHalf},
+            -- {thisapp, appWindows[2]:title(), laptopScreen, nil, nil, bottomHalf}
+            {thisapp, appWindows[1]:title(), laptopScreen, nil, nil, topTwoThirds},
+            {thisapp, appWindows[2]:title(), laptopScreen, nil, nil, bottomThird}
         }
         hs.layout.apply(twoWindows)
 
@@ -152,10 +168,10 @@ function alterWindows()
     elseif (count == 4) then
 
         local fourWindows = {
-            {thisapp, appWindows[1]:title(), laptopScreen, nil, nil, topLeftQuarter},
-            {thisapp, appWindows[2]:title(), laptopScreen, nil, nil, topRightQuarter},
-            {thisapp, appWindows[3]:title(), laptopScreen, nil, nil, bottomLeftQuarter},
-            {thisapp, appWindows[4]:title(), laptopScreen, nil, nil, bottomRightQuarter}
+            {thisapp, appWindows[1]:title(), laptopScreen, nil, nil, leftQuarter},
+            {thisapp, appWindows[2]:title(), laptopScreen, nil, nil, leftMidQuarter},
+            {thisapp, appWindows[3]:title(), laptopScreen, nil, nil, rightMidQuarter},
+            {thisapp, appWindows[4]:title(), laptopScreen, nil, nil, rightQuarter}
         }
         hs.layout.apply(fourWindows)
 
@@ -164,11 +180,11 @@ function alterWindows()
 end
 
 
-hs.hotkey.bind({'cmd', 'ctrl'}, 'z', function()
+hs.hotkey.bind({'cmd', 'ctrl'}, 'a', function()
     resizeLayout()
 end)
 
-hs.hotkey.bind({'cmd', 'ctrl'}, 'x', function()
+hs.hotkey.bind({'cmd', 'ctrl'}, 's', function()
     resizeLayoutReverse()
 end)
 

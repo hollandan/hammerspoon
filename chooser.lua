@@ -112,7 +112,7 @@ end)
 -----------------
 -- Window Chooser
 -----------------
-function getWindowList()
+function getChooserWindowList()
     -- TODO:
         -- Get Browser tabs
             -- see https://github.com/ashfinal/awesome-hammerspoon/blob/master/modes/hsearch.lua
@@ -144,7 +144,7 @@ hs.hotkey.bind(right_command, 'w', function()
     if (windowChooser:isVisible()) then
         windowChooser:hide()
     else
-        windowChooser:choices(getWindowList())
+        windowChooser:choices(getChooserWindowList())
         navigationMode:exit()
         windowChooser:show()
         -- Unfortuantly, we don't seem to be able to clear the last search with windowChooser:query(nil) ...

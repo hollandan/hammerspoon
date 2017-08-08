@@ -82,7 +82,7 @@ pasteboard = ""
 showBorders      = true
 -- for color ideas: http://www.rapidtables.com/web/color/RGB_Color.htm
 -- focusedBorder    = {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
-focusedBorder    = {["red"]=.67,["blue"]=.67,["green"]=.67,["alpha"]=0.9}
+focusedBorder    = {["red"]=0,["blue"]=.6,["green"]=.1,["alpha"]=0.5}
 navigationBorder = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
 functionBorder   = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
 emptyBorder      = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
@@ -104,6 +104,29 @@ hs.hotkey.bind(double_command, 'l', function()
         currentIndicator:show()
     end
 end)
+
+------------------------------------------------
+-- -- This is freaking cool, but it draws so slowly it's too distracting to work with
+-- hs.window.highlight.ui.overlay = true
+-- -- hs.window.highlight.ui.overlayColor = {0.2,0.05,0,0.25}
+-- hs.window.highlight.ui.overlayColor = {0,0,0,0.2}
+-- hs.window.highlight.ui.overlayColorInverted = {0.8,0.9,1,0.3}
+-- hs.window.highlight.ui.isolateColor = {0,0,0,0.95}
+-- hs.window.highlight.ui.isolateColorInverted = {1,1,1,0.95}
+-- hs.window.highlight.ui.frameWidth = 10
+-- hs.window.highlight.ui.frameColor = {0,0.6,1,0.5}
+-- hs.window.highlight.ui.frameColorInvert = {1,0.4,0,0.5}
+-- hs.window.highlight.ui.flashDuration = 0
+-- hs.window.highlight.ui.windowShownFlashColor = {0,1,0,0.8}
+-- hs.window.highlight.ui.windowHiddenFlashColor = {1,0,0,0.8}
+-- hs.window.highlight.ui.windowShownFlashColorInvert = {1,0,1,0.8}
+-- hs.window.highlight.ui.windowHiddenFlashColorInvert = {0,1,1,0.8}
+--
+-- -- function highlightStuff()
+--     hs.window.highlight.start()
+-- -- end
+-- hs.hotkey.bind('ctrl-cmd','\\', nil,hs.window.highlight.toggleIsolate)
+------------------------------------------------
 
 function redrawBorder()
     if showBorders then
