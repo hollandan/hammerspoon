@@ -31,6 +31,8 @@ navigationMode:bind({'shift'},  41, function() fullRightAndSelect() end)
 navigationMode:bind({'shift'}, 'q', function() fullUpAndSelect() end)
 navigationMode:bind({'shift'}, '/', function() fullDownAndSelect() end)
 
+navigationMode:bind({'shift'}, 'r', function() pageUpAndSelect() end)
+navigationMode:bind({'shift'}, 'm', function() pageDownAndSelect() end)
 navigationMode:bind({}, 'r', function() pageUp() end)
 navigationMode:bind({}, 'm', function() pageDown() end)
 
@@ -180,6 +182,30 @@ function pageDown()
     end
 end
 
+function pageUpAndSelect()
+    local currentapp = hs.application.frontmostApplication();
+    if (string.match(currentapp:name(), 'Safari') or
+        string.match(currentapp:name(), 'Chrome') or
+        string.match(currentapp:name(), 'Firefox'))
+    then
+        hs.eventtap.keyStroke({'shift', 'fn'}, 'up')
+    else
+        hs.eventtap.keyStroke({'shift', 'alt'}, 'up')
+    end
+end
+
+function pageDownAndSelect()
+    local currentapp = hs.application.frontmostApplication();
+    if (string.match(currentapp:name(), 'Safari') or
+        string.match(currentapp:name(), 'Chrome') or
+        string.match(currentapp:name(), 'Firefox'))
+    then
+        hs.eventtap.keyStroke({'shift', 'fn'}, 'down')
+    else
+        hs.eventtap.keyStroke({'shift', 'alt'}, 'down')
+    end
+end
+
 function goLeft()
     fastKeyStroke({}, 'left')
 end
@@ -197,7 +223,7 @@ function goDown()
 end
 
 function goLeftAndSelect()
-    fastKeyStroke({'shfit'}, 'left')
+    fastKeyStroke({'shift'}, 'left')
 end
 
 function goRightAndSelect()
@@ -288,8 +314,12 @@ function focusURLBarAndExit()
 end
 
 function findAndExit()
-    fastKeyStroke({'cmd'}, 'f')
+    -- seems the only way to get this to work...
+    -- otherwise, focus just leaves the find box...
+    hs.eventtap.keyStroke({'cmd'}, 'f')
     navigationMode:exit()
+    hs.eventtap.keyStroke({'cmd'}, 'f')
+    hs.eventtap.keyStroke({'cmd'}, 'f')
 end
 
 function previousField()

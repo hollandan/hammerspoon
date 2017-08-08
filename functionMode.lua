@@ -30,13 +30,17 @@ functionMode:bind({}        , 'd' , function() dateStamp() end)
 functionMode:bind({}        , 't' , function() showTime() end)
 
 function timeStamp()
+    local pasteboard = hs.pasteboard.getContents()
     stamp = hs.execute("date +'%m-%d-%Y %H:%M' | tr -d '\n' | pbcopy")
     hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.pasteboard.setContents(pasteboard)
 end
 
 function dateStamp()
+    local pasteboard = hs.pasteboard.getContents()
     stamp = hs.execute("date +'%m-%d-%Y' | tr -d '\n' | pbcopy")
     hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.pasteboard.setContents(pasteboard)
 end
 
 function showTime()

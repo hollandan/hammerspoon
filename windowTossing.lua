@@ -39,8 +39,8 @@ chain = (function(movements)
     lastSeenWindow = id
 
     hs.grid.set(win, movements[sequenceNumber], screen)
-    redrawBorder()
     sequenceNumber = sequenceNumber % cycleLength + 1
+    redrawBorder()
   end
 end)
 
@@ -154,17 +154,18 @@ function showDesktop()
 
     -- Show Desktop is kind of stupid in that it does not automatically change
     -- the current app to the Finder
-    local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), 'Finder')) then
-        -- so, if we're in the finder, cmd-tab back from where we came
-        hs.eventtap.keyStroke({'cmd'}, 'tab')
-    else
-        -- otherwise, set the current app to the finder, so we can manipulate
-        -- the desktop with the keyboard
-        hs.applescript.applescript([[
-            tell application "Finder" to activate
-        ]])
-    end
+
+    -- local currentapp = hs.application.frontmostApplication();
+    -- if (string.match(currentapp:name(), 'Finder')) then
+    --     -- so, if we're in the finder, cmd-tab back from where we came
+    --     hs.eventtap.keyStroke({'cmd'}, 'tab')
+    -- else
+    --     -- otherwise, set the current app to the finder, so we can manipulate
+    --     -- the desktop with the keyboard
+    --     hs.applescript.applescript([[
+    --         tell application "Finder" to activate
+    --     ]])
+    -- end
 end
 
 -- Below in development

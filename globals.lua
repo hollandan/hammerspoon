@@ -22,6 +22,7 @@ end)
 -- functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 
 -- nsgMenu
+-- Define these to placeholder values here, so Hammerspoon doesn't throw undefined errors
 urltoadmin                     = hs.hotkey.bind({}, 'pad*', function() end)
 urltostructuredcontent         = hs.hotkey.bind({}, 'pad*', function() end)
 urltocontentpages              = hs.hotkey.bind({}, 'pad*', function() end)
@@ -29,8 +30,8 @@ urltospecificcontentpage       = hs.hotkey.bind({}, 'pad*', function() end)
 urltospecificstructuredcontent = hs.hotkey.bind({}, 'pad*', function() end)
 urltodomain                    = hs.hotkey.bind({}, 'pad*', function() end)
 urltouri                       = hs.hotkey.bind({}, 'pad*', function() end)
- 
-hs.grid.setGrid('12x12') -- allows us to place on quarters, thirds and halves
+
+hs.grid.setGrid('12x12')
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 hs.window.animationDuration = 0
@@ -78,39 +79,54 @@ end
 -- use this as a placeholder to retain clipboard contents when performing copy/pastes in scripts
 pasteboard = ""
 
+showBorders      = true
 -- for color ideas: http://www.rapidtables.com/web/color/RGB_Color.htm
--- focusedBorder    = {["red"]=0,["blue"]=.4,["green"]=.8,["alpha"]=0.9}
 focusedBorder    = {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
 navigationBorder = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
 functionBorder   = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
-emptyBorder      = nil
+emptyBorder      = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
 
 currentBorder    = focusedBorder
+-- currentBorder    = emptyBorder
 
 currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 -- https://github.com/jwkvam/hammerspoon-config/blob/master/init.lua#L233
-function redrawBorder()
-    win = hs.window.focusedWindow()
 
-    if win ~= nil then
-        top_left = win:topLeft()
-        size = win:size()
-        if currentIndicator ~= nil then
-            currentIndicator:delete()
-        end
-        currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
-        currentIndicator:setStrokeColor(currentBorder)
-        currentIndicator:setFill(false)
-        currentIndicator:setStrokeWidth(8)
-        currentIndicator:setRoundedRectRadii(5.0, 5.0)
-
-        if string.match(win:application():name(), 'iTerm') then
-            currentIndicator:setStrokeColor(emptyBorder)
-        end
-
+-- b doesn't work...
+-- so, l for "lines"
+hs.hotkey.bind(double_command, 'l', function()
+    if showBorders then
+        showBorders = false
+        currentIndicator:hide()
+    else
+        showBorders = true
         currentIndicator:show()
+    end
+end)
 
-        -- hs.alert.show(win:id())
+function redrawBorder()
+    if showBorders then
+        win = hs.window.focusedWindow()
+
+        if win ~= nil then
+            top_left = win:topLeft()
+            size = win:size()
+            if currentIndicator ~= nil then
+                currentIndicator:delete()
+            end
+            currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
+            currentIndicator:setStrokeColor(currentBorder)
+            currentIndicator:setFill(false)
+            currentIndicator:setStrokeWidth(8)
+            currentIndicator:setRoundedRectRadii(5.0, 5.0)
+
+            if string.match(win:application():name(), 'iTerm') then
+                currentIndicator:setStrokeColor(emptyBorder)
+            end
+            currentIndicator:show()
+        else
+            currentIndicator:hide()
+        end
     end
 end
 

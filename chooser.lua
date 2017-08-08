@@ -115,9 +115,11 @@ end)
 function getWindowList()
     -- TODO:
         -- Get Browser tabs
+            -- see https://github.com/ashfinal/awesome-hammerspoon/blob/master/modes/hsearch.lua
         -- Get windows from all spaces?
             -- see http://www.hammerspoon.org/docs/hs.window.filter.html
         -- Ignore windows we'll never want
+        -- Might want to use globabl allwindows for this...
     local windows = hs.window.allWindows()
     windowlist = {}
     for _,win in pairs(windows) do

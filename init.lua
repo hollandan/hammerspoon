@@ -12,14 +12,10 @@ local hyperRightShift   = require 'hyperRightShift'
 local fuckYouXfinity    = require 'fuckYouXfinity'
 local chooser           = require 'chooser'
 
--- fix globals.frameCache
-    -- we need two
-        -- globals.centeredFrameCache
-        -- globals.fullFrameCache
+-- see https://github.com/dsanson/hs.tiling
 
---  fix borders on:
+--  fix borders on
     -- spotlight --> escape (we'll probably need a spotlight mode to deal with this)
-    -- minimize window
 
 --  can our window borders have a "z-index" ?
     --  i'd like the following to draw OVER the borders:
@@ -35,7 +31,6 @@ local chooser           = require 'chooser'
         --  if yes, set as foremost
         --  else, launch
     --  why doesn't navigationMode work on the chooser?
-    --  can we figure out a good way to deal with borders on the chooser and spotlight windows?
 
 -- See windowTossing.lua -> markWindow
     -- so, we can mark one window
@@ -52,7 +47,7 @@ local chooser           = require 'chooser'
     -- We can do the following (enable redrawBorder() in windowTossing.lua)
         -- 1) Hide the border when iTerm's Hotkey Window is active
         -- 2) Change the color of the border based on mode
-        -- 3)notice  when the current Window changes?
+        -- 3) notice  when the current Window changes?
 
 -- Don't forget about this?
 -- local vimouse = require('notused/vimouse')
