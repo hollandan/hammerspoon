@@ -81,7 +81,8 @@ pasteboard = ""
 
 showBorders      = true
 -- for color ideas: http://www.rapidtables.com/web/color/RGB_Color.htm
-focusedBorder    = {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
+-- focusedBorder    = {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
+focusedBorder    = {["red"]=.67,["blue"]=.67,["green"]=.67,["alpha"]=0.9}
 navigationBorder = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
 functionBorder   = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
 emptyBorder      = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
@@ -111,6 +112,7 @@ function redrawBorder()
         if win ~= nil then
             top_left = win:topLeft()
             size = win:size()
+
             if currentIndicator ~= nil then
                 currentIndicator:delete()
             end
@@ -120,7 +122,9 @@ function redrawBorder()
             currentIndicator:setStrokeWidth(8)
             currentIndicator:setRoundedRectRadii(5.0, 5.0)
 
-            if string.match(win:application():name(), 'iTerm') then
+            if string.match(win:application():name() , 'iTerm'    ) or
+               string.match(win:title()              , 'Spotlight') or
+               string.match(win:title()              , 'Chooser'  ) then
                 currentIndicator:setStrokeColor(emptyBorder)
             end
             currentIndicator:show()
