@@ -2,7 +2,6 @@
 
 local autoload          = require 'autoload'
 globals                 = require 'globals'
-local globalBindings    = require 'globalBindings'
 local windowTossing     = require 'windowTossing'
 local windowLayout      = require 'windowLayout'
 local navigationMode    = require 'navigationMode'
@@ -11,6 +10,7 @@ local karabinerRightCmd = require 'karabinerRightCmd'
 local hyperRightShift   = require 'hyperRightShift'
 local fuckYouXfinity    = require 'fuckYouXfinity'
 local chooser           = require 'chooser'
+local mouse             = require 'mouse'
 
 -- see https://github.com/dsanson/hs.tiling
 
@@ -43,7 +43,7 @@ local chooser           = require 'chooser'
     -- navigation mode draws a border around the CURRENT WINDOW
         -- Red Border: Navigation mode
         -- Blue Border: Function mode
-        -- Yellow Border: Window's selected, that's all
+        -- Light Blue Border: Window's selected, that's all
     -- We can do the following (enable redrawBorder() in windowTossing.lua)
         -- 1) Hide the border when iTerm's Hotkey Window is active
         -- 2) Change the color of the border based on mode

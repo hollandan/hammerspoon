@@ -10,8 +10,9 @@
     -- control when used as modifier
     -- return when used alone
 
-right_command = {'alt', 'ctrl', 'shift'}
-double_command = {'cmd', 'alt', 'ctrl', 'shift'}
+return_modifier = {'alt', 'ctrl'}
+right_command   = {'alt', 'ctrl', 'shift'}
+double_command  = {'cmd', 'alt', 'ctrl', 'shift'}
 
 hs.hotkey.bind(double_command, 'h', function()
     hs.reload()
@@ -164,3 +165,18 @@ allwindows:subscribe(hs.window.filter.windowCreated, function () redrawBorder() 
 allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
+
+local fastKeyStroke = function(modifiers, character)
+  local event = require('hs.eventtap').event
+  event.newKeyEvent(modifiers, string.lower(character), true):post()
+  event.newKeyEvent(modifiers, string.lower(character), false):post()
+end
+
+hs.hotkey.bind({'ctrl'}, 'g', function()
+    fastKeyStroke({}, 'forwarddelete')
+end)
+
+-- clever way to prevent system beeps from tapping right_command when not in navigationMode
+hs.hotkey.bind({}, 'f17', function()
+    fastKeyStroke({}, 'eisu')
+end)
