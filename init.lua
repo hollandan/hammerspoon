@@ -12,6 +12,10 @@ local fuckYouXfinity    = require 'fuckYouXfinity'
 local chooser           = require 'chooser'
 local mouse             = require 'mouse'
 
+-- What if we make WindowTossing work like this:
+-- -- Chain is used to toggle size
+-- -- Keyboard locations are used to send to the corresponding place on the screen..
+
 -- see https://github.com/dsanson/hs.tiling
 
 --  fix borders on

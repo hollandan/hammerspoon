@@ -71,12 +71,6 @@ fullFrameCache = {}
 centeredFrameCache = {}
 markedFrameCache = {}
 
-fastKeyStroke = function(modifiers, character)
-  local event = require("hs.eventtap").event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
-
 -- use this as a placeholder to retain clipboard contents when performing copy/pastes in scripts
 pasteboard = ""
 
@@ -136,6 +130,18 @@ function redrawBorder()
         if win ~= nil then
             top_left = win:topLeft()
             size = win:size()
+
+            -- -- Why do ghost borders persist in the Finder?
+            -- -- Interest is probably on cmd-w
+            -- -- when we close the window, that's when the ghost persists
+            -- hs.alert.show(win:title())
+            -- hs.alert.show(win:application():name())
+            --
+            -- if string.match(win:application():name() ,"Finder") or
+            --     win:title() == nil then
+            --     currentIndicator:setStrokeColor(emptyBorder)
+            -- end
+
 
             if currentIndicator ~= nil then
                 currentIndicator:delete()

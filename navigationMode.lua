@@ -20,7 +20,6 @@ navigationMode:bind({}, 'escape' , function() navigationMode:exit() end)
 
 -- navigationMode:bind({}, 'v', function() visualMode() end)
 
-
 navigationMode:bind({}, 'a', function() fullLeft() end)
 navigationMode:bind({},  41, function() fullRight() end)
 navigationMode:bind({}, '`', function() fullUp() end)
@@ -309,17 +308,17 @@ function goForward()
 end
 
 function focusURLBarAndExit()
-    fastKeyStroke({'cmd'}, 'l')
     navigationMode:exit()
+    fastKeyStroke({'cmd'}, 'l')
 end
 
 function findAndExit()
     -- seems the only way to get this to work...
     -- otherwise, focus just leaves the find box...
-    hs.eventtap.keyStroke({'cmd'}, 'f')
+    -- hs.eventtap.keyStroke({'cmd'}, 'f')
     navigationMode:exit()
     hs.eventtap.keyStroke({'cmd'}, 'f')
-    hs.eventtap.keyStroke({'cmd'}, 'f')
+    -- hs.eventtap.keyStroke({'cmd'}, 'f')
 end
 
 function previousField()

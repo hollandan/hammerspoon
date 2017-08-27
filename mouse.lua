@@ -2,7 +2,6 @@
 function mouseNudge(offset)
     hs.mouse.setRelativePosition(hs.geometry(hs.mouse.getRelativePosition()):move(offset))
 end
-
 function mouseJump(offset)
     hs.mouse.setRelativePosition(hs.geometry(offset))
 end
@@ -24,10 +23,15 @@ hs.hotkey.bind(return_modifier, 'o', function() mouseNudge({x =   0, y = -50}) e
 hs.hotkey.bind(return_modifier, 'k', function() mouseNudge({x = -50, y =   0}) end)
 hs.hotkey.bind(return_modifier, ';', function() mouseNudge({x =  50, y =   0}) end)
 
+-- hs.hotkey.bind(return_modifier, 'y', function() mouseNudge({x =   0, y =  10}) end)
+-- hs.hotkey.bind(return_modifier, 'h', function() mouseNudge({x =   0, y = -10}) end)
+-- hs.hotkey.bind(return_modifier, 'g', function() mouseNudge({x = -10, y =   0}) end)
+-- hs.hotkey.bind(return_modifier, 'j', function() mouseNudge({x =  10, y =   0}) end)
+
 hs.hotkey.bind(return_modifier, 'y', function() mouseNudge({x =   0, y =  10}) end)
 hs.hotkey.bind(return_modifier, 'h', function() mouseNudge({x =   0, y = -10}) end)
 hs.hotkey.bind(return_modifier, 'g', function() mouseNudge({x = -10, y =   0}) end)
-hs.hotkey.bind(return_modifier, 'j', function() mouseNudge({x =  10, y =   0}) end)
+hs.hotkey.bind(return_modifier, 't', function() mouseNudge({x =  10, y =   0}) end)
 
 hs.hotkey.bind(return_modifier, 'space', function()
     hs.eventtap.leftClick(hs.mouse.getAbsolutePosition())
@@ -36,3 +40,11 @@ end)
 hs.hotkey.bind(return_modifier, 'f17', function()
     hs.eventtap.rightClick(hs.mouse.getAbsolutePosition())
 end)
+
+-- Use Karabiner the Elder to throw the cursor to the center of the currently focused window
+hs.hotkey.bind(return_modifier, 'tab', function()
+    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
+end)
+
+-- smartZoom w/ BetterTouchTool
+-- -- ({'alt, ctrl'}, '9')

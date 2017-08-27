@@ -35,6 +35,20 @@ end
         fastKeyStroke({'ctrl', 'shift', 'fn'}, 'f4')
     end)
 
+-- Convenient Zoom
+    hs.hotkey.bind(right_command, 'i', function()
+       hs.eventtap.keyStroke({'cmd'}, '=')
+       hs.eventtap.keyStroke({'cmd'}, '=')
+       hs.eventtap.keyStroke({'cmd'}, '=')
+       hs.eventtap.keyStroke({'cmd'}, '=')
+    end)
+    hs.hotkey.bind(right_command, 'e', function()
+       hs.eventtap.keyStroke({'cmd'}, '-')
+       hs.eventtap.keyStroke({'cmd'}, '-')
+       hs.eventtap.keyStroke({'cmd'}, '-')
+       hs.eventtap.keyStroke({'cmd'}, '-')
+    end)
+
 
 function invokeSpotlight()
     fastKeyStroke({'cmd'}, 'space')
@@ -46,12 +60,6 @@ function findShit()
     fastKeyStroke({'cmd'}, 'f')
     navigationMode:exit()
 end
-
-
--- Use Karabiner the Elder to throw the cursor to the center of the currently focused window
-hs.hotkey.bind(right_command, 'tab', function()
-    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
-end)
 
 -- Misc
 function makeBagels()
