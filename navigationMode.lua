@@ -39,7 +39,9 @@ navigationMode:bind({}, 'm', function() pageDown() end)
 -- So interestingly, the only way to get repeatfn to fire is if you display a message.
     -- Setting the message to nil doesn't work .Weird.
 -- navigationMode:bind({}, 's', '', function() goLeft() end, nil, function() goLeft() end)
-navigationMode:bind({}, 's', nil, function() goLeft() end, nil, function() goLeft() end)
+-- navigationMode:bind({}, 's', nil, function() goLeft() end, nil, function() goLeft() end)
+
+navigationMode:bind({}, 's', function() goLeft() end)
 navigationMode:bind({}, 'l', function() goRight() end)
 navigationMode:bind({}, 'd', function() goUp() end)
 navigationMode:bind({}, 'k', function() goDown() end)
@@ -279,6 +281,8 @@ function previousTab()
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
         fastKeyStroke({'ctrl', 'shift'}, 'tab')
+    elseif (string.match(currentapp:name(), 'Excel')) then
+        fastKeyStroke({'cmd'}, 'pageup')
     else
         -- fastKeyStroke({'ctrl'}, 'w')
         -- ...no idea why, but... fastKeyStroke just doesn't work, and eventtap needs to be called twice to get the functionality...
@@ -291,6 +295,8 @@ function nextTab()
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
         fastKeyStroke({'ctrl'}, 'tab')
+    elseif (string.match(currentapp:name(), 'Excel')) then
+        fastKeyStroke({'cmd'}, 'pagedown')
     else
         -- fastKeyStroke({'ctrl'}, 'o')
         -- ...no idea why, but... fastKeyStroke just doesn't work, and eventtap needs to be called twice to get the functionality...

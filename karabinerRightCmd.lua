@@ -56,6 +56,11 @@ function invokeSpotlight()
     redrawBorder()
 end
 
+-- invoke dock
+hs.hotkey.bind(right_command, 'tab', function()
+    hs.eventtap.keyStroke({'ctrl, fn'}, 'f3')
+end)
+
 function findShit()
     fastKeyStroke({'cmd'}, 'f')
     navigationMode:exit()

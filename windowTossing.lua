@@ -1,3 +1,9 @@
+local fastKeyStroke = function(modifiers, character)
+  local event = require('hs.eventtap').event
+  event.newKeyEvent(modifiers, string.lower(character), true):post()
+  event.newKeyEvent(modifiers, string.lower(character), false):post()
+end
+
 -- chain functionality shamelessly stolen from Greg Hurrel
 -- -- https://github.com/wincent/wincent/tree/35d430520d525e8ac4c829f4436e5b42c8df5dd8/roles/dotfiles/files/.hammerspoon
 -- and of course modified for my own purposes
@@ -104,27 +110,83 @@ hs.hotkey.bind(right_command, ',', chain({
 -- stolen and modified from https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
 function toggleWindowMaximized()
     local win = hs.window.focusedWindow()
-    if fullFrameCache[win:id()] then
-        win:setFrame(fullFrameCache[win:id()])
-        fullFrameCache[win:id()] = nil
-    else
-        fullFrameCache[win:id()] = win:frame()
-        win:maximize()
-    end
+    fullFrameCache[win:id()] = win:frame()
+    win:maximize()
     redrawBorder()
 end
 function toggleCenterWindow()
     local win = hs.window.focusedWindow()
+    centeredFrameCache[win:id()] = win:frame()
+    win:centerOnScreen('Color LCD')
+    redrawBorder()
+end
+function snapBack()
+    local win = hs.window.frontmostWindow()
+
     if centeredFrameCache[win:id()] then
         win:setFrame(centeredFrameCache[win:id()])
         centeredFrameCache[win:id()] = nil
+    elseif fullFrameCache[win:id()] then
+        win:setFrame(fullFrameCache[win:id()])
+        fullFrameCache[win:id()] = nil
     else
-        centeredFrameCache[win:id()] = win:frame()
-        win:centerOnScreen('Color LCD')
+        -- hs.alert.show("ballz!")
     end
-    redrawBorder()
 end
 
+-- function halveWindowHeight()
+--   local win = hs.window.focusedWindow()
+--   local f = win:frame()
+--
+--   f.x = f.x - 10
+--   f.y = f.y - 10
+--   win:setFrame(f)
+-- end
+
+function halveWindowHeight()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+
+  f.h = f.h / 2
+  win:setFrame(f)
+end
+function doubleWindowHeight()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+
+  f.h = f.h * 2
+  win:setFrame(f)
+end
+
+function halveWindowWidth()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+
+  f.w = f.w / 2
+  win:setFrame(f)
+end
+function doubleWindowWidth()
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+
+  f.w = f.w * 2
+  win:setFrame(f)
+end
+
+hs.hotkey.bind(right_command, '-', function()
+    halveWindowHeight()
+end)
+
+hs.hotkey.bind(right_command, '=', function()
+    doubleWindowHeight()
+end)
+hs.hotkey.bind(right_command, '0', function()
+    halveWindowWidth()
+end)
+
+hs.hotkey.bind(right_command, '9', function()
+    doubleWindowWidth()
+end)
 
 -- Toggle Center And Zoom
 hs.hotkey.bind(double_command, 'space', function()
@@ -146,6 +208,9 @@ hs.hotkey.bind(right_command, 'c', function()
 end)
 hs.hotkey.bind(right_command, 'f', function()
     toggleWindowMaximized()
+end)
+hs.hotkey.bind(right_command, 'b', function()
+    snapBack()
 end)
 
 hs.hotkey.bind(right_command, 'd', function()

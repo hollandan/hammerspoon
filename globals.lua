@@ -96,6 +96,7 @@ hs.hotkey.bind(double_command, 'l', function()
         currentIndicator:hide()
     else
         showBorders = true
+        redrawBorder()
         currentIndicator:show()
     end
 end)

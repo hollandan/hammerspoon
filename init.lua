@@ -12,6 +12,17 @@ local fuckYouXfinity    = require 'fuckYouXfinity'
 local chooser           = require 'chooser'
 local mouse             = require 'mouse'
 
+-- More windowTossing improvements
+    -- Fix the full screen / center window cache
+        -- Full screen should always full screen; same with Center Screen
+        -- One button should be dedicated to snapback
+    -- Resize windows with keyboard
+        -- perhaps:
+            -- halve height
+            -- halve width
+            -- else?
+    -- How do we toss a window to a specific desktop?
+
 -- What if we make WindowTossing work like this:
 -- -- Chain is used to toggle size
 -- -- Keyboard locations are used to send to the corresponding place on the screen..
@@ -42,16 +53,6 @@ local mouse             = require 'mouse'
     -- so, we can have multiple borders that can be deleted when unmarked?
     -- then the fun stuff begins
         --  how can we do cool shit to the windows we've marked?
-
--- Implemented and ready for testing!
-    -- navigation mode draws a border around the CURRENT WINDOW
-        -- Red Border: Navigation mode
-        -- Blue Border: Function mode
-        -- Light Blue Border: Window's selected, that's all
-    -- We can do the following (enable redrawBorder() in windowTossing.lua)
-        -- 1) Hide the border when iTerm's Hotkey Window is active
-        -- 2) Change the color of the border based on mode
-        -- 3) notice  when the current Window changes?
 
 -- Don't forget about this?
 -- local vimouse = require('notused/vimouse')

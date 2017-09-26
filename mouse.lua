@@ -47,4 +47,4 @@ hs.hotkey.bind(return_modifier, 'tab', function()
 end)
 
 -- smartZoom w/ BetterTouchTool
--- -- ({'alt, ctrl'}, '9')
+-- -- ({'alt, ctrl'}, 'f19')
