@@ -1,97 +1,87 @@
 local breakModes = nil
 local browserSwitch = nil
 
--- NOTE: this is also in globalBindings... shouldn't be in two places
-local fastKeyStroke = function(modifiers, character)
-  local event = require('hs.eventtap').event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
-
 navigationMode = hs.hotkey.modal.new({}, 'F19')
-navigationMode:bind({}, 'F19'    , function() end)
-navigationMode:bind({}, 'F18'    , function() invokeFunctionMode() end)
-navigationMode:bind({}, 'F17'    , function() navigationMode:exit() end)
-navigationMode:bind({'shift'}, 'F17'    , function() navigationMode:exit() end)
-navigationMode:bind({}, 'escape' , function() navigationMode:exit() end)
--- navigationMode:bind({'ctrl'} , 'space'  , function() navInvokeITerm() end)
--- functions *are* sharing namespace among files
--- so we either need one invokeIterm, or one for each mode...
 
--- navigationMode:bind({}, 'v', function() visualMode() end)
+navigationMode:bind({}            , 'escape' , function() navigationMode:exit() end )
+navigationMode:bind({}            , 'F19'    , function()                       end )
+navigationMode:bind({}            , 'F18'    , function() invokeFunctionMode()  end )
+navigationMode:bind({}            , 'F17'    , function() navigationMode:exit() end )
+    navigationMode:bind({'shift'} , 'F17'    , function() navigationMode:exit() end )
 
-navigationMode:bind({}, 'a', function() fullLeft() end)
-navigationMode:bind({},  41, function() fullRight() end)
-navigationMode:bind({}, '`', function() fullUp() end)
-navigationMode:bind({}, '/', function() fullDown() end)
+navigationMode:bind({}            , '`'      , function() fullUp()              end )
+-- navigationMode:bind({}         , '1'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '2'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '3'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '4'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '5'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '6'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '7'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '8'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '9'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '0'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '-'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '='      , function() navigationMode:exit() end )
 
-navigationMode:bind({'shift'}, 'a', function() fullLeftAndSelect() end)
-navigationMode:bind({'shift'},  41, function() fullRightAndSelect() end)
-navigationMode:bind({'shift'}, 'q', function() fullUpAndSelect() end)
-navigationMode:bind({'shift'}, '/', function() fullDownAndSelect() end)
+-- navigationMode:bind({}         , 'tab'    , function() navigationMode:exit() end )
+navigationMode:bind({}            , 'q'      , function() goBack()              end )
+    navigationMode:bind({'shift'} , 'q'      , function() fullUpAndSelect()     end )
+navigationMode:bind({}            , 'w'      , function() previousTab()         end )
+navigationMode:bind({}            , 'e'      , function() previousField()       end )
+navigationMode:bind({}            , 'r'      , function() pageUp()              end )
+    navigationMode:bind({'shift'} , 'r'      , function() pageUpAndSelect()     end )
+navigationMode:bind({}            , 't'      , function() take()                end )
+navigationMode:bind({}            , 'y'      , function() yank()                end )
+navigationMode:bind({}            , 'u'      , function() pressAndExit('u')     end )
+navigationMode:bind({}            , 'i'      , function() nextField()           end )
+navigationMode:bind({}            , 'o'      , function() nextTab()             end )
+navigationMode:bind({}            , 'p'      , function() goForward()           end )
+-- navigationMode:bind({}         , '['      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , ']'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , '\\'     , function() navigationMode:exit() end )
 
-navigationMode:bind({'shift'}, 'r', function() pageUpAndSelect() end)
-navigationMode:bind({'shift'}, 'm', function() pageDownAndSelect() end)
-navigationMode:bind({}, 'r', function() pageUp() end)
-navigationMode:bind({}, 'm', function() pageDown() end)
+navigationMode:bind({}            , 'a'      , function() fullLeft()            end )
+    navigationMode:bind({'shift'} , 'a'      , function() fullLeftAndSelect()   end )
+navigationMode:bind({}            , 's'      , function() goLeft()              end )
+    navigationMode:bind({'shift'} , 's'      , function() goLeftAndSelect()     end )
+navigationMode:bind({}            , 'd'      , function() goUp()                end )
+    navigationMode:bind({'shift'} , 'd'      , function() goUpAndSelect()       end )
+navigationMode:bind({}            , 'f'      , function() wordRight()           end )
+    navigationMode:bind({'shift'} , 'f'      , function() wordRightAndSelect()  end )
+    navigationMode:bind({'cmd'}   , 'f'      , function() findAndExit()         end )
+navigationMode:bind({}            , 'g'      , function() deleteForward()       end )
+navigationMode:bind({}            , 'h'      , function() deleteBackward()      end )
+navigationMode:bind({}            , 'j'      , function() wordLeft()            end )
+    navigationMode:bind({'shift'} , 'j'      , function() wordLeftAndSelect()   end )
+navigationMode:bind({}            , 'k'      , function() goDown()              end )
+navigationMode:bind({}            , 'l'      , function() goRight()             end )
+    navigationMode:bind({'shift'} , 'l'      , function() goRightAndSelect()    end )
+    navigationMode:bind({'cmd'}   , 'l'      , function() focusURLBarAndExit()  end )
+navigationMode:bind({}            , ';'      , function() fullRight()           end )
+    navigationMode:bind({'shift'} , ';'      , function() fullRightAndSelect()  end )
+-- navigationMode:bind({}         , "'"      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , 'return' , function() navigationMode:exit() end )
 
--- hs.hotkey.bind(mods, key, message, pressedfn, releasedfn, repeatfn)
--- So interestingly, the only way to get repeatfn to fire is if you display a message.
-    -- Setting the message to nil doesn't work .Weird.
--- navigationMode:bind({}, 's', '', function() goLeft() end, nil, function() goLeft() end)
--- navigationMode:bind({}, 's', nil, function() goLeft() end, nil, function() goLeft() end)
 
-navigationMode:bind({}, 's', function() goLeft() end)
-navigationMode:bind({}, 'l', function() goRight() end)
-navigationMode:bind({}, 'd', function() goUp() end)
-navigationMode:bind({}, 'k', function() goDown() end)
+-- navigationMode:bind({}         , 'z'      , function() navigationMode:exit() end )
+-- navigationMode:bind({}         , 'x'      , function() navigationMode:exit() end )
+navigationMode:bind({}            , 'c'      , function()
+    hs.eventtap.keyStroke({'cmd'} , 'c')
+    hs.eventtap.keyStroke({'cmd'} , 'c')
+end )
+navigationMode:bind({}            , 'v'      , function()
+    hs.eventtap.keyStroke({'cmd'} , 'v')
+    hs.eventtap.keyStroke({'cmd'} , 'v')
+end )
+navigationMode:bind({}            , 'b'      , function() pressAndExit('b')     end )
+navigationMode:bind({}            , 'n'      , function() pressAndExit('n')     end )
+navigationMode:bind({}            , 'm'      , function() pageDown()            end )
+    navigationMode:bind({'shift'} , 'm'      , function() pageDownAndSelect()   end )
+navigationMode:bind({}            , ','      , function() pressAndExit(',')     end )
+navigationMode:bind({}            , '.'      , function() pressAndExit('.')     end )
+navigationMode:bind({}            , '/'      , function() fullDown()            end )
+    navigationMode:bind({'shift'} , '/'      , function() fullDownAndSelect()   end )
 
-navigationMode:bind({'shift'}, 's', function() goLeftAndSelect() end)
-navigationMode:bind({'shift'}, 'l', function() goRightAndSelect() end)
-navigationMode:bind({'shift'}, 'd', function() goUpAndSelect() end)
-navigationMode:bind({'shift'}, 'k', function() goDownAndSelect() end)
-
-navigationMode:bind({}, 'h', function() deleteBackward() end)
-navigationMode:bind({}, 'g', function() deleteForward() end)
-
-navigationMode:bind({}, 'j', function() wordLeft() end)
-navigationMode:bind({}, 'f', function() wordRight() end)
-
-navigationMode:bind({'shift'}, 'j', function() wordLeftAndSelect() end)
-navigationMode:bind({'shift'}, 'f', function() wordRightAndSelect() end)
-
-navigationMode:bind({}, 'w', function() previousTab() end)
-navigationMode:bind({}, 'o', function() nextTab() end)
-navigationMode:bind({}, 'q', function() goBack() end)
-navigationMode:bind({}, 'p', function() goForward() end)
-
-navigationMode:bind({'cmd'}, 'l', function() focusURLBarAndExit() end)
-navigationMode:bind({'cmd'}, 'f', function() findAndExit() end)
-
-navigationMode:bind({}, 'e', function() previousField() end)
-navigationMode:bind({}, 'i', function() nextField() end)
-
-navigationMode:bind({}, 't', function() take() end)
-navigationMode:bind({}, 'y', function() yank() end)
-
-navigationMode:bind({}, 'c', function()
-    hs.eventtap.keyStroke({'cmd'}, 'c')
-    hs.eventtap.keyStroke({'cmd'}, 'c')
-end)
-navigationMode:bind({}, 'v', function()
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-end)
-
-function invokeFunctionMode()
-    navigationMode:exit()
-    -- hs.eventtap.keyStroke({}, 'f18')
-    fastKeyStroke({}, 'f18')
-end
-
--- function visualMode()
---     visualMode = hs.hotkey.modal.new({}, 'v', 'Visual')
--- end
 
 function navigationMode:entered()
 
@@ -121,6 +111,12 @@ function navigationMode:exited()
     currentIndicator:setStrokeColor(currentBorder);
 end
 
+
+function invokeFunctionMode()
+    navigationMode:exit()
+    fastKeyStroke({}, 'f18')
+end
+
 function fullLeft()
     hs.eventtap.keyStroke({'cmd'}, 'left')
 end
@@ -130,7 +126,6 @@ function fullRight()
 end
 
 function fullUp()
-
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'Mail')) then
         hs.eventtap.keyStroke({'cmd', 'alt'}, 'up')
@@ -185,26 +180,33 @@ end
 
 function pageUpAndSelect()
     local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), 'Safari') or
-        string.match(currentapp:name(), 'Chrome') or
-        string.match(currentapp:name(), 'Firefox'))
-    then
-        hs.eventtap.keyStroke({'shift', 'fn'}, 'up')
-    else
-        hs.eventtap.keyStroke({'shift', 'alt'}, 'up')
-    end
+
+    -- if (string.match(currentapp:name(), 'Safari') or
+    --     string.match(currentapp:name(), 'Chrome') or
+    --     string.match(currentapp:name(), 'Firefox'))
+    -- then
+    --     hs.eventtap.keyStroke({'shift', rlt, 'fn'}, 'up')
+    -- else
+    --     hs.eventtap.keyStroke({'shift', 'alt'}, 'up')
+    -- end
+
+    hs.eventtap.keyStroke({'shift'}, 'pageup')
 end
 
 function pageDownAndSelect()
     local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), 'Safari') or
-        string.match(currentapp:name(), 'Chrome') or
-        string.match(currentapp:name(), 'Firefox'))
-    then
-        hs.eventtap.keyStroke({'shift', 'fn'}, 'down')
-    else
-        hs.eventtap.keyStroke({'shift', 'alt'}, 'down')
-    end
+
+    -- if (string.match(currentapp:name(), 'Safari') or
+    --     string.match(currentapp:name(), 'Chrome') or
+    --     string.match(currentapp:name(), 'Firefox')
+    --     )
+    -- then
+    --     hs.eventtap.keyStroke({'shift', 'fn'}, 'down')
+    -- else
+    --     -- hs.eventtap.keyStroke({'shift', 'alt'}, 'down')
+    -- end
+
+        hs.eventtap.keyStroke({'shift'}, 'pagedown')
 end
 
 function goLeft()
@@ -340,6 +342,11 @@ function nextField()
     fastKeyStroke({}, 'tab')
 end
 
+function pressAndExit(char)
+    navigationMode:exit()
+    hs.timer.doAfter(500, fastKeyStroke({}, char))
+end
+
 -- Define a callback function to be called when application events happen
 function applicationWatcherCallback(appName, eventType, appObject)
 
@@ -373,3 +380,13 @@ navModeBreaker = hs.application.watcher.new(applicationWatcherCallback)
 navModeBreaker:start()
 
 --- ==========
+
+-- hs.hotkey.bind(mods, key, message, pressedfn, releasedfn, repeatfn)
+-- So interestingly, the only way I can get repeatfn to fire is if I display a message.
+    -- Setting the message to nil doesn't work. Weird.
+-- navigationMode:bind({}, 's', '', function() goLeft() end, nil, function() goLeft() end)
+-- navigationMode:bind({}, 's', nil, function() goLeft() end, nil, function() goLeft() end)
+
+-- navigationMode:bind({'ctrl'} , 'space'  , function() navInvokeITerm() end)
+-- functions *are* sharing namespace among files
+-- so we either need one invokeIterm, or one for each mode...

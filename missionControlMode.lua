@@ -1,16 +1,3 @@
-local fastKeyStroke = function(modifiers, character)
-  local event = require('hs.eventtap').event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
-
-function mouseNudge(offset)
-    hs.mouse.setRelativePosition(hs.geometry(hs.mouse.getRelativePosition()):move(offset))
-end
-function mouseJump(offset)
-    hs.mouse.setRelativePosition(hs.geometry(offset))
-end
-
 -- missionControlMode = hs.hotkey.modal.new(double_command, 'return')
 missionControlMode = hs.hotkey.modal.new(double_command, 'u')
 missionControlMode:bind({}            , 'escape', function() missionControlMode:exit() end)

@@ -1,12 +1,3 @@
--- local right_command = {'cmd', 'alt', 'ctrl', 'shift'}
-
-local fastKeyStroke = function(modifiers, character)
-  local event = require("hs.eventtap").event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
-
-
 -- Leave custom mode
     hs.hotkey.bind(right_command, 'space', function()
         invokeSpotlight()

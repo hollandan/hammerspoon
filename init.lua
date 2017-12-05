@@ -1,4 +1,4 @@
--- hs.inspect(hs.keycodes.map)
+-- keyreference.lua
 
 local autoload          = require 'autoload'
 globals                 = require 'globals'
@@ -11,6 +11,15 @@ local hyperRightShift   = require 'hyperRightShift'
 local fuckYouXfinity    = require 'fuckYouXfinity'
 local chooser           = require 'chooser'
 local mouse             = require 'mouse'
+local missionControlMode= require 'missionControlMode'
+
+-- Mouse keys needs some work!!
+
+-- How about some smart exiting of navigation mode
+    -- If I start typing a bunch of digits, then a - or / 
+        --  exit navigation
+    --  If I start typing chars that aren't associated with any navigation function
+        --  exit navigation?
 
 -- More windowTossing improvements
     -- Fix the full screen / center window cache

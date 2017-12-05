@@ -11,4 +11,4 @@ function reloadConfig(files)
     end
 end
 local myWatcher = hs.pathwatcher.new(os.getenv('HOME') .. '/.hammerspoon/', reloadConfig):start()
-hs.alert.show('Haijime')
+hs.alert.show('Hajime')

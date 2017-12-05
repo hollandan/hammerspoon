@@ -37,6 +37,7 @@ zanzibar:bind({}, 'j' , function() zanzibar:exit() end)
 zanzibar:bind({}, 'k' , function() zanzibar:exit() end)
 zanzibar:bind({}, 'l' , function() zanzibar:exit() end)
 zanzibar:bind({}, ';' , function() zanzibar:exit() end)
+zanzibar:bind({}, "'" , function() zanzibar:exit() end)
 zanzibar:bind({}, 'return' , function() zanzibar:exit() end)
 
 zanzibar:bind({}, 'z' , function() zanzibar:exit() end)

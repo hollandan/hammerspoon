@@ -1,16 +1,10 @@
-local fastKeyStroke = function(modifiers, character)
-  local event = require('hs.eventtap').event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
-
 functionMode = hs.hotkey.modal.new({}, 'F18')
 -- functionMode:bind({}       , 'F19'    , function() functionMode:exit() end)
 -- f19 should exit functionMode and open navigationMode
 functionMode:bind({}       , 'escape' , function() functionMode:exit() end)
 functionMode:bind({}       , 'f18'    , function() functionMode:exit() end)
 functionMode:bind({}       , 'f17'    , function() functionMode:exit() end)
-functionMode:bind({'ctrl'} , 'space'  , function() invokeITerm() end)
+-- functionMode:bind({'ctrl'} , 'space'  , function() invokeITerm() end)
 
 --should these be in windowTossing?
 functionMode:bind({} , 'm' , function() showMissionControl() end)
@@ -85,32 +79,16 @@ function functionMode:exited()
     urltospecificcontentpage:disable()
 end
 
+-- -- Change to DoubleCommand-Enter?
 function showMissionControl()
     fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f9')
     functionMode:exit()
 end
 
-function goToDesktopOne()
-    fastKeyStroke({'cmd', 'alt', 'ctrl'}, '1')
-    functionMode:exit()
-end
-
-function goToDesktopTwo()
-    fastKeyStroke({'cmd', 'alt', 'ctrl'}, '2')
-    functionMode:exit()
-end
-
-function goToDesktopThree()
-    fastKeyStroke({'cmd', 'alt', 'ctrl'}, '3')
-    functionMode:exit()
-end
-
-
-
-function invokeITerm()
-    functionMode:exit()
-    fastKeyStroke({'ctrl'}, 'space')
-end
+-- function invokeITerm()
+--     functionMode:exit()
+--     fastKeyStroke({'ctrl'}, 'space')
+-- end
 
 
 function capitalizeWord()

@@ -1,9 +1,3 @@
-local fastKeyStroke = function(modifiers, character)
-  local event = require('hs.eventtap').event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
-
 -- chain functionality shamelessly stolen from Greg Hurrel
 -- -- https://github.com/wincent/wincent/tree/35d430520d525e8ac4c829f4436e5b42c8df5dd8/roles/dotfiles/files/.hammerspoon
 -- and of course modified for my own purposes

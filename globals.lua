@@ -173,11 +173,6 @@ allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() 
 allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
 
-local fastKeyStroke = function(modifiers, character)
-  local event = require('hs.eventtap').event
-  event.newKeyEvent(modifiers, string.lower(character), true):post()
-  event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
 
 hs.hotkey.bind({'ctrl'}, 'g', function()
     fastKeyStroke({}, 'forwarddelete')
@@ -187,3 +182,20 @@ end)
 hs.hotkey.bind({}, 'f17', function()
     fastKeyStroke({}, 'eisu')
 end)
+
+
+
+fastKeyStroke = function(modifiers, character)
+  local event = require('hs.eventtap').event
+  event.newKeyEvent(modifiers, string.lower(character), true):post()
+  event.newKeyEvent(modifiers, string.lower(character), false):post()
+  -- hs.alert.show("hi!")
+end
+
+-- https://github.com/mgee/hammerspoon-config/blob/master/init.lua
+function mouseNudge(offset)
+    hs.mouse.setRelativePosition(hs.geometry(hs.mouse.getRelativePosition()):move(offset))
+end
+function mouseJump(offset)
+    hs.mouse.setRelativePosition(hs.geometry(offset))
+end
