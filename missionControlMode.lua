@@ -5,7 +5,6 @@ missionControlMode:bind({}, 'return' , function() missionControlMode:exit() end)
 missionControlMode:bind({}, 'space' , function() missionControlMode:exit() end)
 missionControlMode:bind({'ctrl'}, 'space' , function() missionControlMode:exit() end)
 
-
 missionControlMode:bind({}, 'q' , function() missionControlMode:exit() end)
 missionControlMode:bind({}, 'w' , function() missionControlMode:exit() end)
 missionControlMode:bind({}, 'e' , function() missionControlMode:exit() end)
@@ -40,16 +39,15 @@ missionControlMode:bind({}, '.' , function() missionControlMode:exit() end)
 missionControlMode:bind({}, '/' , function() missionControlMode:exit() end)
 
 function missionControlMode:entered()
-    hs.alert.show("MissionControl In")
     fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f9')
     mouseJump({x = 750, y = 40})
     mouseNudge({x = -20, y = -20})
 
-    hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
-    hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
-    hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
-    hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
-    hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
+    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
+    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
+    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
+    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
+    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
 
     -- currentBorder = functionBorder
     -- currentIndicator:setStrokeColor(currentBorder);
@@ -59,6 +57,7 @@ end
 function missionControlMode:exited()
     fastKeyStroke({}, "escape")
     hs.alert.show("MissionControl Out")
+
     -- functionIndicator:delete()
     -- currentBorder = focusedBorder
     -- currentIndicator:setStrokeColor(currentBorder);

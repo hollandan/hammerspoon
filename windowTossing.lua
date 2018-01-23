@@ -128,59 +128,165 @@ function snapBack()
     end
 end
 
--- function halveWindowHeight()
---   local win = hs.window.focusedWindow()
---   local f = win:frame()
---
---   f.x = f.x - 10
---   f.y = f.y - 10
---   win:setFrame(f)
--- end
-
-function halveWindowHeight()
+function decreaseWindowHeight()
   local win = hs.window.focusedWindow()
   local f = win:frame()
 
-  f.h = f.h / 2
+  f.h = f.h - f.h*.25
   win:setFrame(f)
 end
-function doubleWindowHeight()
+function increaseWindowHeight()
   local win = hs.window.focusedWindow()
   local f = win:frame()
 
-  f.h = f.h * 2
+  f.h = f.h + f.h*.25
   win:setFrame(f)
 end
 
-function halveWindowWidth()
+function decreaseWindowWidth()
   local win = hs.window.focusedWindow()
   local f = win:frame()
 
-  f.w = f.w / 2
+  f.w = f.w - f.w*.25
   win:setFrame(f)
 end
-function doubleWindowWidth()
+function increaseWindowWidth()
   local win = hs.window.focusedWindow()
   local f = win:frame()
 
-  f.w = f.w * 2
+  f.w = f.w + f.w*.25
   win:setFrame(f)
 end
 
-hs.hotkey.bind(right_command, '-', function()
-    halveWindowHeight()
+hs.hotkey.bind(right_command, 't', function()
+    decreaseWindowHeight()
 end)
 
-hs.hotkey.bind(right_command, '=', function()
-    doubleWindowHeight()
+hs.hotkey.bind(right_command, 'n', function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    local screen = win:screen()
+    local max = screen:frame()
+
+    local bottom = false;
+    local bottomonly = false;
+
+    if (f.y + f.h >= max.y) then
+        if (math.floor(f.y) > 0) then
+            bottomonly = true
+        else
+            bottom = true
+        end
+    end
+    if (bottom or bottomonly) then
+        decreaseWindowHeightAndHugBottom()
+    else
+        increaseWindowHeight()
+    end
 end)
-hs.hotkey.bind(right_command, '0', function()
-    halveWindowWidth()
+hs.hotkey.bind(right_command, 'h', function()
+    decreaseWindowWidth()
 end)
 
-hs.hotkey.bind(right_command, '9', function()
-    doubleWindowWidth()
+hs.hotkey.bind(right_command, 'g', function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    local screen = win:screen()
+    local max = screen:frame()
+
+    local rightside = false;
+    local rightsideonly = false;
+
+    if (f.x + f.w >= max.w) then
+        if (f.x == -0.0) then
+            rightsideonly = true
+        else
+            rightside = true
+        end
+    end
+    if (rightside or rightsideonly) then
+        decreaseWindowWidthAndHugRightSide()
+    else
+        increaseWindowWidth()
+    end
 end)
+
+function decreaseWindowWidthAndHugRightSide()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    local screen = win:screen()
+    local max = screen:frame()
+
+    local rightside = false;
+    local rightsideonly = false;
+
+    if (f.x + f.w >= max.w) then
+        if (f.x == -0.0) then
+            rightsideonly = true
+        else
+            rightside = true
+        end
+    end
+
+    oldfw = f.w
+    -- if f.w is not an integer, it fucks with the logic. so fuck them floating points
+    newfw = math.floor(f.w - f.w*.25)
+    f.w = newfw
+
+    win:setFrame(f)
+    f = win:frame()
+    if math.floor(oldfw - f.w) == 0 then
+        deltax = 0
+    else
+        deltax = oldfw - newfw
+    end
+
+    if (rightside or rightsideonly) then
+        f.x = f.x + deltax
+    end
+
+    win:setFrame(f)
+end
+
+function decreaseWindowHeightAndHugBottom()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    local screen = win:screen()
+    local max = screen:frame()
+
+    local bottom = false;
+    local bottomonly = false;
+
+    if (f.y + f.h >= max.y) then
+        if (math.floor(f.y) > 0) then
+            bottomonly = true
+        else
+            bottom = true
+        end
+    end
+
+    oldfh = f.h
+    newfh = math.floor(f.h - f.h*.25)
+    f.h = newfh
+
+    win:setFrame(f)
+    f = win:frame()
+    if math.floor(oldfh - f.h) == 0 then
+        deltay = 0
+    else
+        deltay = oldfh - newfh
+    end
+
+    if (bottom or bottomonly) then
+        f.y = f.y + deltay
+    end
+
+    win:setFrame(f)
+end
 
 -- Toggle Center And Zoom
 hs.hotkey.bind(double_command, 'space', function()
@@ -244,7 +350,7 @@ function showDesktop()
 end
 
 -- Below in development
-hs.hotkey.bind(right_command, 'g', function()
+hs.hotkey.bind(right_command, '-', function()
     markWindow()
 end)
 function markWindow()

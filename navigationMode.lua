@@ -54,6 +54,7 @@ navigationMode:bind({}            , 'h'      , function() deleteBackward()      
 navigationMode:bind({}            , 'j'      , function() wordLeft()            end )
     navigationMode:bind({'shift'} , 'j'      , function() wordLeftAndSelect()   end )
 navigationMode:bind({}            , 'k'      , function() goDown()              end )
+    navigationMode:bind({'shift'} , 'k'      , function() goDownAndSelect()     end )
 navigationMode:bind({}            , 'l'      , function() goRight()             end )
     navigationMode:bind({'shift'} , 'l'      , function() goRightAndSelect()    end )
     navigationMode:bind({'cmd'}   , 'l'      , function() focusURLBarAndExit()  end )
@@ -97,6 +98,14 @@ function navigationMode:entered()
     currentBorder = navigationBorder
     currentIndicator:setStrokeColor(currentBorder);
 
+            -- currentIndicator:setFill(true)
+            -- currentIndicator:setFillColor({
+            --     ["red"]   = .4,
+            --     ["blue"]  = .2,
+            --     ["green"] = .2,
+            --     ["alpha"] = 0.2,
+            -- })
+
     -- If we're in iTerm, don't do any navigation remapping
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'iTerm2')) then
@@ -126,7 +135,7 @@ function fullRight()
 end
 
 function fullUp()
-    local currentapp = hs.application.frontmostApplication();
+    local currentapp = hs.application.frontmostApplication()
     if (string.match(currentapp:name(), 'Mail')) then
         hs.eventtap.keyStroke({'cmd', 'alt'}, 'up')
     else
@@ -276,7 +285,6 @@ function yank()
     fastKeyStroke({'ctrl'}, 'y')
     fastKeyStroke({'ctrl'}, 'y')
 end
-
 
 
 function previousTab()

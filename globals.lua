@@ -132,18 +132,6 @@ function redrawBorder()
             top_left = win:topLeft()
             size = win:size()
 
-            -- -- Why do ghost borders persist in the Finder?
-            -- -- Interest is probably on cmd-w
-            -- -- when we close the window, that's when the ghost persists
-            -- hs.alert.show(win:title())
-            -- hs.alert.show(win:application():name())
-            --
-            -- if string.match(win:application():name() ,"Finder") or
-            --     win:title() == nil then
-            --     currentIndicator:setStrokeColor(emptyBorder)
-            -- end
-
-
             if currentIndicator ~= nil then
                 currentIndicator:delete()
             end
@@ -172,6 +160,7 @@ allwindows:subscribe(hs.window.filter.windowCreated, function () redrawBorder() 
 allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
+allwindows:subscribe(hs.window.filter.hasNoWindows, function () redrawBorder() end)
 
 
 hs.hotkey.bind({'ctrl'}, 'g', function()

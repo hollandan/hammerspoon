@@ -1,4 +1,6 @@
 -- keyreference.lua
+-- ~/.config/karabiner/karabiner.json
+	-- https://pqrs.org/osx/karabiner/json.html
 
 local autoload          = require 'autoload'
 globals                 = require 'globals'
@@ -13,28 +15,18 @@ local chooser           = require 'chooser'
 local mouse             = require 'mouse'
 local missionControlMode= require 'missionControlMode'
 
+-- Window Cache still doesn't work how we want it to...
+    -- Cache should be updated on SnapBack, too
+
 -- Mouse keys needs some work!!
 
 -- How about some smart exiting of navigation mode
-    -- If I start typing a bunch of digits, then a - or / 
+    -- If I start typing a bunch of digits, then a - or /
         --  exit navigation
     --  If I start typing chars that aren't associated with any navigation function
         --  exit navigation?
 
--- More windowTossing improvements
-    -- Fix the full screen / center window cache
-        -- Full screen should always full screen; same with Center Screen
-        -- One button should be dedicated to snapback
-    -- Resize windows with keyboard
-        -- perhaps:
-            -- halve height
-            -- halve width
-            -- else?
-    -- How do we toss a window to a specific desktop?
-
--- What if we make WindowTossing work like this:
--- -- Chain is used to toggle size
--- -- Keyboard locations are used to send to the corresponding place on the screen..
+-- How do we toss a window to a specific desktop?
 
 -- see https://github.com/dsanson/hs.tiling
 
@@ -62,7 +54,3 @@ local missionControlMode= require 'missionControlMode'
     -- so, we can have multiple borders that can be deleted when unmarked?
     -- then the fun stuff begins
         --  how can we do cool shit to the windows we've marked?
-
--- Don't forget about this?
--- local vimouse = require('notused/vimouse')
--- vimouse('cmd', 'm')

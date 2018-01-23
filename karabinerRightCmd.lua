@@ -11,11 +11,21 @@
 -- Windows
     -- next window in app
     hs.hotkey.bind(right_command, 'l', function()
-        fastKeyStroke({'cmd'}, '`')
+        local currentapp = hs.application.frontmostApplication()
+        if (string.match(currentapp:name(), 'iTerm2')) then
+            hs.eventtap.keyStroke({'ctrl'}, 'tab')
+        else
+            fastKeyStroke({'cmd'}, '`')
+        end
     end)
         -- previous window in app
     hs.hotkey.bind(right_command, 41, function()
-        fastKeyStroke({'cmd', 'shift'}, '`')
+        local currentapp = hs.application.frontmostApplication()
+        if (string.match(currentapp:name(), 'iTerm2')) then
+            hs.eventtap.keyStroke({'ctrl', 'shift'}, 'tab')
+        else
+            fastKeyStroke({'cmd', 'shift'}, '`')
+        end
     end)
         -- next window in space
     hs.hotkey.bind(right_command, 'j', function()
@@ -76,3 +86,11 @@ hs.hotkey.bind(right_command, '`', function()
         hs.eventtap.keyStroke({}, 'return');
     end
 end)
+
+-- hs.hotkey.bind(right_command, 'return', function()
+--     local currentapp = hs.application.frontmostApplication();
+--
+--     if (string.match(currentapp:name(), 'Safari')) then
+--         hs.eventtap.keyStroke({'cmd'}, 'return');
+--     end
+-- end)

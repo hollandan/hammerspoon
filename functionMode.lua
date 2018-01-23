@@ -7,46 +7,27 @@ functionMode:bind({}       , 'f17'    , function() functionMode:exit() end)
 -- functionMode:bind({'ctrl'} , 'space'  , function() invokeITerm() end)
 
 --should these be in windowTossing?
-functionMode:bind({} , 'm' , function() showMissionControl() end)
 functionMode:bind({} , '1' , function() goToDesktopOne() end)
 functionMode:bind({} , '2' , function() goToDesktopTwo() end)
 functionMode:bind({} , '3' , function() goToDesktopThree() end)
 
+functionMode:bind({} , 'a' , function() appendText() end)
+functionMode:bind({} , 'l' , function() lowercaseWord() end)
 
 functionMode:bind({} , 'c' , function() capitalizeWord() end)
-functionMode:bind({} , 'l' , function() lowercaseWord() end)
 functionMode:bind({} , 'u' , function() uppercaseWord() end)
 
-functionMode:bind({} , 'a' , function() appendText() end)
-
-functionMode:bind({'shift'} , 't' , function() timeStamp() end)
-functionMode:bind({}        , 'd' , function() dateStamp() end)
-functionMode:bind({}        , 't' , function() showTime() end)
-
-function timeStamp()
-    local pasteboard = hs.pasteboard.getContents()
-    stamp = hs.execute("date +'%m-%d-%Y %H:%M' | tr -d '\n' | pbcopy")
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.pasteboard.setContents(pasteboard)
-end
-
-function dateStamp()
-    local pasteboard = hs.pasteboard.getContents()
-    stamp = hs.execute("date +'%m-%d-%Y' | tr -d '\n' | pbcopy")
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.pasteboard.setContents(pasteboard)
-end
-
-function showTime()
-    stamp = hs.execute("date +'%A %I:%M:%S %p' | tr -d '\n'")
-    local style = hs.styledtext.new(stamp,{font={size=48}})
-    -- local pos = hs.geometry.rect{0, 0, 300, 300}
-    hs.alert.show(style, pos, 3)
-    functionMode:exit()
-end
+functionMode:bind({} , 'n' , function() nsgMenu() end)
+functionMode:bind({} , 'm' , function() showMissionControl() end)
 
 functionMode:bind({} , 'space' , function() dotSpaceDash() end)
 
+functionMode:bind({}        , 't' , function() showTime() end)
+    functionMode:bind({'shift'} , 't' , function() timeStamp() end)
+functionMode:bind({}        , 'd' , function() dateStamp() end)
+
+functionMode:bind({}        , 'z' , function() moveFocusToMenuBar() end)
+functionMode:bind({}        , 'x' , function() moveFocusToStatusBar() end)
 
 function functionMode:entered()
     -- if we can set and delete a rect... we can either use that or set another flag
@@ -78,6 +59,29 @@ function functionMode:exited()
     urltospecificstructuredcontent:disable()
     urltospecificcontentpage:disable()
 end
+
+function timeStamp()
+    local pasteboard = hs.pasteboard.getContents()
+    stamp = hs.execute("date +'%m-%d-%Y %H:%M' | tr -d '\n' | pbcopy")
+    hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.pasteboard.setContents(pasteboard)
+end
+
+function dateStamp()
+    local pasteboard = hs.pasteboard.getContents()
+    stamp = hs.execute("date +'%m-%d-%Y' | tr -d '\n' | pbcopy")
+    hs.eventtap.keyStroke({'cmd'}, 'v')
+    hs.pasteboard.setContents(pasteboard)
+end
+
+function showTime()
+    stamp = hs.execute("date +'%A %I:%M:%S %p' | tr -d '\n'")
+    local style = hs.styledtext.new(stamp,{font={size=48}})
+    -- local pos = hs.geometry.rect{0, 0, 300, 300}
+    hs.alert.show(style, pos, 3)
+    functionMode:exit()
+end
+
 
 -- -- Change to DoubleCommand-Enter?
 function showMissionControl()
@@ -117,6 +121,18 @@ function appendText()
 end
 
 
+function moveFocusToMenuBar()
+    functionMode:exit()
+    fastKeyStroke({'ctrl', 'fn'}, "F2")
+end
+
+function moveFocusToStatusBar()
+    functionMode:exit()
+    -- fastKeyStroke({'ctrl', 'fn'}, "F2")
+    fastKeyStroke({'ctrl', 'fn'}, "F8")
+    navigationMode:enter()
+end
+
 function dotSpaceDash()
 
     local text = hs.pasteboard.getContents()
@@ -146,7 +162,6 @@ function dotSpaceDash()
 end
 
 
-functionMode:bind({} , 'n' , function() nsgMenu() end)
 function nsgMenu()
     urltoadmin                     = hs.hotkey.bind({}, 'a', function() urlToAdmin() end)
     urltostructuredcontent         = hs.hotkey.bind({}, 's', function() urlToStructuredContent() end)
