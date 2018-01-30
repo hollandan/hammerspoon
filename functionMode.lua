@@ -12,6 +12,7 @@ functionMode:bind({} , '2' , function() goToDesktopTwo() end)
 functionMode:bind({} , '3' , function() goToDesktopThree() end)
 
 functionMode:bind({} , 'a' , function() appendText() end)
+functionMode:bind({} , 's' , function() badAssMenu() end)
 functionMode:bind({} , 'l' , function() lowercaseWord() end)
 
 functionMode:bind({} , 'c' , function() capitalizeWord() end)
@@ -89,12 +90,6 @@ function showMissionControl()
     functionMode:exit()
 end
 
--- function invokeITerm()
---     functionMode:exit()
---     fastKeyStroke({'ctrl'}, 'space')
--- end
-
-
 function capitalizeWord()
     hs.eventtap.keyStroke({'ctrl', 'shift'}, "\\")
     -- wtf? we can't have an empty modifier here. If we do, the following eventtap just doesn't fire
@@ -117,6 +112,11 @@ end
 
 function appendText()
     fastKeyStroke({'ctrl'}, '7')
+    functionMode:exit()
+end
+
+function badAssMenu()
+    fastKeyStroke({'ctrl', 'shift'}, '\\')
     functionMode:exit()
 end
 
@@ -176,18 +176,19 @@ function urlToAdmin()
 
     local pasteboard = hs.pasteboard.getContents()
 
-    hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
     hs.alert.show(currentapp:name())
 
     if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
-        fastKeyStroke({'cmd'}, 'v')
-        fastKeyStroke({'cmd'}, 't')
-        fastKeyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'x')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({'cmd'}, 't')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        os.execute('python /Users/dan/pyscript/urltoadmin.py')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({}, 'return')
     end
-    os.execute('python /Users/dan/pyscript/urltoadmin.py')
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
 
     hs.pasteboard.setContents(pasteboard)
@@ -196,16 +197,17 @@ end
 function urlToStructuredContent()
     local pasteboard = hs.pasteboard.getContents()
 
-    hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
-        fastKeyStroke({'cmd'}, 'v')
-        fastKeyStroke({'cmd'}, 't')
-        fastKeyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'x')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({'cmd'}, 't')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        os.execute('python /Users/dan/pyscript/urltostructuredcontent.py')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({}, 'return')
     end
-    os.execute('python /Users/dan/pyscript/urltostructuredcontent.py')
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
 
     hs.pasteboard.setContents(pasteboard)
@@ -213,16 +215,18 @@ end
 
 function urlToSpecificStructuredContent()
     local pasteboard = hs.pasteboard.getContents()
-    hs.eventtap.keyStroke({'cmd'}, 'x')
+
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
-        fastKeyStroke({'cmd'}, 'v')
-        fastKeyStroke({'cmd'}, 't')
-        fastKeyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'x')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({'cmd'}, 't')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        os.execute('python /Users/dan/pyscript/urltostructuredcontent.py')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({}, 'return')
     end
-    os.execute('python /Users/dan/pyscript/urltostructuredcontent.py')
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-    fastKeyStroke({'cmd'}, 'right')
     functionMode:exit()
 
     hs.pasteboard.setContents(pasteboard)
@@ -231,16 +235,8 @@ end
 function urlToDomain()
     local pasteboard = hs.pasteboard.getContents()
 
-    hs.eventtap.keyStroke({'cmd'}, 'x')
-    local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
-        fastKeyStroke({'cmd'}, 'v')
-        fastKeyStroke({'cmd'}, 't')
-        fastKeyStroke({'cmd'}, 'l')
-    end
     os.execute('python /Users/dan/pyscript/urltodomain.py')
     hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
 
     hs.pasteboard.setContents(pasteboard)
@@ -249,16 +245,17 @@ end
 function urlToContentPages()
     local pasteboard = hs.pasteboard.getContents()
 
-    hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
-        fastKeyStroke({'cmd'}, 'v')
-        fastKeyStroke({'cmd'}, 't')
-        fastKeyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'x')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({'cmd'}, 't')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        os.execute('python /Users/dan/pyscript/urltocontentpages.py')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({}, 'return')
     end
-    os.execute('python /Users/dan/pyscript/urltocontentpages.py')
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
 
     hs.pasteboard.setContents(pasteboard)
@@ -267,16 +264,17 @@ end
 function urlToSpecificContentPage()
     local pasteboard = hs.pasteboard.getContents()
 
-    hs.eventtap.keyStroke({'cmd'}, 'x')
     local currentapp = hs.application.frontmostApplication();
     if (string.match(currentapp:name(), 'Safari') or string.match(currentapp:name(), 'Chrome') or string.match(currentapp:name(), 'Firefox')) then
-        fastKeyStroke({'cmd'}, 'v')
-        fastKeyStroke({'cmd'}, 't')
-        fastKeyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'x')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({'cmd'}, 't')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        os.execute('python /Users/dan/pyscript/urltocontentpages.py')
+        hs.eventtap.keyStroke({'cmd'}, 'v')
+        hs.eventtap.keyStroke({'cmd'}, 'right')
     end
-    os.execute('python /Users/dan/pyscript/urltocontentpages.py')
-    hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.eventtap.keyStroke({'cmd'}, 'right')
     functionMode:exit()
 
     hs.pasteboard.setContents(pasteboard)
@@ -285,11 +283,8 @@ end
 function urlToURI()
     local pasteboard = hs.pasteboard.getContents()
 
-    hs.eventtap.keyStroke({'cmd'}, 'x')
-    local currentapp = hs.application.frontmostApplication();
     os.execute('python /Users/dan/pyscript/urltouri.py')
     hs.eventtap.keyStroke({'cmd'}, 'v')
-    hs.eventtap.keyStroke({}, 'return')
     functionMode:exit()
 
     hs.pasteboard.setContents(pasteboard)

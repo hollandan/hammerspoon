@@ -2,18 +2,18 @@
 -- ~/.config/karabiner/karabiner.json
 	-- https://pqrs.org/osx/karabiner/json.html
 
-local autoload          = require 'autoload'
-globals                 = require 'globals'
-local windowTossing     = require 'windowTossing'
-local windowLayout      = require 'windowLayout'
-local navigationMode    = require 'navigationMode'
-local functionMode      = require 'functionMode'
-local karabinerRightCmd = require 'karabinerRightCmd'
-local hyperRightShift   = require 'hyperRightShift'
-local fuckYouXfinity    = require 'fuckYouXfinity'
-local chooser           = require 'chooser'
-local mouse             = require 'mouse'
-local missionControlMode= require 'missionControlMode'
+local autoload           = require 'autoload'
+globals                  = require 'globals'
+local windowTossing      = require 'windowTossing'
+local windowLayout       = require 'windowLayout'
+local navigationMode     = require 'navigationMode'
+local functionMode       = require 'functionMode'
+local karabinerRightCmd  = require 'karabinerRightCmd'
+local hyperRightShift    = require 'hyperRightShift'
+local fuckYouXfinity     = require 'fuckYouXfinity'
+local chooser            = require 'chooser'
+local mouse              = require 'mouse'
+local missionControlMode = require 'missionControlMode'
 
 -- Window Cache still doesn't work how we want it to...
     -- Cache should be updated on SnapBack, too

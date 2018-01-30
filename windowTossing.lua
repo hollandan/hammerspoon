@@ -330,23 +330,24 @@ function showApplicationWindows()
 end
 function showDesktop()
     functionMode:exit()
+
     -- Systemwide keystoke I set in System Preferences to Show Desktop
     fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f11')
 
     -- Show Desktop is kind of stupid in that it does not automatically change
     -- the current app to the Finder
 
-    -- local currentapp = hs.application.frontmostApplication();
-    -- if (string.match(currentapp:name(), 'Finder')) then
-    --     -- so, if we're in the finder, cmd-tab back from where we came
-    --     hs.eventtap.keyStroke({'cmd'}, 'tab')
-    -- else
-    --     -- otherwise, set the current app to the finder, so we can manipulate
-    --     -- the desktop with the keyboard
-    --     hs.applescript.applescript([[
-    --         tell application "Finder" to activate
-    --     ]])
-    -- end
+    local currentapp = hs.application.frontmostApplication();
+    if (string.match(currentapp:name(), 'Finder')) then
+        -- so, if we're in the finder, cmd-tab back from where we came
+        hs.eventtap.keyStroke({'cmd'}, 'tab')
+    else
+        -- otherwise, set the current app to the finder, so we can manipulate
+        -- the desktop with the keyboard
+        hs.osascript.applescript([[
+            tell application "Finder" to activate
+        ]])
+    end
 end
 
 -- Below in development
