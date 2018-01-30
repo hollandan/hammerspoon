@@ -49,8 +49,8 @@ function missionControlMode:entered()
     -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
     -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
 
-    -- currentBorder = functionBorder
-    -- currentIndicator:setStrokeColor(currentBorder);
+    currentBorder = missionControlBorder
+    currentIndicator:setStrokeColor(currentBorder)
 
 end
 
@@ -59,8 +59,8 @@ function missionControlMode:exited()
     hs.alert.show("MissionControl Out")
 
     -- functionIndicator:delete()
-    -- currentBorder = focusedBorder
-    -- currentIndicator:setStrokeColor(currentBorder);
+    currentBorder = focusedBorder
+    currentIndicator:setStrokeColor(currentBorder);
 
 end
 

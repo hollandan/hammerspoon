@@ -20,27 +20,9 @@ local missionControlMode = require 'missionControlMode'
 
 -- Mouse keys needs some work!!
 
--- How about some smart exiting of navigation mode
-    -- If I start typing a bunch of digits, then a - or /
-        --  exit navigation
-    --  If I start typing chars that aren't associated with any navigation function
-        --  exit navigation?
-
 -- How do we toss a window to a specific desktop?
 
 -- see https://github.com/dsanson/hs.tiling
-
---  fix borders on
-    -- spotlight --> escape (we'll probably need a spotlight mode to deal with this)
-
---  can our window borders have a "z-index" ?
-    --  i'd like the following to draw OVER the borders:
-        -- hammerspoon alerts
-        -- spotlight window
-        -- chooser window
-        -- quicklook widow
-        -- dock
-        -- else?
 
 -- chooser
     --  on executions: first check to see if a window containing the result exists

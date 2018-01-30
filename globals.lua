@@ -77,15 +77,17 @@ pasteboard = ""
 showBorders      = true
 -- for color ideas: http://www.rapidtables.com/web/color/RGB_Color.htm
 -- focusedBorder    = {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
-focusedBorder    = {["red"]=0,["blue"]=.6,["green"]=.1,["alpha"]=0.5}
-navigationBorder = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
-functionBorder   = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
-emptyBorder      = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
+focusedBorder        = {["red"]=0,["blue"]=.6,["green"]=.1,["alpha"]=0.5}
+navigationBorder     = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
+functionBorder       = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
+missionControlBorder = {['red']=0,['blue']=0,['green']=1,['alpha']=0.9}
+emptyBorder          = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
 
 currentBorder    = focusedBorder
 -- currentBorder    = emptyBorder
 
 currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
+currentIndicator:setLevel("_MinimumWindowLevelKey")
 -- https://github.com/jwkvam/hammerspoon-config/blob/master/init.lua#L233
 
 -- b doesn't work...
@@ -171,7 +173,6 @@ end)
 hs.hotkey.bind({}, 'f17', function()
     fastKeyStroke({}, 'eisu')
 end)
-
 
 
 fastKeyStroke = function(modifiers, character)

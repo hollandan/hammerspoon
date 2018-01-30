@@ -86,15 +86,6 @@ navigationMode:bind({}            , '/'      , function() fullDown()            
 
 function navigationMode:entered()
 
-    -- -- Just in case window mode causes the indicator to perpetually stick (by invoking another instance we can delete)
-    -- navIndicator:delete()
-    -- navIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 1440, 900})
-    -- navIndicator:setFill(true);
-    -- navIndicator:setFillColor({['red']=0,['blue']=0,['green']=0,['alpha']=0});
-    -- navIndicator:setStrokeColor({['red']=1,['blue']=0,['green']=0,['alpha']=.7})
-    -- navIndicator:setStrokeWidth(10)
-    -- navIndicator:show()
-
     currentBorder = navigationBorder
     currentIndicator:setStrokeColor(currentBorder);
 
@@ -111,6 +102,7 @@ function navigationMode:entered()
     if (string.match(currentapp:name(), 'iTerm2')) then
         navigationMode:exit()
         functionMode:exit()
+        missionControlMode:exit()
     end
 end
 
