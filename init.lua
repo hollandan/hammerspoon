@@ -1,19 +1,34 @@
+-- ***** Please Note!  ************************************************************
+-- ** These are my personal settings
+-- ** They are not not well documented
+-- ** They rely on other configs from:
+--    * Karabiner Elements
+--    * ~/Library/KeyBindings/DefaultKeyBinding.dict
+--    * Better Touch Tool
+--    * And, probably a lot of other things, too
+-- ** DO NOT expect a direct copy and paste will work on your system
+-- ** DO expect a direct copy and paste will break your system
+-- ** Also: It is possible some code was stolen from other sources and not credited
+--    * If that's the case, sorry. Tell me; I'll do my best to credit appropriately
+-- ********************************************************************************
 -- keyreference.lua
 -- ~/.config/karabiner/karabiner.json
 	-- https://pqrs.org/osx/karabiner/json.html
 
+      globals            = require 'globals'
 local autoload           = require 'autoload'
-globals                  = require 'globals'
 local windowTossing      = require 'windowTossing'
 local windowLayout       = require 'windowLayout'
 local navigationMode     = require 'navigationMode'
 local functionMode       = require 'functionMode'
 local karabinerRightCmd  = require 'karabinerRightCmd'
-local hyperRightShift    = require 'hyperRightShift'
 local fuckYouXfinity     = require 'fuckYouXfinity'
 local chooser            = require 'chooser'
 local mouse              = require 'mouse'
 local missionControlMode = require 'missionControlMode'
+local gaming             = require 'gaming'
+
+-- local hyperRightShift    = require 'hyperRightShift'
 
 -- Window Cache still doesn't work how we want it to...
     -- Cache should be updated on SnapBack, too

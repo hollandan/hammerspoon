@@ -26,18 +26,3 @@ end)
 
 -- smartZoom w/ BetterTouchTool
 -- -- ({'alt, ctrl'}, 'f19')
-
--- hs.hotkey.bind(return_modifier, 'l', function() mouseNudge({x =   0, y =  50}) end)
--- hs.hotkey.bind(return_modifier, 'o', function() mouseNudge({x =   0, y = -50}) end)
--- hs.hotkey.bind(return_modifier, 'k', function() mouseNudge({x = -50, y =   0}) end)
--- hs.hotkey.bind(return_modifier, ';', function() mouseNudge({x =  50, y =   0}) end)
-
--- -- hs.hotkey.bind(return_modifier, 'y', function() mouseNudge({x =   0, y =  10}) end)
--- -- hs.hotkey.bind(return_modifier, 'h', function() mouseNudge({x =   0, y = -10}) end)
--- -- hs.hotkey.bind(return_modifier, 'g', function() mouseNudge({x = -10, y =   0}) end)
--- -- hs.hotkey.bind(return_modifier, 'j', function() mouseNudge({x =  10, y =   0}) end)
-
--- hs.hotkey.bind(return_modifier, 'y', function() mouseNudge({x =   0, y =  10}) end)
--- hs.hotkey.bind(return_modifier, 'h', function() mouseNudge({x =   0, y = -10}) end)
--- hs.hotkey.bind(return_modifier, 'g', function() mouseNudge({x = -10, y =   0}) end)
--- hs.hotkey.bind(return_modifier, 't', function() mouseNudge({x =  10, y =   0}) end)

@@ -102,7 +102,6 @@ function navigationMode:entered()
     if (string.match(currentapp:name(), 'iTerm2')) then
         navigationMode:exit()
         functionMode:exit()
-        missionControlMode:exit()
     end
 end
 
@@ -321,12 +320,8 @@ function focusURLBarAndExit()
 end
 
 function findAndExit()
-    -- seems the only way to get this to work...
-    -- otherwise, focus just leaves the find box...
-    -- hs.eventtap.keyStroke({'cmd'}, 'f')
     navigationMode:exit()
     hs.eventtap.keyStroke({'cmd'}, 'f')
-    -- hs.eventtap.keyStroke({'cmd'}, 'f')
 end
 
 function previousField()

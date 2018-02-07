@@ -23,7 +23,7 @@ end)
 -- functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 
 -- nsgMenu
--- Define these to placeholder values here, so Hammerspoon doesn't throw undefined errors
+-- Define these as placeholders, so Hammerspoon doesn't throw undefined errors
 urltoadmin                     = hs.hotkey.bind({}, 'pad*', function() end)
 urltostructuredcontent         = hs.hotkey.bind({}, 'pad*', function() end)
 urltocontentpages              = hs.hotkey.bind({}, 'pad*', function() end)
@@ -104,7 +104,7 @@ hs.hotkey.bind(double_command, 'l', function()
 end)
 
 ------------------------------------------------
--- -- This is freaking cool, but it draws so slowly it's too distracting to work with
+--This is freaking cool, but it draws so slowly it's way too distracting to work with
 -- hs.window.highlight.ui.overlay = true
 -- -- hs.window.highlight.ui.overlayColor = {0.2,0.05,0,0.25}
 -- hs.window.highlight.ui.overlayColor = {0,0,0,0.2}

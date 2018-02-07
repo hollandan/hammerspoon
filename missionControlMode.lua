@@ -1,8 +1,9 @@
 -- missionControlMode = hs.hotkey.modal.new(double_command, 'return')
 missionControlMode = hs.hotkey.modal.new(double_command, 'u')
-missionControlMode:bind({}            , 'escape', function() missionControlMode:exit() end)
-missionControlMode:bind({}, 'return' , function() missionControlMode:exit() end)
-missionControlMode:bind({}, 'space' , function() missionControlMode:exit() end)
+missionControlMode:bind({}      , 'escape', function() missionControlMode:exit() end)
+missionControlMode:bind({}      , 'eisu', function() missionControlMode:exit() end)
+missionControlMode:bind({}      , 'return' , function() missionControlMode:exit() end)
+missionControlMode:bind({}      , 'space' , function() missionControlMode:exit() end)
 missionControlMode:bind({'ctrl'}, 'space' , function() missionControlMode:exit() end)
 
 missionControlMode:bind({}, 'q' , function() missionControlMode:exit() end)
@@ -42,12 +43,6 @@ function missionControlMode:entered()
     fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f9')
     mouseJump({x = 750, y = 40})
     mouseNudge({x = -20, y = -20})
-
-    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
-    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
-    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
-    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
-    -- hs.eventtap.keyStroke({'rightctrl', 'alt'}, 's')
 
     currentBorder = missionControlBorder
     currentIndicator:setStrokeColor(currentBorder)
