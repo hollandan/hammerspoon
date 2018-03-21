@@ -32,10 +32,15 @@ urltospecificstructuredcontent = hs.hotkey.bind({}, 'pad*', function() end)
 urltodomain                    = hs.hotkey.bind({}, 'pad*', function() end)
 urltouri                       = hs.hotkey.bind({}, 'pad*', function() end)
 
+-- hs.grid.setGrid('4x4')
+-- grid = {
+--     tl = '0,0 2x2',
+--     tr = '0,2 2x2',
+--     bl = '2,0 2x2',
+--     br = '0,2 2x2'
+-- }
+
 hs.grid.setGrid('12x12')
-hs.grid.MARGINX = 0
-hs.grid.MARGINY = 0
-hs.window.animationDuration = 0
 grid = {
   topHalf                = '0,0 12x6',
   topThird               = '0,0 12x4',
@@ -65,6 +70,10 @@ grid = {
   bottomRightSplitTop    = '6,6 6x3',
   bottomRightSplitBottom = '6,9 6x3',
 }
+
+hs.grid.MARGINX = 0
+hs.grid.MARGINY = 0
+hs.window.animationDuration = 0
 
 -- Store window frames (by id) so we can toggle window size
 fullFrameCache = {}

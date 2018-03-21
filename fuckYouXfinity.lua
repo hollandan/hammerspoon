@@ -1,24 +1,45 @@
 wifiWatcher = nil
-homeSSID = "HOME-8B62"
 lastSSID = hs.wifi.currentNetwork()
+
+xfuckinityIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 880, 1500, 20})
+xfuckinityIndicator:setAlpha(.4)
+xfuckinityIndicator:setFill(true)
 
 local trustedNetworks = {
     home = "HOME-8B62",
     nsg  = "nsg"
 }
 
+local availableNetworks = hs.wifi.availableNetworks()
+
+if (lastSSID == "xfinitywifi") then
+    xfuckinityIndicator:show()
+else
+    xfuckinityIndicator:hide()
+end
+
 function ssidChangedCallback()
     newSSID = hs.wifi.currentNetwork()
 
-    -- To implement:
     -- xfinity is a fucking thief if
         --  any of my trusted networks are in hs.wifi.availableNetworks
         --  and
         --  I'm connected to xfinity, not one of them
 
-    -- for now, just tell me when I connect to xfinity
     if (newSSID == "xfinitywifi") then
-        hs.alert.show("xfinity hijacked your wifi connection", 15)
+
+        for k,v in pairs(trustedNetworks) do
+            for i, ival in ipairs(availableNetworks) do
+                if trustedNetworks[k] == availableNetworks[i] then
+                    hs.alert.show("xfinity hijacked your wifi connection", 8)
+                    break
+                end
+            end
+        end
+
+        xfuckinityIndicator:show()
+    else
+        xfuckinityIndicator:hide()
     end
 
     lastSSID = newSSID

@@ -23,10 +23,10 @@ missionControlMode:bind({}, 'd' , function() goToDesktopThree() end)
 missionControlMode:bind({}, 'f' , function() goToDesktopFour() end)
 missionControlMode:bind({}, 'g' , function() missionControlMode:exit() end)
 missionControlMode:bind({}, 'h' , function() missionControlMode:exit() end)
-missionControlMode:bind({}, 'j' , function() missionControlMode:exit() end)
+missionControlMode:bind({}, 'j' , function() goDesktopLeft() end)
 missionControlMode:bind({}, 'k' , function() missionControlMode:exit() end)
 missionControlMode:bind({}, 'l' , function() missionControlMode:exit() end)
-missionControlMode:bind({}, ';' , function() missionControlMode:exit() end)
+missionControlMode:bind({}, ';' , function() goDesktopRight() end)
 
 missionControlMode:bind({}, 'z' , function() missionControlMode:exit() end)
 missionControlMode:bind({}, 'x' , function() missionControlMode:exit() end)
@@ -74,6 +74,14 @@ end
 
 function goToDesktopFour()
     fastKeyStroke(double_command, 'f')
+end
+
+function goDesktopLeft()
+    fastKeyStroke(double_command, 'j')
+end
+
+function goDesktopRight()
+    fastKeyStroke(double_command, ';')
 end
 
 -- function invokeITerm()
