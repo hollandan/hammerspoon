@@ -2,7 +2,7 @@
 -- ** These are my personal settings
 -- ** They are not not well documented
 -- ** They rely on other configs from:
---    * Karabiner Elements
+--    * ~/.config/karabiner/karabiner.json
 --    * ~/Library/KeyBindings/DefaultKeyBinding.dict
 --    * Better Touch Tool
 --    * And, probably a lot of other things, too
@@ -32,9 +32,6 @@ local gaming             = require 'gaming'
 -- local playground         = require 'playground'
 
 -- local hyperRightShift    = require 'hyperRightShift'
-
--- Window Cache still doesn't work how we want it to...
-    -- Cache should be updated on SnapBack, too
 
 -- Mouse keys needs some work!!
 

@@ -141,8 +141,6 @@ function snapBack()
     elseif fullFrameCache[win:id()] then
         win:setFrame(fullFrameCache[win:id()])
         fullFrameCache[win:id()] = nil
-    else
-        -- hs.alert.show("ballz!")
     end
 end
 
@@ -153,6 +151,7 @@ function decreaseWindowHeight()
   f.h = f.h - f.h*.25
   win:setFrame(f)
 end
+
 function increaseWindowHeight()
   local win = hs.window.focusedWindow()
   local f = win:frame()
@@ -179,7 +178,9 @@ end
 hs.hotkey.bind(right_command, 't', function()
     local rect = identifyFocusedWindowLocation()
 
-    if (rect.bottom) then
+    if rect.top then
+        decreaseWindowHeight()
+    elseif rect.bottom then
         increaseWindowHeightAndHugBottom()
     else
         decreaseWindowHeightAndHugBottom()
@@ -196,41 +197,35 @@ hs.hotkey.bind(right_command, 'n', function()
     end
 
 end)
+
 hs.hotkey.bind(right_command, 'h', function()
-    decreaseWindowWidth()
+
+    local rect = identifyFocusedWindowLocation()
+
+    if rect.left then
+        decreaseWindowWidth()
+    elseif rect.right then
+        increaseWindowWidthAndHugRightSide()
+    else
+        decreaseWindowWidth()
+    end
 end)
 
 hs.hotkey.bind(right_command, 'g', function()
-    local win = hs.window.focusedWindow()
-    local f = win:frame()
-
-    local screen = win:screen()
-    local max = screen:frame()
-
-    local rightside = false;
-    local rightsideonly = false;
-
-    if (f.x + f.w >= max.w) then
-        if (f.x == -0.0) then
-            rightsideonly = true
-        else
-            rightside = true
-        end
-    end
-    if (rightside or rightsideonly) then
+    local rect = identifyFocusedWindowLocation()
+    if rect.right then
         decreaseWindowWidthAndHugRightSide()
     else
         increaseWindowWidth()
     end
+
 end)
 
 function decreaseWindowWidthAndHugRightSide()
-    -- need to account for windows that won't keep resizing going out of right bounds
     local win = hs.window.focusedWindow()
     local f = win:frame()
 
     oldfw = f.w
-    -- if f.w is not an integer, it fucks with the logic. so fuck them floating points
     newfw = math.floor(f.w - f.w*.25)
     f.w = newfw
 
@@ -240,15 +235,10 @@ function decreaseWindowWidthAndHugRightSide()
         deltax = oldfw - newfw
     end
 
-    -- hs.alert.show(deltax)
-
     w = identifyFocusedWindowLocation()
     if w.right then
         local screen = win:screen()
         local max = screen:frame()
-
-        -- hs.alert.show(f.x+f.w .. " | " .. max.w)
-        -- hs.alert.show(oldfw .. " | " .. newfw)
 
         if f.x + f.w < max.w then
             f.x = f.x + deltax
@@ -256,6 +246,47 @@ function decreaseWindowWidthAndHugRightSide()
     end
 
     win:setFrame(f)
+    stayInBounds()
+end
+
+function increaseWindowWidthAndHugRightSide()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    local newfw = math.floor(f.w + f.w*.25)
+    local deltax = math.floor(f.w - newfw)
+    f.w = newfw
+
+    f.x = f.x + deltax
+
+    win:setFrame(f)
+    stayInBounds()
+end
+
+function stayInBounds()
+    local rect=identifyFocusedWindowLocation()
+
+    if rect.tooright then
+        local f = win:frame()
+        f.x = f.x + rect.rightoffset
+        win:setFrame(f)
+    end
+
+    if rect.tooleft then
+        local f = win:frame()
+        local screen = win:screen()
+        local max = screen:frame()
+        f.x = 0
+        f.w = max.w
+        win:setFrame(f)
+    end
+
+    if rect.toolow then
+        local f = win:frame()
+        f.y = f.y + rect.bottomoffset
+        win:setFrame(f)
+    end
+
 end
 
 function decreaseWindowHeightAndHugBottom()
@@ -271,14 +302,13 @@ function decreaseWindowHeightAndHugBottom()
     end
 
     f.h = newfh
-    -- hs.alert.show(deltay)
-
     w = identifyFocusedWindowLocation()
     if w.bottom then
         f.y = f.y + deltay
     end
 
     win:setFrame(f)
+    keepBottom()
 end
 
 function increaseWindowHeightAndHugBottom()
@@ -287,20 +317,29 @@ function increaseWindowHeightAndHugBottom()
 
     local oldfh = f.h
     local newfh = math.floor(f.h + f.h*.25)
-    local deltay = math.floor(f.h + newfh)
+    local deltay = math.floor(f.h - newfh)
 
     if newfh == oldfh then
         hs.alert.show("size did not change")
     end
     f.h = newfh
-    -- hs.alert.show(deltay)
 
     w = identifyFocusedWindowLocation()
     if w.bottom then
-        f.y = f.y - deltay
+        f.y = f.y + deltay
     end
 
     win:setFrame(f)
+    keepBottom()
+end
+
+function keepBottom()
+    local rect=identifyFocusedWindowLocation()
+    if rect.toolow then
+        local f = win:frame()
+        f.y = f.y + rect.bottomoffset
+        win:setFrame(f)
+    end
 end
 
 -- Toggle Center And Zoom
@@ -332,13 +371,12 @@ hs.hotkey.bind(right_command, 'd', function()
     showDesktop()
 end)
 
--- Essentially: right_command+left_command
 hs.hotkey.bind({'ctrl', 'alt', 'shift', 'cmd'}, 'w', function()
     showApplicationWindows()
 end)
 
 function showApplicationWindows()
-    -- Systemwide keystoke I set in System Preferences to Show Application Windows
+    -- Systemwide keystoke set in System Preferences to Show Application Windows
     fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f10')
     functionMode:exit()
     navigationMode:enter()
@@ -346,7 +384,7 @@ end
 function showDesktop()
     functionMode:exit()
 
-    -- Systemwide keystoke I set in System Preferences to Show Desktop
+    -- Systemwide keystoke set in System Preferences to Show Desktop
     fastKeyStroke({'cmd', 'alt', 'ctrl', 'shift'}, 'f11')
 
     -- Show Desktop is kind of stupid in that it does not automatically change
@@ -365,6 +403,91 @@ function showDesktop()
     --     ]])
     -- end
 end
+
+function identifyFocusedWindowLocation()
+    local f = hs.window.focusedWindow():frame()
+    local max = win:screen():frame()
+
+    local p = {}
+    p["top"]        = false
+    p["left"]       = false
+    p["right"]      = false
+    p["bottom"]     = false
+    p["fullwidth"]  = false
+    p["fullheight"] = false
+    p["fullscreen"] = false
+    p["leftoffset"] = 0
+    p["rightoffset"] = 0
+    p["bottomoffset"] = 0
+
+    if f.x == 0.0              then p["left"]   = true end
+    if f.y == 0.0              then p["top"]    = true end
+    if f.x + f.w >= max.w - 5  then p["right"]  = true end
+    if f.y + f.h >= max.h - 5  then p["bottom"] = true end
+    -- subtracting 5 above because, sometimes windows won't quite reach
+    -- max.w and max.h
+    if f.x < 0.0               then p["tooleft"] = true end
+    if f.x + f.w > max.w       then p["tooright"] = true end
+    if f.y + f.h > max.h       then p["toolow"]  = true end
+
+    if f.x < 0.0               then p["leftoffset"] = f.x end
+    if f.x + f.w > max.w       then p["rightoffset"] = max.w - (f.x + f.w) end
+    if f.y + f.h > max.h       then p["bottomoffset"] = max.h - (f.y + f.h) end
+
+    if p["top"] and p["bottom"]           then p["fullheight"] = true end
+    if p["left"] and p["right"]           then p["fullwidth"]  = true end
+    if p["fullwidth"] and p["fullheight"] then p["fullscreen"] = true end
+
+    return p;
+end
+
+hs.hotkey.bind(right_command, '1', function() windowInfo() end)
+
+function windowInfo()
+
+    local f = hs.window.focusedWindow():frame()
+    local max = win:screen():frame()
+
+    hs.alert.show("Max   : " .. max.w .. "W x " .. max.h .."H")
+    hs.alert.show("Window: " .. f.w .. "W x " .. f.h .. "H")
+    hs.alert.show("Pos   : " .. f.x .. "W x " .. f.y .. "H")
+
+    local rect = identifyFocusedWindowLocation()
+    if rect.top then hs.alert.show("top") end
+    if rect.right then hs.alert.show("right") end
+    if rect.bottom then hs.alert.show("bottom") end
+    if rect.left then hs.alert.show("left") end
+    -- if rect.fullwidth then hs.alert.show("fullwidth") end
+    -- if rect.fullheight then hs.alert.show("fullheight") end
+    -- if rect.fullscreen then hs.alert.show("fullscreen") end
+    -- if rect.toolow then hs.alert.show("tooLow") end
+    -- if rect.tooleft then hs.alert.show("tooLeft") end
+    -- if rect.tooright then hs.alert.show("tooRight") end
+
+    if rect.toolow then hs.alert.show(rect.bottomoffset) end
+    if rect.tooleft then hs.alert.show(rect.leftoffset) end
+    if rect.tooright then hs.alert.show(rect.rightoffset) end
+
+end
+
+hs.hotkey.bind(right_command, '2', function()
+    -- hs.grid.resizeWindowShorter(hs.window.focusedWindow())
+    -- hs.grid.pushWindowUp(hs.window.focusedWindow())
+    -- hs.grid.snap(hs.window.focusedWindow())
+
+    hs.grid.show()
+    -- hs.grid.adjustWidth(10)
+end)
+
+hs.hotkey.bind(right_command, '3', function()
+    hs.grid.resizeWindowShorter(hs.window.focusedWindow())
+    hs.grid.resizeWindowShorter(hs.window.focusedWindow())
+    -- hs.grid.pushWindowUp(hs.window.focusedWindow())
+end)
+
+hs.hotkey.bind(right_command, "4", function() hs.fnutil.map(hs.window.visibleWindows(), hs.grid.snap) end)
+hs.hotkey.bind(right_command, '=', function() hs.grid.adjustWidth( 1) end)
+
 
 -- Below in development
 hs.hotkey.bind(right_command, '-', function()
@@ -406,73 +529,4 @@ function identifyMarkedWindows()
         hs.alert.show(win)
     end
 end
-
-
-function identifyFocusedWindowLocation()
-    local f = hs.window.focusedWindow():frame()
-    local max = win:screen():frame()
-
-    local p = {}
-    p["top"]        = false
-    p["left"]       = false
-    p["right"]      = false
-    p["bottom"]     = false
-    p["fullwidth"]  = false
-    p["fullheight"] = false
-    p["fullscreen"] = false
-
-    if f.x == 0.0               then p["left"]   =  true end
-    if f.y == 0.0               then p["top"]    =  true end
-    if f.x + f.w >= max.w - 5   then p["right"]  =  true end
-    if f.y + f.h >= max.h - 5   then p["bottom"] =  true end
-    -- subtracting 5 above because, sometimes windows won't quite reach
-    -- max.w and max.h
-
-    if p["top"] and p["bottom"]           then p["fullheight"] = true end
-    if p["left"] and p["right"]           then p["fullwidth"]  = true end
-    if p["fullwidth"] and p["fullheight"] then p["fullscreen"] = true end
-
-    return p;
-end
-
-hs.hotkey.bind(right_command, '1', function() windowInfo() end)
-
-function windowInfo()
-
-    local f = hs.window.focusedWindow():frame()
-    local max = win:screen():frame()
-
-    hs.alert.show("Max   : " .. max.w .. "W x " .. max.h .."H")
-    hs.alert.show("Window: " .. f.w .. "W x " .. f.h .. "H")
-    hs.alert.show("Pos   : " .. f.x .. "W x " .. f.y .. "H")
-
-    local rect = identifyFocusedWindowLocation()
-    if rect.top then hs.alert.show("top") end
-    if rect.right then hs.alert.show("right") end
-    if rect.bottom then hs.alert.show("bottom") end
-    if rect.left then hs.alert.show("left") end
-    if rect.fullwidth then hs.alert.show("fullwidth") end
-    if rect.fullheight then hs.alert.show("fullheight") end
-    if rect.fullscreen then hs.alert.show("fullscreen") end
-
-end
-
-hs.hotkey.bind(right_command, '2', function()
-    -- hs.grid.resizeWindowShorter(hs.window.focusedWindow())
-    -- hs.grid.pushWindowUp(hs.window.focusedWindow())
-    -- hs.grid.snap(hs.window.focusedWindow())
-
-    hs.grid.show()
-    -- hs.grid.adjustWidth(10)
-end)
-
-hs.hotkey.bind(right_command, '3', function()
-    hs.grid.resizeWindowShorter(hs.window.focusedWindow())
-    hs.grid.resizeWindowShorter(hs.window.focusedWindow())
-    -- hs.grid.pushWindowUp(hs.window.focusedWindow())
-end)
-
-hs.hotkey.bind(right_command, "4", function() hs.fnutil.map(hs.window.visibleWindows(), hs.grid.snap) end)
-hs.hotkey.bind(right_command, '=', function() hs.grid.adjustWidth( 1) end)
-
 
