@@ -10,7 +10,10 @@ local trustedNetworks = {
     nsg  = "nsg"
 }
 
-local availableNetworks = hs.wifi.availableNetworks()
+-- Here's the culprit for the whtie screen on reload:
+-- local availableNetworks = hs.wifi.availableNetworks()
+
+local availableNetworks = {}
 
 if (lastSSID == "xfinitywifi") then
     xfuckinityIndicator:show()

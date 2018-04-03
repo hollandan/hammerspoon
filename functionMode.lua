@@ -26,15 +26,24 @@ functionMode:bind({} , 'd' , function() dateStamp() end)
 
 functionMode:bind({} , 'z' , function() moveFocusToMenuBar() end)
 functionMode:bind({} , 'x' , function() moveFocusToStatusBar() end)
+functionMode:bind({} , 'space' , function() moveFocusMenuHelp() end)
 
 function functionMode:entered()
-    currentBorder = functionBorder
-    currentIndicator:setStrokeColor(currentBorder);
+    currentColor = functionColor
+    currentIndicator:setStrokeColor(currentColor);
+    dashboard[1] = {
+        type = "rectangle",
+        fillColor = functionColor
+    }
 end
 
 function functionMode:exited()
-    currentBorder = focusedBorder
-    currentIndicator:setStrokeColor(currentBorder);
+    currentColor = focusedColor
+    currentIndicator:setStrokeColor(currentColor);
+    dashboard[1] = {
+        type = "rectangle",
+        fillColor = darkColor
+    }
 
     -- -- This is probably a dumb way to do this... Is there a better way?
     -- nsgMenu Variables
@@ -118,6 +127,14 @@ function moveFocusToStatusBar()
     fastKeyStroke({'ctrl', 'fn'}, "F8")
     navigationMode:enter()
 end
+
+function moveFocusMenuHelp()
+    functionMode:exit()
+    fastKeyStroke({'ctrl', 'fn'}, "F2")
+    fastKeyStroke({}, "left")
+    fastKeyStroke({}, "down")
+end
+
 
 function dotSpaceDash()
 

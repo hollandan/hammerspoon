@@ -17,6 +17,7 @@
 
       globals            = require 'globals'
 local autoload           = require 'autoload'
+local dashboard          = require 'dashboard'
 local windowTossing      = require 'windowTossing'
 local windowLayout       = require 'windowLayout'
 local navigationMode     = require 'navigationMode'
@@ -31,13 +32,8 @@ local gaming             = require 'gaming'
 -- local reloadbrowser      = require 'reloadbrowser'
 -- local playground         = require 'playground'
 
--- local hyperRightShift    = require 'hyperRightShift'
-
--- Mouse keys needs some work!!
 
 -- How do we toss a window to a specific desktop?
-
--- see https://github.com/dsanson/hs.tiling
 
 -- chooser
     --  on executions: first check to see if a window containing the result exists

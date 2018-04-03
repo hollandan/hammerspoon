@@ -18,10 +18,6 @@ hs.hotkey.bind(double_command, 'h', function()
     hs.reload()
 end)
 
--- Indicators (deprecated?)
--- navIndicator      = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
--- functionIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
-
 -- nsgMenu
 -- Define these as placeholders, so Hammerspoon doesn't throw undefined errors
 urltoadmin                     = hs.hotkey.bind({}, 'pad*', function() end)
@@ -85,15 +81,14 @@ pasteboard = ""
 
 showBorders      = true
 -- for color ideas: http://www.rapidtables.com/web/color/RGB_Color.htm
--- focusedBorder    = {["red"]=1,["blue"]=0,["green"]=1,["alpha"]=0.9}
-focusedBorder        = {["red"]=0,["blue"]=.6,["green"]=.1,["alpha"]=0.5}
-navigationBorder     = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
-functionBorder       = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
-missionControlBorder = {['red']=0,['blue']=0,['green']=1,['alpha']=0.9}
-emptyBorder          = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
+focusedColor        = {["red"]=0,["blue"]=.6,["green"]=.1,["alpha"]=0.5}
+navigationColor     = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
+functionColor       = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
+missionControlColor = {['red']=0,['blue']=0,['green']=1,['alpha']=0.9}
+darkColor           = {["red"]=0,["blue"]=0,["green"]=0,["alpha"]=0.6}
+emptyColor          = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
 
-currentBorder    = focusedBorder
--- currentBorder    = emptyBorder
+currentColor    = focusedColor
 
 currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 currentIndicator:setLevel("_MinimumWindowLevelKey")
@@ -147,7 +142,7 @@ function redrawBorder()
                 currentIndicator:delete()
             end
             currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
-            currentIndicator:setStrokeColor(currentBorder)
+            currentIndicator:setStrokeColor(currentColor)
             currentIndicator:setFill(false)
             currentIndicator:setStrokeWidth(8)
             currentIndicator:setRoundedRectRadii(5.0, 5.0)
@@ -155,7 +150,7 @@ function redrawBorder()
             if string.match(win:application():name() , 'iTerm'    ) or
                string.match(win:title()              , 'Spotlight') or
                string.match(win:title()              , 'Chooser'  ) then
-                currentIndicator:setStrokeColor(emptyBorder)
+                currentIndicator:setStrokeColor(emptyColor)
             end
             currentIndicator:show()
         else

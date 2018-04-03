@@ -44,19 +44,25 @@ function missionControlMode:entered()
     mouseJump({x = 750, y = 40})
     mouseNudge({x = -20, y = -20})
 
-    currentBorder = missionControlBorder
-    currentIndicator:setStrokeColor(currentBorder)
+    currentColor = missionControlColor
+    currentIndicator:setStrokeColor(currentColor)
 
+    dashboard[1] = {
+        type = "rectangle",
+        fillColor = missionControlColor
+    }
 end
 
 function missionControlMode:exited()
     fastKeyStroke({}, "escape")
     hs.alert.show("MissionControl Out")
 
-    -- functionIndicator:delete()
-    currentBorder = focusedBorder
-    currentIndicator:setStrokeColor(currentBorder);
-
+    currentColor = focusedColor
+    currentIndicator:setStrokeColor(currentColor);
+    dashboard[1] = {
+        type = "rectangle",
+        fillColor = darkColor
+    }
 end
 
 

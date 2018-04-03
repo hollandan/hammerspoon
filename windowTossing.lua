@@ -185,6 +185,8 @@ hs.hotkey.bind(right_command, 't', function()
     else
         decreaseWindowHeightAndHugBottom()
     end
+
+    redrawBorder()
 end)
 
 hs.hotkey.bind(right_command, 'n', function()
@@ -196,6 +198,7 @@ hs.hotkey.bind(right_command, 'n', function()
         increaseWindowHeightAndHugBottom()
     end
 
+    redrawBorder()
 end)
 
 hs.hotkey.bind(right_command, 'h', function()
@@ -209,6 +212,8 @@ hs.hotkey.bind(right_command, 'h', function()
     else
         decreaseWindowWidth()
     end
+
+    redrawBorder()
 end)
 
 hs.hotkey.bind(right_command, 'g', function()
@@ -219,6 +224,7 @@ hs.hotkey.bind(right_command, 'g', function()
         increaseWindowWidth()
     end
 
+    redrawBorder()
 end)
 
 function decreaseWindowWidthAndHugRightSide()
@@ -480,9 +486,14 @@ hs.hotkey.bind(right_command, '2', function()
 end)
 
 hs.hotkey.bind(right_command, '3', function()
-    hs.grid.resizeWindowShorter(hs.window.focusedWindow())
-    hs.grid.resizeWindowShorter(hs.window.focusedWindow())
+    -- hs.grid.resizeWindowShorter(hs.window.focusedWindow())
+    -- hs.grid.resizeWindowShorter(hs.window.focusedWindow())
     -- hs.grid.pushWindowUp(hs.window.focusedWindow())
+    decreaseWindowHeight()
+    decreaseWindowHeight()
+    decreaseWindowHeight()
+    decreaseWindowHeight()
+    decreaseWindowHeight()
 end)
 
 hs.hotkey.bind(right_command, "4", function() hs.fnutil.map(hs.window.visibleWindows(), hs.grid.snap) end)

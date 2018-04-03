@@ -41,9 +41,7 @@ function getLayoutWindowList()
     for _,win in pairs(windows) do
         -- hs.alert.show(win:id() .. ': ' .. win:title() .. ' | ' .. win:application():name())
         local app = win:application():name()
-        if (app == 'SimpleFloatingClock') then
-            -- hs.alert.show('clock')
-        elseif (app == 'Hammerspoon') then
+        if (app == 'Hammerspoon') then
             -- hs.alert.show('spoon')
         elseif (app == 'iTerm2') then
             -- hs.alert.show('term')
@@ -182,10 +180,12 @@ end
 
 hs.hotkey.bind({'cmd', 'ctrl'}, 'a', function()
     resizeLayout()
+    hs.alert.show("?")
 end)
 
 hs.hotkey.bind({'cmd', 'ctrl'}, 's', function()
     resizeLayoutReverse()
+    hs.alert.show("!")
 end)
 
 function resizeLayout()

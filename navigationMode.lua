@@ -85,17 +85,13 @@ navigationMode:bind({}            , '/'      , function() fullDown()            
 
 
 function navigationMode:entered()
+    currentColor = navigationColor
+    currentIndicator:setStrokeColor(currentColor);
 
-    currentBorder = navigationBorder
-    currentIndicator:setStrokeColor(currentBorder);
-
-            -- currentIndicator:setFill(true)
-            -- currentIndicator:setFillColor({
-            --     ["red"]   = .4,
-            --     ["blue"]  = .2,
-            --     ["green"] = .2,
-            --     ["alpha"] = 0.2,
-            -- })
+    dashboard[1] = {
+        type = "rectangle",
+        fillColor = navigationColor
+    }
 
     -- If we're in iTerm, don't do any navigation remapping
     local currentapp = hs.application.frontmostApplication();
@@ -106,9 +102,12 @@ function navigationMode:entered()
 end
 
 function navigationMode:exited()
-    -- navIndicator:delete()
-    currentBorder = focusedBorder
-    currentIndicator:setStrokeColor(currentBorder);
+    currentColor = focusedColor
+    currentIndicator:setStrokeColor(currentColor);
+    dashboard[1] = {
+        type = "rectangle",
+        fillColor = darkColor
+    }
 end
 
 
