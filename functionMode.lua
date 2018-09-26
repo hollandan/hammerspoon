@@ -10,6 +10,8 @@ functionMode:bind({} , '3' , function() goToDesktopThree() end)
 
 functionMode:bind({} , 'a' , function() appendText() end)
 functionMode:bind({} , 's' , function() badAssMenu() end)
+functionMode:bind({} , 'd' , function() dateStamp() end)
+functionMode:bind({} , 'f' , function() moveFocusMenuHelp() end)
 
 functionMode:bind({} , 'l' , function() lowercaseWord() end)
 functionMode:bind({} , 'c' , function() capitalizeWord() end)
@@ -22,11 +24,12 @@ functionMode:bind({} , 'space' , function() dotSpaceDash() end)
 
 functionMode:bind({} , 't' , function() showTime() end)
     functionMode:bind({'shift'} , 't' , function() timeStamp() end)
-functionMode:bind({} , 'd' , function() dateStamp() end)
 
-functionMode:bind({} , 'z' , function() moveFocusToMenuBar() end)
+functionMode:bind({} , 'w' , function() windowMenu() end)
+
 functionMode:bind({} , 'x' , function() moveFocusToStatusBar() end)
-functionMode:bind({} , 'space' , function() moveFocusMenuHelp() end)
+functionMode:bind({} , 'z' , function() moveFocusToMenuBar() end)
+
 
 function functionMode:entered()
     currentColor = functionColor
@@ -54,6 +57,11 @@ function functionMode:exited()
     urltocontentpages:disable()
     urltospecificstructuredcontent:disable()
     urltospecificcontentpage:disable()
+
+
+    windowsalignvertical:disable()
+    windowsalignhorizontal:disable()
+
 end
 
 function timeStamp()
@@ -61,6 +69,7 @@ function timeStamp()
     stamp = hs.execute("date +'%m-%d-%Y %H:%M' | tr -d '\n' | pbcopy")
     hs.eventtap.keyStroke({'cmd'}, 'v')
     hs.pasteboard.setContents(pasteboard)
+    functionMode:exit()
 end
 
 function dateStamp()
@@ -68,6 +77,7 @@ function dateStamp()
     stamp = hs.execute("date +'%m-%d-%Y' | tr -d '\n' | pbcopy")
     hs.eventtap.keyStroke({'cmd'}, 'v')
     hs.pasteboard.setContents(pasteboard)
+    functionMode:exit()
 end
 
 function showTime()
@@ -293,3 +303,18 @@ function urlToURI()
     hs.pasteboard.setContents(pasteboard)
 end
 --- ==========
+
+
+
+function windowsAlignHorizontal()
+    alterWindows()
+    functionMode:exit()
+end
+function windowsAlignVertical()
+    balanceWindows()
+    functionMode:exit()
+end
+function windowMenu()
+    windowsalignhorizontal = hs.hotkey.bind({}, 'a', function() windowsAlignHorizontal() end)
+    windowsalignvertical   = hs.hotkey.bind({}, 'b', function() windowsAlignVertical() end)
+end

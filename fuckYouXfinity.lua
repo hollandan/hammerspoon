@@ -4,6 +4,7 @@ lastSSID = hs.wifi.currentNetwork()
 xfuckinityIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 880, 1500, 20})
 xfuckinityIndicator:setAlpha(.4)
 xfuckinityIndicator:setFill(true)
+xfuckinityIndicator:behavior("canJoinAllSpaces")
 
 local trustedNetworks = {
     home = "HOME-8B62",

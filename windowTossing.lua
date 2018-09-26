@@ -96,9 +96,9 @@ hs.hotkey.bind(right_command, '/', chain({
 
 
 hs.hotkey.bind(right_command, ',', chain({
-  grid.fullScreen,
-  grid.centeredBig,
-  grid.centeredSmall,
+  grid.allPad,
+  grid.wideVertical,
+  grid.tallHorizontal,
 }))
 
 -- stolen and modified from https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
@@ -377,8 +377,9 @@ hs.hotkey.bind(right_command, 'd', function()
     showDesktop()
 end)
 
-hs.hotkey.bind({'ctrl', 'alt', 'shift', 'cmd'}, 'w', function()
+hs.hotkey.bind(double_command, 'w', function()
     showApplicationWindows()
+    navigationMode:enter()
 end)
 
 function showApplicationWindows()
@@ -405,9 +406,10 @@ function showDesktop()
     --     -- otherwise, set the current app to the finder, so we can manipulate
     --     -- the desktop with the keyboard
     --     hs.osascript.applescript([[
-    --         tell application "Finder" to activate
+    --         tell application "Finder" to activate desktop
     --     ]])
     -- end
+
 end
 
 function identifyFocusedWindowLocation()

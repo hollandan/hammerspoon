@@ -6,6 +6,7 @@ local function focusLastFocused()
     if #lastFocused > 0 then lastFocused[1]:focus() end
 end
 
+-- a b g o q u x y z
 -----------------
 -- App Chooser
 -----------------
@@ -17,6 +18,11 @@ local apps = {
       ["subText"] = "Google Chrome",
       ["action"]  = "l"
     },
+
+    { ["text"]    = "CA",
+      ["subText"] = "Calendar",
+      ["action"]  = "l"
+    },
     { ["text"]    = "D",
       ["subText"] = "Cyberduck",
       ["action"]  = "l"
@@ -25,17 +31,23 @@ local apps = {
       ["subText"] = "TextEdit",
       ["action"]  = "l"
     },
-    { ["text"]    = "I",
-      ["subText"] = "iTunes",
-      ["action"]  = "l"
-    },
-    { ["text"]    = "F",
-      ["subText"] = "FirefoxDeveloperEdition",
+    {
+      ["text"]    = "F",
+      ["subText"] = "Firefox",
       ["action"]  = "l"
     },
     { ["text"]    = "H",
       ["subText"] = "Hammerspoon",
       ["action"]  = "l"
+    },
+    {
+      ["text"]    = "I",
+      ["subText"] = "iTunes",
+      ["action"]  = "l"
+    },
+    { ["text"]    = "J",
+      ["subText"] = "open -a '/Applications/Google Chrome.app' https://calendar.google.com/calendar/r",
+      ["action"]  = "e"
     },
     { ["text"]    = "K",
       ["subText"] = "Karabiner-Elements",
@@ -46,13 +58,23 @@ local apps = {
       ["action"]  = "l"
     },
     {
-      ["text"]     = "M",
-      ["subText"]  = "Mail",
+      ["text"]    = "M",
+      ["subText"] = "Mail",
       ["action"]  = "l"
     },
     {
-      ["text"]     = "N",
-      ["subText"]  = "open -a /Applications/FirefoxDeveloperEdition.app https://admin.nsgroupllc.com/",
+      ["text"]    = "MA",
+      ["subText"] = "Mail",
+      ["action"]  = "l"
+    },
+    {
+      ["text"]    = "ME",
+      ["subText"] = "Messages",
+      ["action"]  = "l"
+    },
+    {
+      ["text"]    = "N",
+      ["subText"] = "open -a /Applications/Firefox.app https://admin.nsgroupllc.com/",
       ["action"]  = "e"
     },
     { ["text"]    = "P",
@@ -60,8 +82,8 @@ local apps = {
       ["action"]  = "l"
     },
     {
-      ["text"]     = "R",
-      ["subText"]  = "open -a /Applications/Safari.app https://www.mixcloud.com/mountainchill/",
+      ["text"]    = "R",
+      ["subText"] = "open -a /Applications/Safari.app http://player.radiocoalition.org/mountainchill?l&autoplay=1",
       ["action"]  = "e"
     },
     { ["text"]    = "S",
@@ -77,8 +99,8 @@ local apps = {
       ["action"]  = "l"
     },
     {
-      ["text"]     = "W",
-      ["subText"]  = "open -a /Applications/Safari.app https://weather.com/weather/hourbyhour/l/USMI0028:1:US",
+      ["text"]    = "W",
+      ["subText"] = "open -a /Applications/Safari.app https://weather.com/weather/hourbyhour/l/USMI0028:1:US",
       ["action"]  = "e"
     },
 }
@@ -93,21 +115,27 @@ local appChooser = hs.chooser.new(function(choice)
 end)
 appChooser:bgDark(true)
 appChooser:searchSubText(false)
+appChooser:width(50)
 
 hs.hotkey.bind(right_command, 'f19', function()
     if (appChooser:isVisible()) then
         appChooser:hide()
     else
         appChooser:choices(apps)
-        appChooser:rows(5)
+        appChooser:rows(1)
         navigationMode:exit()
-        appChooser:show()
+        local topleftpoint = hs.geometry.point(
+            hs.screen.mainScreen():frame().w*.25,
+            0
+        )
+        appChooser:show(topleftpoint)
         hs.eventtap.keyStroke({}, "delete")
         -- ?? enter a mode here, where:
             -- pressing letter keys sends the letter, then enter
             -- pressing cmd+w, right_shift sends escape
     end
 end)
+
 
 -----------------
 -- Window Chooser
@@ -123,12 +151,14 @@ function getChooserWindowList()
     local windows = hs.window.allWindows()
     windowlist = {}
     for _,win in pairs(windows) do
-        table.insert(windowlist, 
-            {
-                ["text"] = win:title(),
-                ["id"]   = win:id(),
-            }
-        )
+        if win:title() ~= "" then
+            table.insert(windowlist, 
+                {
+                    ["text"] = win:title(),
+                    ["id"]   = win:id(),
+                }
+            )
+        end
     end
     return windowlist
 end

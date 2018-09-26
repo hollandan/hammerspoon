@@ -33,6 +33,20 @@ hs.hotkey.bind({}, 'pad1', function()
     alterWindows()
 end)
 
+hs.hotkey.bind({}, 'pad2', function()
+    balanceWindows()
+end)
+hs.hotkey.bind({}, 'pad1', function()
+    alterWindows()
+end)
+
+hs.hotkey.bind(double_command, 'tab', function()
+    balanceWindows()
+end)
+hs.hotkey.bind(double_command, 'F16', function()
+    alterWindows()
+end)
+
 -- windowList = function() getWindowList() end
 
 function getLayoutWindowList()
@@ -180,12 +194,10 @@ end
 
 hs.hotkey.bind({'cmd', 'ctrl'}, 'a', function()
     resizeLayout()
-    hs.alert.show("?")
 end)
 
 hs.hotkey.bind({'cmd', 'ctrl'}, 's', function()
     resizeLayoutReverse()
-    hs.alert.show("!")
 end)
 
 function resizeLayout()
@@ -277,3 +289,15 @@ function resizeLayoutReverse()
         end
     end
 end
+
+
+
+-- V
+--     take the window on the left
+--         resize it laterally by some small amount
+--       <- H   L ->
+--     window on the right
+--         x: left window width
+--         y: right window height
+--         h: screen height - left window height
+--         w: screen width  - left widow width

@@ -24,5 +24,5 @@ hs.hotkey.bind(return_modifier, 'tab', function()
     os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
 end)
 
--- smartZoom w/ BetterTouchTool
+-- smartZoom handled w/ BetterTouchTool
 -- -- ({'alt, ctrl'}, 'f19')

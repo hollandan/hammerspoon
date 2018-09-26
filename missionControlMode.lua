@@ -1,5 +1,5 @@
 -- missionControlMode = hs.hotkey.modal.new(double_command, 'return')
-missionControlMode = hs.hotkey.modal.new(double_command, 'u')
+missionControlMode = hs.hotkey.modal.new(double_command, 'r')
 missionControlMode:bind({}      , 'escape', function() missionControlMode:exit() end)
 missionControlMode:bind({}      , 'eisu', function() missionControlMode:exit() end)
 missionControlMode:bind({}      , 'return' , function() missionControlMode:exit() end)
@@ -55,8 +55,6 @@ end
 
 function missionControlMode:exited()
     fastKeyStroke({}, "escape")
-    hs.alert.show("MissionControl Out")
-
     currentColor = focusedColor
     currentIndicator:setStrokeColor(currentColor);
     dashboard[1] = {

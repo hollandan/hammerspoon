@@ -27,6 +27,8 @@ urltospecificcontentpage       = hs.hotkey.bind({}, 'pad*', function() end)
 urltospecificstructuredcontent = hs.hotkey.bind({}, 'pad*', function() end)
 urltodomain                    = hs.hotkey.bind({}, 'pad*', function() end)
 urltouri                       = hs.hotkey.bind({}, 'pad*', function() end)
+windowsalignvertical           = hs.hotkey.bind({}, 'pad*', function() end)
+windowsalignhorizontal         = hs.hotkey.bind({}, 'pad*', function() end)
 
 -- hs.grid.setGrid('4x4')
 -- grid = {
@@ -65,6 +67,9 @@ grid = {
   topRightSplitBottom    = '6,3 6x3',
   bottomRightSplitTop    = '6,6 6x3',
   bottomRightSplitBottom = '6,9 6x3',
+  wideVertical           = '1,0 10x12',
+  tallHorizontal         = '0,1 12x10',
+  allPad                 = '1,1 10x10',
 }
 
 hs.grid.MARGINX = 0
@@ -193,3 +198,10 @@ end
 function mouseJump(offset)
     hs.mouse.setRelativePosition(hs.geometry(offset))
 end
+
+-- hs.hotkey.bind({}, 'delete', function()
+--     fastKeyStroke({}, 'eisu')
+-- end)
+
+-- double_command u
+-- service to veiw page source in terminal vim

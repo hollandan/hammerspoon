@@ -15,6 +15,9 @@
 -- ~/.config/karabiner/karabiner.json
 	-- https://pqrs.org/osx/karabiner/json.html
 
+-- karabiner logs located in:
+-- /Users/dan/.local/share/karabiner/log
+
       globals            = require 'globals'
 local autoload           = require 'autoload'
 local dashboard          = require 'dashboard'
@@ -28,6 +31,17 @@ local chooser            = require 'chooser'
 local mouse              = require 'mouse'
 local missionControlMode = require 'missionControlMode'
 local gaming             = require 'gaming'
+
+-- local interfacer         = require 'interfacer'
+-- local webivew            = require 'webview'
+
+hs.hotkey.bind({'shift'}, 'f1', function()
+    hs.brightness.set(15)
+end)
+
+hs.hotkey.bind({'shift'}, 'f2', function()
+    hs.brightness.set(100)
+end)
 
 -- local reloadbrowser      = require 'reloadbrowser'
 -- local playground         = require 'playground'

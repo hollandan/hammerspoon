@@ -134,7 +134,12 @@ function fullUp()
 end
 
 function fullDown()
-    hs.eventtap.keyStroke({'cmd'}, 'down')
+    local currentapp = hs.application.frontmostApplication()
+    if (string.match(currentapp:name(), 'Mail')) then
+        hs.eventtap.keyStroke({'cmd', 'alt'}, 'down')
+    else
+        hs.eventtap.keyStroke({'cmd'}, 'down')
+    end
 end
 
 function fullLeftAndSelect()
@@ -160,6 +165,8 @@ function pageUp()
         string.match(currentapp:name(), 'Firefox'))
     then
         hs.eventtap.keyStroke({'fn'}, 'pageup')
+    elseif (string.match(currentapp:name(), 'Preview')) then
+        hs.eventtap.keyStroke({'cmd', 'shift'}, 'up')
     else
         hs.eventtap.keyStroke({'alt'}, 'pageup')
     end
@@ -172,6 +179,8 @@ function pageDown()
         string.match(currentapp:name(), 'Firefox'))
     then
         hs.eventtap.keyStroke({'fn'}, 'pagedown')
+    elseif (string.match(currentapp:name(), 'Preview')) then
+        hs.eventtap.keyStroke({'cmd', 'shift'}, 'down')
     else
         hs.eventtap.keyStroke({'alt'}, 'pagedown')
     end
