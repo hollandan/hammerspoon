@@ -47,8 +47,6 @@ hs.hotkey.bind(double_command, 'F16', function()
     alterWindows()
 end)
 
--- windowList = function() getWindowList() end
-
 function getLayoutWindowList()
     local windows = hs.window.allWindows()
     windowlist = {}

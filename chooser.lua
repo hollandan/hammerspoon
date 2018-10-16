@@ -18,10 +18,13 @@ local apps = {
       ["subText"] = "Google Chrome",
       ["action"]  = "l"
     },
-
     { ["text"]    = "CA",
       ["subText"] = "Calendar",
       ["action"]  = "l"
+    },
+    { ["text"]    = "CHILL",
+      ["subText"] = "~/dotfiles/personal/scripts/ichill",
+      ["action"]  = "e"
     },
     { ["text"]    = "D",
       ["subText"] = "Cyberduck",
@@ -77,13 +80,20 @@ local apps = {
       ["subText"] = "open -a /Applications/Firefox.app https://admin.nsgroupllc.com/",
       ["action"]  = "e"
     },
+    {
+      ["text"]    = "O",
+      -- ["subText"] = "open -a /Applications/Safari.app https://rainwave.cc/ocremix/",
+      ["subText"] = "open -a '/Applications/Google Chrome.app' https://rainwave.cc/ocremix/",
+      ["action"]  = "e"
+    },
     { ["text"]    = "P",
       ["subText"] = "Preview",
       ["action"]  = "l"
     },
     {
       ["text"]    = "R",
-      ["subText"] = "open -a /Applications/Safari.app http://player.radiocoalition.org/mountainchill?l&autoplay=1",
+      -- ["subText"] = "open -a /Applications/Safari.app http://player.radiocoalition.org/mountainchill?l&autoplay=1",
+      ["subText"] = "open -a '/Applications/Google Chrome.app' http://player.radiocoalition.org/mountainchill?l&autoplay=1",
       ["action"]  = "e"
     },
     { ["text"]    = "S",
@@ -107,17 +117,24 @@ local apps = {
 
 local appChooser = hs.chooser.new(function(choice)
     if not choice then focusLastFocused(); return end
+    -- if not choice then os.execute("~/dotfiles/personal/scripts/ichill"); return end
     if (choice.action == "l") then
         hs.application.launchOrFocus(choice.subText)
-    else
+    elseif (choice.action == "e") then
         os.execute(choice.subText)
     end
 end)
+
 appChooser:bgDark(true)
 appChooser:searchSubText(false)
 appChooser:width(50)
 
-hs.hotkey.bind(right_command, 'f19', function()
+-- launch chooser outside of terminal
+hs.hotkey.bind(right_command, 'f19', function() launchChooser() end)
+-- lauch chooser inside of terminal
+hs.hotkey.bind(right_command, 'escape', function() launchChooser() end)
+
+function launchChooser()
     if (appChooser:isVisible()) then
         appChooser:hide()
     else
@@ -129,12 +146,15 @@ hs.hotkey.bind(right_command, 'f19', function()
             0
         )
         appChooser:show(topleftpoint)
+        -- appChooser:query('') will clear the query... but leaves only one item selected
+        -- But, this clears the query AND shows all options
         hs.eventtap.keyStroke({}, "delete")
+
         -- ?? enter a mode here, where:
             -- pressing letter keys sends the letter, then enter
             -- pressing cmd+w, right_shift sends escape
     end
-end)
+end
 
 
 -----------------
@@ -177,8 +197,8 @@ hs.hotkey.bind(right_command, 'w', function()
         windowChooser:choices(getChooserWindowList())
         navigationMode:exit()
         windowChooser:show()
-        -- Unfortuantly, we don't seem to be able to clear the last search with windowChooser:query(nil) ...
-        -- But, this works!
+        -- windowChooser:query('') will clear the query... but leaves only one item selected
+        -- But, this clears the query AND shows all options
         hs.eventtap.keyStroke({}, "delete")
     end
 end)

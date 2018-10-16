@@ -175,6 +175,76 @@ function increaseWindowWidth()
   win:setFrame(f)
 end
 
+function nudgeWindowUp()
+    local f = hs.window.focusedWindow():frame()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    f.y = f.y - 10
+    win:setFrame(f)
+end
+
+function nudgeWindowDown()
+    local f = hs.window.focusedWindow():frame()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    f.y = f.y + 10
+    win:setFrame(f)
+end
+
+function nudgeWindowRight()
+    local f = hs.window.focusedWindow():frame()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    f.x = f.x + 10
+    win:setFrame(f)
+end
+
+function nudgeWindowLeft()
+    local f = hs.window.focusedWindow():frame()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+
+    f.x = f.x - 10
+    win:setFrame(f)
+end
+
+hs.hotkey.bind({}, 'pad3', function()
+    nudgeWindowUp()
+end)
+hs.hotkey.bind({}, 'pad4', function()
+    nudgeWindowDown()
+end)
+hs.hotkey.bind({}, 'pad5', function()
+    nudgeWindowLeft()
+end)
+hs.hotkey.bind({}, 'pad6', function()
+    nudgeWindowRight()
+end)
+
+hs.hotkey.bind({"shift"}, 'pad3', function()
+    nudgeWindowUp()
+    nudgeWindowUp()
+    nudgeWindowUp()
+end)
+hs.hotkey.bind({"shift"}, 'pad4', function()
+    nudgeWindowDown()
+    nudgeWindowDown()
+    nudgeWindowDown()
+end)
+hs.hotkey.bind({"shift"}, 'pad5', function()
+    nudgeWindowLeft()
+    nudgeWindowLeft()
+    nudgeWindowLeft()
+end)
+hs.hotkey.bind({"shift"}, 'pad6', function()
+    nudgeWindowRight()
+    nudgeWindowRight()
+    nudgeWindowRight()
+end)
+
 hs.hotkey.bind(right_command, 't', function()
     local rect = identifyFocusedWindowLocation()
 
@@ -542,4 +612,5 @@ function identifyMarkedWindows()
         hs.alert.show(win)
     end
 end
+
 

@@ -13,6 +13,8 @@ functionMode:bind({} , 's' , function() badAssMenu() end)
 functionMode:bind({} , 'd' , function() dateStamp() end)
 functionMode:bind({} , 'f' , function() moveFocusMenuHelp() end)
 
+functionMode:bind({} , 'j' , function() toggleJavascriptInBrowser() end)
+
 functionMode:bind({} , 'l' , function() lowercaseWord() end)
 functionMode:bind({} , 'c' , function() capitalizeWord() end)
 functionMode:bind({} , 'u' , function() uppercaseWord() end)
@@ -317,4 +319,60 @@ end
 function windowMenu()
     windowsalignhorizontal = hs.hotkey.bind({}, 'a', function() windowsAlignHorizontal() end)
     windowsalignvertical   = hs.hotkey.bind({}, 'b', function() windowsAlignVertical() end)
+end
+
+-- toggle javascript in browsers
+function toggleJavascriptInBrowser()
+
+    functionMode:exit()
+    local app = hs.application.frontmostApplication():name();
+    if string.match(app , 'Firefox') or string.match(app , 'Firefox Developer Edition') then
+        hs.eventtap.keyStroke({'cmd'}, 't')
+        hs.eventtap.keyStrokes("about:config")
+        hs.timer.usleep(600)
+        hs.eventtap.keyStroke({}, 'return')
+        hs.eventtap.keyStrokes("javascript.enabled")
+        hs.timer.usleep(800)
+        hs.eventtap.keyStroke({}, 'return')
+        hs.eventtap.keyStroke({}, 'tab')
+        hs.eventtap.keyStroke({}, 'return')
+        hs.eventtap.keyStroke({'cmd'}, 'w')
+
+    elseif string.match(app , 'Google Chrome') then
+        hs.eventtap.keyStroke({'cmd'}, 't')
+        hs.eventtap.keyStrokes("chrome://settings/content/javascript")
+        hs.timer.usleep(1000)
+        hs.eventtap.keyStroke({}, 'return')
+
+        -- there's some goofy delay here while chrome forces focus on the 
+        -- "Search Settings" bar. Hitting cmd-l 4 times seems to eat the delay
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+        hs.eventtap.keyStroke({'cmd'}, 'l')
+
+        -- the amount of times you need to hit tab depend on the width of the
+        -- window. But, you can always reach the desired field by hitting
+        -- shift-tab 3 times
+        hs.eventtap.keyStroke({"shift"}, 'tab')
+        hs.eventtap.keyStroke({"shift"}, 'tab')
+        hs.eventtap.keyStroke({"shift"}, 'tab')
+
+        hs.eventtap.keyStroke({}, 'return')
+
+        hs.eventtap.keyStroke({'cmd'}, 'w')
+
+    elseif string.match(app , 'Safari') then
+        hs.osascript.applescript([[
+        tell application "System Events"
+            tell process "Safari"
+                set frontmost to true
+                click menu item "Disable JavaScript" of menu "Develop" of menu bar 1
+            end tell
+        end tell
+        ]])
+    else
+        hs.alert.show("Not in browser; js not toggled.")
+    end
+
 end

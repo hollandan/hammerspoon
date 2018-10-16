@@ -5,7 +5,9 @@
     -- f17 when tapped to exit navigationMode
 -- caps_lock
     -- control when used as modifier
-    -- f19 when tapped to enter navigationMode
+    -- when tapped
+        -- f19 when tapped to enter navigationMode OUSIDE terminal emulators
+        -- escape when tapped INSIDE terminal emulators
 -- return
     -- control when used as modifier
     -- return when used alone
@@ -17,6 +19,10 @@ double_command  = {'cmd', 'alt', 'ctrl', 'shift'}
 hs.hotkey.bind(double_command, 'h', function()
     hs.reload()
 end)
+
+-- hs.hotkey.bind(double_command, 'k', function()
+--     hs.execute("'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile Default")
+-- end)
 
 -- nsgMenu
 -- Define these as placeholders, so Hammerspoon doesn't throw undefined errors
@@ -177,6 +183,17 @@ allwindows:subscribe(hs.window.filter.hasNoWindows, function () redrawBorder() e
 hs.hotkey.bind({'ctrl'}, 'g', function()
     fastKeyStroke({}, 'forwarddelete')
 end)
+
+-- -- How do we hide iTerm's hotkey window when we swithch apps...?
+-- hs.hotkey.bind({'cmd'}, 'tab', function()
+--     if string.match(win:application():name() , 'iTerm2') then
+--         hs.eventtap.keyStroke({'ctrl'} , 'space')
+--         hs.eventtap.keyStroke({'cmd'} , 'tab')
+--         hs.alert.show("!")
+--     else
+--         hs.eventtap.keyStroke({'cmd'} , 'tab')
+--     end
+-- end)
 
 -- clever way to prevent system beeps from tapping right_command when not in navigationMode
 hs.hotkey.bind({}, 'f17', function()

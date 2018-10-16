@@ -292,6 +292,9 @@ function previousTab()
         fastKeyStroke({'ctrl', 'shift'}, 'tab')
     elseif (string.match(currentapp:name(), 'Excel')) then
         fastKeyStroke({'cmd'}, 'pageup')
+    elseif (string.match(currentapp:name(), 'Mail')) then
+        navigationMode:exit()
+        fastKeyStroke({}, 'w')
     else
         -- fastKeyStroke({'ctrl'}, 'w')
         -- ...no idea why, but... fastKeyStroke just doesn't work, and eventtap needs to be called twice to get the functionality...
@@ -306,6 +309,9 @@ function nextTab()
         fastKeyStroke({'ctrl'}, 'tab')
     elseif (string.match(currentapp:name(), 'Excel')) then
         fastKeyStroke({'cmd'}, 'pagedown')
+    elseif (string.match(currentapp:name(), 'Mail')) then
+        navigationMode:exit()
+        fastKeyStroke({}, 'o')
     else
         -- fastKeyStroke({'ctrl'}, 'o')
         -- ...no idea why, but... fastKeyStroke just doesn't work, and eventtap needs to be called twice to get the functionality...
