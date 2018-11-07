@@ -6,6 +6,7 @@ local function focusLastFocused()
     if #lastFocused > 0 then lastFocused[1]:focus() end
 end
 
+-- Leftovers:
 -- a b g o q u x y z
 -----------------
 -- App Chooser
@@ -13,6 +14,7 @@ end
     -- actions:
         --  l => Launch
         --  e => Execute
+        --  f => Call Function
 local apps = {
     { ["text"]    = "C",
       ["subText"] = "Google Chrome",
@@ -53,8 +55,8 @@ local apps = {
       ["action"]  = "e"
     },
     { ["text"]    = "K",
-      ["subText"] = "Karabiner-Elements",
-      ["action"]  = "l"
+        ["subText"] = "open -a '/Applications/Karabiner-Elements.app'",
+      ["action"]  = "e"
     },
     { ["text"]    = "L",
       ["subText"] = "Calendar",
@@ -64,6 +66,11 @@ local apps = {
       ["text"]    = "M",
       ["subText"] = "Mail",
       ["action"]  = "l"
+    },
+    {
+      ["text"]    = "MS",
+      ["subText"] = "searchMailFullScreen",
+      ["action"]  = "f"
     },
     {
       ["text"]    = "MA",
@@ -117,11 +124,12 @@ local apps = {
 
 local appChooser = hs.chooser.new(function(choice)
     if not choice then focusLastFocused(); return end
-    -- if not choice then os.execute("~/dotfiles/personal/scripts/ichill"); return end
     if (choice.action == "l") then
         hs.application.launchOrFocus(choice.subText)
     elseif (choice.action == "e") then
         os.execute(choice.subText)
+    elseif (choice.action == "f") then
+        _G[choice.subText]()
     end
 end)
 
@@ -202,3 +210,20 @@ hs.hotkey.bind(right_command, 'w', function()
         hs.eventtap.keyStroke({}, "delete")
     end
 end)
+
+hs.hotkey.bind(double_command, '2', function()
+    searchMailFullScreen()
+end)
+
+function searchMailFullScreen()
+    hs.osascript.applescript([[
+    tell application "System Events"
+        tell process "Mail"
+            set frontmost to true
+            click menu item "New Viewer Window" of menu "File" of menu bar 1
+            click menu item "Enter Full Screen" of menu "View" of menu bar 1
+            click menu item "Mailbox Search" of it's menu of menu item "Find" of it's menu of menu bar item "Edit" of menu bar 1
+        end tell
+    end tell
+    ]])
+end

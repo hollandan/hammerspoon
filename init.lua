@@ -1,7 +1,8 @@
 -- ***** Please Note!  ************************************************************
 -- ** These are my personal settings
 -- ** They are not not well documented
--- ** They rely on other configs from:
+-- ** They rely on configs from:
+--    * ~/.hammerspoon/
 --    * ~/.config/karabiner/karabiner.json
 --    * ~/Library/KeyBindings/DefaultKeyBinding.dict
 --    * Better Touch Tool

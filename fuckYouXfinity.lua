@@ -28,7 +28,7 @@ function ssidChangedCallback()
     -- xfinity is a fucking thief if
         --  any of my trusted networks are in hs.wifi.availableNetworks
         --  and
-        --  I'm connected to xfinity, not one of them
+        --  I'm connected to xfinity, instead of one of them
 
     if (newSSID == "xfinitywifi") then
 

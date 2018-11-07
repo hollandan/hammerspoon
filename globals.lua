@@ -102,7 +102,6 @@ emptyColor          = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
 currentColor    = focusedColor
 
 currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
-currentIndicator:setLevel("_MinimumWindowLevelKey")
 -- https://github.com/jwkvam/hammerspoon-config/blob/master/init.lua#L233
 
 -- b doesn't work...
@@ -118,8 +117,8 @@ hs.hotkey.bind(double_command, 'l', function()
     end
 end)
 
-------------------------------------------------
---This is freaking cool, but it draws so slowly it's way too distracting to work with
+-- ----------------------------------------------
+-- -- -- This is freaking cool, but it draws so slowly it's way too distracting to work with
 -- hs.window.highlight.ui.overlay = true
 -- -- hs.window.highlight.ui.overlayColor = {0.2,0.05,0,0.25}
 -- hs.window.highlight.ui.overlayColor = {0,0,0,0.2}
@@ -139,7 +138,7 @@ end)
 --     hs.window.highlight.start()
 -- -- end
 -- hs.hotkey.bind('ctrl-cmd','\\', nil,hs.window.highlight.toggleIsolate)
-------------------------------------------------
+-- ----------------------------------------------
 
 function redrawBorder()
     if showBorders then
@@ -157,6 +156,7 @@ function redrawBorder()
             currentIndicator:setFill(false)
             currentIndicator:setStrokeWidth(8)
             currentIndicator:setRoundedRectRadii(5.0, 5.0)
+            currentIndicator:setLevel("dock")
 
             if string.match(win:application():name() , 'iTerm'    ) or
                string.match(win:title()              , 'Spotlight') or
@@ -177,6 +177,8 @@ allwindows:subscribe(hs.window.filter.windowCreated, function () redrawBorder() 
 allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
+allwindows:subscribe(hs.window.filter.windowVisible, function () redrawBorder() end)
+-- allwindows:subscribe(hs.window.filter.hasNoWindows, function () currentIndicator:hide() end)
 allwindows:subscribe(hs.window.filter.hasNoWindows, function () redrawBorder() end)
 
 

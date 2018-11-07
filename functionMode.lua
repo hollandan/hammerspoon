@@ -60,7 +60,6 @@ function functionMode:exited()
     urltospecificstructuredcontent:disable()
     urltospecificcontentpage:disable()
 
-
     windowsalignvertical:disable()
     windowsalignhorizontal:disable()
 
