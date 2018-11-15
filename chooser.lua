@@ -194,6 +194,7 @@ end
 local windowChooser = hs.chooser.new(function(choice)
     if not choice then focusLastFocused(); return end
     hs.window(choice.id):focus()
+    showBorders()
 end)
 windowChooser:bgDark(true)
 windowChooser:searchSubText(true)

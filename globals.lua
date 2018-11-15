@@ -90,7 +90,7 @@ markedFrameCache = {}
 -- use this as a placeholder to retain clipboard contents when performing copy/pastes in scripts
 pasteboard = ""
 
-showBorders      = true
+showborders      = true
 -- for color ideas: http://www.rapidtables.com/web/color/RGB_Color.htm
 focusedColor        = {["red"]=0,["blue"]=.6,["green"]=.1,["alpha"]=0.5}
 navigationColor     = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
@@ -104,16 +104,24 @@ currentColor    = focusedColor
 currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
 -- https://github.com/jwkvam/hammerspoon-config/blob/master/init.lua#L233
 
+
+function showBorders()
+    showborders = false
+    currentIndicator:hide()
+end
+function hideBorders()
+    showborders = true
+    redrawBorder()
+    currentIndicator:show()
+end
+
 -- b doesn't work...
 -- so, l for "lines"
 hs.hotkey.bind(double_command, 'l', function()
-    if showBorders then
-        showBorders = false
-        currentIndicator:hide()
+    if showborders then
+        showBorders()
     else
-        showBorders = true
-        redrawBorder()
-        currentIndicator:show()
+        hideBorders()
     end
 end)
 
@@ -141,7 +149,7 @@ end)
 -- ----------------------------------------------
 
 function redrawBorder()
-    if showBorders then
+    if showborders then
         win = hs.window.focusedWindow()
 
         if win ~= nil then
@@ -151,6 +159,7 @@ function redrawBorder()
             if currentIndicator ~= nil then
                 currentIndicator:delete()
             end
+
             currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
             currentIndicator:setStrokeColor(currentColor)
             currentIndicator:setFill(false)
@@ -158,9 +167,10 @@ function redrawBorder()
             currentIndicator:setRoundedRectRadii(5.0, 5.0)
             currentIndicator:setLevel("dock")
 
+               -- string.match(win:title()              , 'Chooser'  ) then
             if string.match(win:application():name() , 'iTerm'    ) or
-               string.match(win:title()              , 'Spotlight') or
-               string.match(win:title()              , 'Chooser'  ) then
+               string.match(win:application():name() , 'Grab'     ) or
+               string.match(win:title()              , 'Spotlight') then
                 currentIndicator:setStrokeColor(emptyColor)
             end
             currentIndicator:show()
@@ -223,4 +233,4 @@ end
 -- end)
 
 -- double_command u
--- service to veiw page source in terminal vim
+-- service to view page source in terminal vim
