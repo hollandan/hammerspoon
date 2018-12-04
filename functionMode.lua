@@ -35,7 +35,9 @@ functionMode:bind({} , 'z' , function() moveFocusToMenuBar() end)
 
 function functionMode:entered()
     currentColor = functionColor
-    currentIndicator:setStrokeColor(currentColor);
+    if currentIndicator ~= nil then
+        currentIndicator:setStrokeColor(currentColor);
+    end
     dashboard[1] = {
         type = "rectangle",
         fillColor = functionColor
@@ -44,7 +46,9 @@ end
 
 function functionMode:exited()
     currentColor = focusedColor
-    currentIndicator:setStrokeColor(currentColor);
+    if currentIndicator ~= nil then
+        currentIndicator:setStrokeColor(currentColor);
+    end
     dashboard[1] = {
         type = "rectangle",
         fillColor = darkColor

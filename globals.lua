@@ -101,15 +101,14 @@ emptyColor          = {['red']=0,['blue']=0,['green']=0,['alpha']=0.0}
 
 currentColor    = focusedColor
 
-currentIndicator = hs.drawing.rectangle(hs.geometry.rect{0, 0, 0, 0})
+-- currentIndicator = hs.drawing.rectangle(hs.geometry.rect(1, 1, 1, 1))
 -- https://github.com/jwkvam/hammerspoon-config/blob/master/init.lua#L233
 
-
-function showBorders()
+function hideBorders()
     showborders = false
     currentIndicator:hide()
 end
-function hideBorders()
+function showBorders()
     showborders = true
     redrawBorder()
     currentIndicator:show()
@@ -119,9 +118,9 @@ end
 -- so, l for "lines"
 hs.hotkey.bind(double_command, 'l', function()
     if showborders then
-        showBorders()
-    else
         hideBorders()
+    else
+        showBorders()
     end
 end)
 
@@ -151,7 +150,6 @@ end)
 function redrawBorder()
     if showborders then
         win = hs.window.focusedWindow()
-
         if win ~= nil then
             top_left = win:topLeft()
             size = win:size()
@@ -160,22 +158,28 @@ function redrawBorder()
                 currentIndicator:delete()
             end
 
-            currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
-            currentIndicator:setStrokeColor(currentColor)
-            currentIndicator:setFill(false)
-            currentIndicator:setStrokeWidth(8)
-            currentIndicator:setRoundedRectRadii(5.0, 5.0)
-            currentIndicator:setLevel("dock")
+            local winapp   = win:application():name()
+            local wintitle = win:title()
 
-               -- string.match(win:title()              , 'Chooser'  ) then
-            if string.match(win:application():name() , 'iTerm'    ) or
-               string.match(win:application():name() , 'Grab'     ) or
-               string.match(win:title()              , 'Spotlight') then
-                currentIndicator:setStrokeColor(emptyColor)
+            if winapp   == 'iTerm2'    or
+               winapp   == 'Grab'      or
+               wintitle == 'Spotlight' then
+               if currentIndicator ~= nil then
+                   currentIndicator:delete()
+               end
+            else
+                currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
+                currentIndicator:setStrokeColor(currentColor)
+                currentIndicator:setFill(false)
+                currentIndicator:setStrokeWidth(8)
+                currentIndicator:setRoundedRectRadii(5.0, 5.0)
+                currentIndicator:setLevel("dock")
+                currentIndicator:show()
             end
-            currentIndicator:show()
         else
-            currentIndicator:hide()
+            if currentIndicator ~= nil then
+                currentIndicator:delete()
+            end
         end
     end
 end
@@ -188,9 +192,7 @@ allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() 
 allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowVisible, function () redrawBorder() end)
--- allwindows:subscribe(hs.window.filter.hasNoWindows, function () currentIndicator:hide() end)
 allwindows:subscribe(hs.window.filter.hasNoWindows, function () redrawBorder() end)
-
 
 hs.hotkey.bind({'ctrl'}, 'g', function()
     fastKeyStroke({}, 'forwarddelete')
@@ -217,7 +219,6 @@ fastKeyStroke = function(modifiers, character)
   local event = require('hs.eventtap').event
   event.newKeyEvent(modifiers, string.lower(character), true):post()
   event.newKeyEvent(modifiers, string.lower(character), false):post()
-  -- hs.alert.show("hi!")
 end
 
 -- https://github.com/mgee/hammerspoon-config/blob/master/init.lua

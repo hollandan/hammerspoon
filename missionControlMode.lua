@@ -45,7 +45,9 @@ function missionControlMode:entered()
     mouseNudge({x = -20, y = -20})
 
     currentColor = missionControlColor
-    currentIndicator:setStrokeColor(currentColor)
+    if currentIndicator ~= nil then
+        currentIndicator:setStrokeColor(currentColor)
+    end
 
     dashboard[1] = {
         type = "rectangle",
@@ -56,7 +58,9 @@ end
 function missionControlMode:exited()
     fastKeyStroke({}, "escape")
     currentColor = focusedColor
-    currentIndicator:setStrokeColor(currentColor);
+    if currentIndicator ~= nil then
+        currentIndicator:setStrokeColor(currentColor);
+    end
     dashboard[1] = {
         type = "rectangle",
         fillColor = darkColor

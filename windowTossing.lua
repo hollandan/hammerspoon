@@ -526,11 +526,11 @@ function windowInfo()
     local f = hs.window.focusedWindow():frame()
     local max = win:screen():frame()
 
+    hs.alert.show(win:title())
+    hs.alert.show(win:application():name())
     hs.alert.show("Max   : " .. max.w .. "W x " .. max.h .."H")
     hs.alert.show("Window: " .. f.w .. "W x " .. f.h .. "H")
     hs.alert.show("Pos   : " .. f.x .. "W x " .. f.y .. "H")
-    hs.alert.show(win:title())
-    hs.alert.show(win:application():name())
 
     local rect = identifyFocusedWindowLocation()
     if rect.top then hs.alert.show("top") end

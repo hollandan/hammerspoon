@@ -86,7 +86,9 @@ navigationMode:bind({}            , '/'      , function() fullDown()            
 
 function navigationMode:entered()
     currentColor = navigationColor
-    currentIndicator:setStrokeColor(currentColor);
+    if currentIndicator ~= nil then
+        currentIndicator:setStrokeColor(currentColor);
+    end
 
     dashboard[1] = {
         type = "rectangle",
@@ -94,16 +96,20 @@ function navigationMode:entered()
     }
 
     -- If we're in iTerm, don't do any navigation remapping
-    local currentapp = hs.application.frontmostApplication();
-    if (string.match(currentapp:name(), 'iTerm2')) then
-        navigationMode:exit()
-        functionMode:exit()
-    end
+    -- Handled by applicationWatcher instead
+    -- local currentapp = hs.application.frontmostApplication();
+    -- if (string.match(currentapp:name(), 'iTerm2')) then
+    --     navigationMode:exit()
+    --     functionMode:exit()
+    -- end
+
 end
 
 function navigationMode:exited()
     currentColor = focusedColor
-    currentIndicator:setStrokeColor(currentColor);
+    if currentIndicator ~= nil then
+        currentIndicator:setStrokeColor(currentColor);
+    end
     dashboard[1] = {
         type = "rectangle",
         fillColor = darkColor
@@ -368,10 +374,10 @@ function applicationWatcherCallback(appName, eventType, appObject)
             navigationMode:exit()
             functionMode:exit()
             breakModes = true
-            currentIndicator:hide()
+            redrawBorder()
         else
             breakModes = false
-            currentIndicator:show()
+            redrawBorder()
         end
     end
 
