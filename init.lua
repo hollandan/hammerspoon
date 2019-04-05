@@ -17,10 +17,13 @@ local fuckYouXfinity     = require 'fuckYouXfinity'
 local chooser            = require 'chooser'
 local mouse              = require 'mouse'
 local missionControlMode = require 'missionControlMode'
+local editinvim          = require 'editinvim'
 local gaming             = require 'gaming'
 
+require("hs.ipc")
+hs.ipc.cliInstall()
+
 -- local interfacer         = require 'interfacer'
--- local webivew            = require 'webview'
 
 hs.hotkey.bind({'shift'}, 'f1', function()
     hs.brightness.set(15)

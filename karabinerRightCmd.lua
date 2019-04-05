@@ -82,8 +82,7 @@ hs.hotkey.bind(right_command, '`', function()
     hs.eventtap.rightClick(hs.mouse.getAbsolutePosition())
 
     if (string.match(currentapp:name(), 'iTerm')) then
-        hs.eventtap.keyStroke({}, 's');
-        hs.eventtap.keyStroke({}, 'return');
+        hs.eventtap.keyStroke({}, 'm');
     end
 end)
 

@@ -105,11 +105,15 @@ hs.hotkey.bind(right_command, ',', chain({
 function toggleWindowMaximized()
     local win = hs.window.focusedWindow()
 
-    if identifyFocusedWindowLocation().fullscreen then
-        snapBack()
+    if string.match(win:application():name() , 'iTerm2') then
+        hs.eventtap.keyStroke({'cmd'}, 'return')
     else
-        fullFrameCache[win:id()] = win:frame()
-        win:maximize()
+        if identifyFocusedWindowLocation().fullscreen then
+            snapBack()
+        else
+            fullFrameCache[win:id()] = win:frame()
+            win:maximize()
+        end
     end
 
     redrawBorder()
@@ -466,19 +470,16 @@ function showDesktop()
 
     -- Show Desktop is kind of stupid in that it does not automatically change
     -- the current app to the Finder
-
-    -- local currentapp = hs.application.frontmostApplication();
-    -- hs.alert.show(currentapp:name())
-    -- if (string.match(currentapp:name(), 'Finder')) then
-    --     -- so, if we're in the finder, cmd-tab back from where we came
-    --     hs.eventtap.keyStroke({'cmd'}, 'tab')
-    -- else
-    --     -- otherwise, set the current app to the finder, so we can manipulate
-    --     -- the desktop with the keyboard
-    --     hs.osascript.applescript([[
-    --         tell application "Finder" to activate desktop
-    --     ]])
-    -- end
+    if (string.match(currentapp:name(), 'Finder')) then
+        -- so, if we're in the finder, cmd-tab back from where we came
+        hs.eventtap.keyStroke({'cmd'}, 'tab')
+    else
+        -- otherwise, set the current app to the finder, so we can manipulate
+        -- the desktop with the keyboard
+        hs.osascript.applescript([[
+            tell application "Finder" to activate desktop
+        ]])
+    end
 
 end
 

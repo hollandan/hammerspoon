@@ -155,7 +155,8 @@ function redrawBorder()
             size = win:size()
 
             if currentIndicator ~= nil then
-                currentIndicator:delete()
+                -- currentIndicator:delete()
+                currentIndicator:hide()
             end
 
             local winapp   = win:application():name()
@@ -165,7 +166,8 @@ function redrawBorder()
                winapp   == 'Grab'      or
                wintitle == 'Spotlight' then
                if currentIndicator ~= nil then
-                   currentIndicator:delete()
+                   -- currentIndicator:delete()
+                   currentIndicator:hide()
                end
             else
                 currentIndicator = hs.drawing.rectangle(hs.geometry.rect(top_left['x'], top_left['y'], size['w'], size['h']))
@@ -178,7 +180,8 @@ function redrawBorder()
             end
         else
             if currentIndicator ~= nil then
-                currentIndicator:delete()
+                -- currentIndicator:delete()
+                currentIndicator:hide()
             end
         end
     end

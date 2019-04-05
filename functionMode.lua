@@ -122,6 +122,7 @@ end
 
 function appendText()
     fastKeyStroke({'ctrl'}, '7')
+    navigationMode:exit()
     functionMode:exit()
 end
 

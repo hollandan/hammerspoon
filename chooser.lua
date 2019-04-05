@@ -120,6 +120,11 @@ local apps = {
       ["subText"] = "open -a /Applications/Safari.app https://weather.com/weather/hourbyhour/l/USMI0028:1:US",
       ["action"]  = "e"
     },
+    {
+      ["text"]    = "x",
+      ["subText"] = "open -a '/Applications/Google Chrome.app' https://login.xfinity.com/login",
+      ["action"]  = "e"
+    },
 }
 
 local appChooser = hs.chooser.new(function(choice)
@@ -210,10 +215,6 @@ hs.hotkey.bind(right_command, 'w', function()
         -- But, this clears the query AND shows all options
         hs.eventtap.keyStroke({}, "delete")
     end
-end)
-
-hs.hotkey.bind(double_command, '2', function()
-    searchMailFullScreen()
 end)
 
 function searchMailFullScreen()

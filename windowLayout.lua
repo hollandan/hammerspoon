@@ -40,10 +40,10 @@ hs.hotkey.bind({}, 'pad1', function()
     alterWindows()
 end)
 
-hs.hotkey.bind(double_command, 'tab', function()
+hs.hotkey.bind(double_command, '1', function()
     balanceWindows()
 end)
-hs.hotkey.bind(double_command, 'F16', function()
+hs.hotkey.bind(double_command, '2', function()
     alterWindows()
 end)
 

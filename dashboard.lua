@@ -38,9 +38,11 @@ if clocktimer == nil then
         local stamp = hs.execute("date +'%I:%M:%S %p %a %m/%d' | tr -d '\n'")
 
         -- local denmark = hs.execute("date -v +'21600S' +'%I:%M:%S %p' | tr -d '\n'")
+        -- local japan = hs.execute("date -v +'50400S' +'%I:%M:%S %p %a %m/%d' | tr -d '\n'")
 
         local text = stamp
         -- local text = denmark .. " | " .. stamp
+        -- local text = japan .. " | " .. stamp
         if string.len(remindme) > 0 then
             text = remindme .. " ┃ " .. text
         end
