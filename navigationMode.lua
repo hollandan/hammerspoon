@@ -31,6 +31,7 @@ navigationMode:bind({}            , 'e'      , function() previousField()       
 navigationMode:bind({}            , 'r'      , function() pageUp()              end )
     navigationMode:bind({'shift'} , 'r'      , function() pageUpAndSelect()     end )
 navigationMode:bind({}            , 't'      , function() take()                end )
+    navigationMode:bind({'cmd'}   , 't'      , function() newTabAndExit()       end )
 navigationMode:bind({}            , 'y'      , function() yank()                end )
 navigationMode:bind({}            , 'u'      , function() pressAndExit('u')     end )
 navigationMode:bind({}            , 'i'      , function() nextField()           end )
@@ -283,6 +284,11 @@ function take()
     -- won't work unless done twice... why??
     fastKeyStroke({'ctrl'}, 't')
     fastKeyStroke({'ctrl'}, 't')
+end
+
+function newTabAndExit()
+    navigationMode:exit()
+    fastKeyStroke({'cmd'}, 't')
 end
 
 function yank()
