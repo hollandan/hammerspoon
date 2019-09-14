@@ -249,9 +249,27 @@ hs.hotkey.bind({"shift"}, 'pad6', function()
     nudgeWindowRight()
 end)
 
-hs.hotkey.bind(right_command, 't', function()
-    local rect = identifyFocusedWindowLocation()
 
+
+hs.hotkey.bind(right_command, 't', function()
+    changeSizeTowardTop()
+end)
+
+hs.hotkey.bind(right_command, 'n', function()
+    changeSizeTowardBottom()
+end)
+
+hs.hotkey.bind(right_command, 'h', function()
+    changeSizeTowardLeft()
+end)
+
+hs.hotkey.bind(right_command, 'g', function()
+    changeSizeTowardRight()
+end)
+
+
+function changeSizeTowardTop()
+    local rect = identifyFocusedWindowLocation()
     if rect.top then
         decreaseWindowHeight()
     elseif rect.bottom then
@@ -259,26 +277,31 @@ hs.hotkey.bind(right_command, 't', function()
     else
         decreaseWindowHeightAndHugBottom()
     end
-
     redrawBorder()
-end)
+end
 
-hs.hotkey.bind(right_command, 'n', function()
+function changeSizeTowardRight()
     local rect = identifyFocusedWindowLocation()
+    if rect.right then
+        decreaseWindowWidthAndHugRightSide()
+    else
+        increaseWindowWidth()
+    end
+    redrawBorder()
+end
 
+function changeSizeTowardBottom()
+    local rect = identifyFocusedWindowLocation()
     if (rect.bottom) then
         decreaseWindowHeightAndHugBottom()
     else
         increaseWindowHeightAndHugBottom()
     end
-
     redrawBorder()
-end)
+end
 
-hs.hotkey.bind(right_command, 'h', function()
-
+function changeSizeTowardLeft()
     local rect = identifyFocusedWindowLocation()
-
     if rect.left then
         decreaseWindowWidth()
     elseif rect.right then
@@ -286,20 +309,10 @@ hs.hotkey.bind(right_command, 'h', function()
     else
         decreaseWindowWidth()
     end
-
     redrawBorder()
-end)
+end
 
-hs.hotkey.bind(right_command, 'g', function()
-    local rect = identifyFocusedWindowLocation()
-    if rect.right then
-        decreaseWindowWidthAndHugRightSide()
-    else
-        increaseWindowWidth()
-    end
 
-    redrawBorder()
-end)
 
 function decreaseWindowWidthAndHugRightSide()
     local win = hs.window.focusedWindow()
@@ -560,16 +573,8 @@ hs.hotkey.bind(right_command, '2', function()
     -- hs.grid.adjustWidth(10)
 end)
 
-hs.hotkey.bind(right_command, '3', function()
-    -- hs.grid.resizeWindowShorter(hs.window.focusedWindow())
-    -- hs.grid.resizeWindowShorter(hs.window.focusedWindow())
-    -- hs.grid.pushWindowUp(hs.window.focusedWindow())
-    decreaseWindowHeight()
-    decreaseWindowHeight()
-    decreaseWindowHeight()
-    decreaseWindowHeight()
-    decreaseWindowHeight()
-end)
+-- command list
+
 
 hs.hotkey.bind(right_command, "4", function() hs.fnutil.map(hs.window.visibleWindows(), hs.grid.snap) end)
 hs.hotkey.bind(right_command, '=', function() hs.grid.adjustWidth( 1) end)
@@ -617,3 +622,31 @@ function identifyMarkedWindows()
 end
 
 
+-- Choices
+--
+-- increaseWindowHeight()
+-- increaseWindowWidth()
+-- increaseWindowHeightAndHugBottom()
+-- increaseWindowWidthAndHugRightSide()
+--
+-- decreaseWindowHeight()
+-- decreaseWindowWidth()
+-- decreaseWindowHeightAndHugBottom()
+-- decreaseWindowWidthAndHugRightSide()
+--
+-- nudgeWindowUp()
+-- nudgeWindowRight()
+-- nudgeWindowDown()
+-- nudgeWindowLeft()
+--
+-- changeSizeTowardTop()
+-- changeSizeTowardRight()
+-- changeSizeTowardBottom()
+-- changeSizeTowardLeft()
+
+hs.hotkey.bind(right_command, '3', function()
+    nudgeWindowUp()
+    nudgeWindowLeft()
+    changeSizeTowardRight()
+    changeSizeTowardBottom()
+end)

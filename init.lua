@@ -18,7 +18,9 @@ local chooser            = require 'chooser'
 local mouse              = require 'mouse'
 local missionControlMode = require 'missionControlMode'
 local editinvim          = require 'editinvim'
-local gaming             = require 'gaming'
+local scrap              = require 'scrap'
+-- local iterm2             = require 'iterm2'
+-- local gaming             = require 'gaming'
 
 require("hs.ipc")
 hs.ipc.cliInstall()
@@ -26,11 +28,11 @@ hs.ipc.cliInstall()
 -- local interfacer         = require 'interfacer'
 
 hs.hotkey.bind({'shift'}, 'f1', function()
-    hs.brightness.set(15)
-end)
-
-hs.hotkey.bind({'shift'}, 'f2', function()
-    hs.brightness.set(100)
+    if hs.brightness.get() > 50 then
+        hs.brightness.set(15)
+    else
+        hs.brightness.set(100)
+    end
 end)
 
 -- local reloadbrowser      = require 'reloadbrowser'

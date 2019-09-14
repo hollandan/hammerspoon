@@ -25,7 +25,7 @@ local apps = {
       ["action"]  = "l"
     },
     { ["text"]    = "CHILL",
-      ["subText"] = "~/dotfiles/personal/scripts/ichill",
+      ["subText"] = "~/dotfiles/mac/scripts/ichill",
       ["action"]  = "e"
     },
     { ["text"]    = "D",
@@ -144,6 +144,21 @@ appChooser:width(50)
 
 -- launch chooser outside of terminal
 hs.hotkey.bind(right_command, 'f19', function() launchChooser() end)
+
+----this would be awesome if we could bind the keystroke 
+--    -- ONLY TO !iterm2
+---- but, it appears that this will intercept the keystroke in iTerm2
+---- makeing the bind unusable there.
+-- hs.hotkey.bind(right_command, 'o', function()
+--     local currentapp = hs.application.frontmostApplication()
+--     if (not string.match(currentapp:name(), 'iTerm2')) then
+--         launchChooser()
+--     else
+--         // open recent in iterm
+--         hs.eventtap.keyStroke({'ctrl', 'shift', 'option'}, 'o')
+--     end
+-- end)
+
 -- lauch chooser inside of terminal
 hs.hotkey.bind(right_command, 'escape', function() launchChooser() end)
 

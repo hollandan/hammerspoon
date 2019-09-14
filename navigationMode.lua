@@ -375,7 +375,7 @@ function applicationWatcherCallback(appName, eventType, appObject)
     -- hs.alert.show(eventType)
     -- hs.alert.show(appObject)
 
-    if (appName == 'iTerm2') then
+    if appName == 'iTerm2' or appName == 'Alacritty' or appName == 'Terminal' then
         if (eventType == hs.application.watcher.activated) then
             navigationMode:exit()
             functionMode:exit()
