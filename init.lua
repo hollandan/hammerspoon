@@ -15,12 +15,14 @@ local functionMode       = require 'functionMode'
 local karabinerRightCmd  = require 'karabinerRightCmd'
 local fuckYouXfinity     = require 'fuckYouXfinity'
 local chooser            = require 'chooser'
-local mouse              = require 'mouse'
+-- local mouse              = require 'mouse'
 local missionControlMode = require 'missionControlMode'
 local editinvim          = require 'editinvim'
-local scrap              = require 'scrap'
--- local iterm2             = require 'iterm2'
+-- local scrap              = require 'scrap'
 -- local gaming             = require 'gaming'
+
+-- -- Perhaps an easy way to toggle configs
+-- sed -i "" "s/local scrap/-- local scrap/" testsed.txt
 
 require("hs.ipc")
 hs.ipc.cliInstall()
@@ -33,6 +35,10 @@ hs.hotkey.bind({'shift'}, 'f1', function()
     else
         hs.brightness.set(100)
     end
+end)
+
+hs.hotkey.bind(return_modifier, 'space', function()
+    hs.alert.show("!")
 end)
 
 -- local reloadbrowser      = require 'reloadbrowser'

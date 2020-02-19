@@ -107,6 +107,10 @@ local apps = {
       ["subText"] = "Safari",
       ["action"]  = "l"
     },
+    { ["text"]    = "SHUFFLE",
+      ["subText"] = "~/dotfiles/mac/scripts/itunes shuffle",
+      ["action"]  = "e"
+    },
     { ["text"]    = "T",
       ["subText"] = "iTerm",
       ["action"]  = "l"

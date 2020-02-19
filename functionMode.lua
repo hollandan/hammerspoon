@@ -27,7 +27,7 @@ functionMode:bind({} , 'space' , function() dotSpaceDash() end)
 functionMode:bind({} , 't' , function() showTime() end)
     functionMode:bind({'shift'} , 't' , function() timeStamp() end)
 
-functionMode:bind({} , 'w' , function() windowMenu() end)
+-- functionMode:bind({} , 'w' , function() windowMenu() end)
 
 functionMode:bind({} , 'x' , function() moveFocusToStatusBar() end)
 functionMode:bind({} , 'z' , function() moveFocusToMenuBar() end)

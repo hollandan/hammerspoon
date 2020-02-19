@@ -7,11 +7,11 @@ xfuckinityIndicator:setFill(true)
 xfuckinityIndicator:behavior("canJoinAllSpaces")
 
 local trustedNetworks = {
-    home = "HOME-8B62",
+    home = "khd&dmhBONZAI",
     nsg  = "nsg"
 }
 
--- Here's the culprit for the whtie screen on reload:
+-- Here's the culprit for the white screen on reload:
 -- local availableNetworks = hs.wifi.availableNetworks()
 
 local availableNetworks = {}

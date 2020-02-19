@@ -6,7 +6,7 @@
 -- caps_lock
     -- control when used as modifier
     -- when tapped
-        -- f19 when tapped to enter navigationMode OUSIDE terminal emulators
+        -- f19 when tapped to enter navigationMode OUTSIDE terminal emulators
         -- escape when tapped INSIDE terminal emulators
 -- return
     -- control when used as modifier
@@ -162,6 +162,7 @@ function redrawBorder()
             local winapp   = win:application():name()
             local wintitle = win:title()
 
+            -- TODO: Grab may not be needed anymore after os upgrade
             if winapp   == 'iTerm2'    or
                winapp   == 'Grab'      or
                wintitle == 'Spotlight' then
@@ -191,11 +192,12 @@ redrawBorder()
 
 allwindows = hs.window.filter.new(nil)
 allwindows:subscribe(hs.window.filter.windowCreated, function () redrawBorder() end)
+allwindows:subscribe(hs.window.filter.windowDestroyed, function () redrawBorder() end)
+allwindows:subscribe(hs.window.filter.hasNoWindows, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowFocused, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowMoved, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowUnfocused, function () redrawBorder() end)
 allwindows:subscribe(hs.window.filter.windowVisible, function () redrawBorder() end)
-allwindows:subscribe(hs.window.filter.hasNoWindows, function () redrawBorder() end)
 
 hs.hotkey.bind({'ctrl'}, 'g', function()
     fastKeyStroke({}, 'forwarddelete')

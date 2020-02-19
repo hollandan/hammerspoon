@@ -236,11 +236,11 @@ function resizeLayout()
     local count = 0
     local appWindows = {}
 
-    local appWindows = getAppWindows()
+    -- local appWindows = getAppWindows()
+    local appWindows = getLayoutWindowList()
     local count = #appWindows
 
     if (balanceFlag) then
-        -- hs.alert.show('balance')
         if (count == 2) then
             local other = appWindows[2]
             local op    = appWindows[1]
@@ -256,9 +256,29 @@ function resizeLayout()
             op:setFrame(fop)
             other:setFrame(fother)
         end
+
+        -- if (count == 4) then
+        --     local quatr = appWindows[4]
+        --     local alter = appWindows[3]
+        --     local other = appWindows[2]
+        --     local op    = appWindows[1]
+        --
+        --     local fop = op:frame()
+        --     local fother = other:frame()
+        --     local falter = alter:frame()
+        --     local fquatr = quatr:frame()
+        --     local screen = op:screen():frame()
+        --
+        --     fop.w = fop.w+20
+        --     fother.w = fother.w-20
+        --     fop.x = screen.w - fop.w
+        --
+        --     op:setFrame(fop)
+        --     other:setFrame(fother)
+        -- end
+
     end
     if (alterFlag) then
-        -- hs.alert.show('alter')
         if (count == 2) then
             local other = appWindows[2]
             local op    = appWindows[1]
@@ -275,17 +295,39 @@ function resizeLayout()
             other:setFrame(fother)
         end
     end
+
+    if (count == 3) then
+        local alter = appWindows[3]
+        local other = appWindows[2]
+        local op    = appWindows[1]
+
+        local fop = op:frame()
+        local fother = other:frame()
+        local falter = alter:frame()
+        local screen = op:screen():frame()
+
+        fop.h = fop.h+20
+        fother.h = fother.h-20
+        fother.y = fother.y+20
+        falter.h = fother.h-20
+        falter.y = fother.y+20
+        fop.y = 0
+
+        op:setFrame(fop)
+        other:setFrame(fother)
+        alter:setFrame(falter)
+    end
 end
 
 function resizeLayoutReverse()
     local count = 0
     local appWindows = {}
 
-    local appWindows = getAppWindows()
+    -- local appWindows = getAppWindows()
+    local appWindows = getLayoutWindowList()
     local count = #appWindows
 
     if (balanceFlag) then
-        -- hs.alert.show('balance')
         if (count == 2) then
             local other = appWindows[2]
             local op    = appWindows[1]
@@ -303,7 +345,6 @@ function resizeLayoutReverse()
         end
     end
     if (alterFlag) then
-        -- hs.alert.show('alter')
         if (count == 2) then
             local other = appWindows[2]
             local op    = appWindows[1]
@@ -319,6 +360,28 @@ function resizeLayoutReverse()
             op:setFrame(fop)
             other:setFrame(fother)
         end
+    end
+
+    if (count == 3) then
+        local alter = appWindows[3]
+        local other = appWindows[2]
+        local op    = appWindows[1]
+
+        local fop = op:frame()
+        local fother = other:frame()
+        local falter = alter:frame()
+        local screen = op:screen():frame()
+
+        fop.h = fop.h-20
+        fother.h = fother.h+20
+        fother.y = fother.y-20
+        falter.h = fother.h+20
+        falter.y = fother.y-20
+        fop.y = 0
+
+        op:setFrame(fop)
+        other:setFrame(fother)
+        alter:setFrame(falter)
     end
 end
 

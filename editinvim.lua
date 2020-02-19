@@ -117,7 +117,3 @@ end
 
 -- hs.hotkey.bind(right_command, '4', function()
 -- end)
-
--- function showthething()
---     hs.alert.show("!")
--- end

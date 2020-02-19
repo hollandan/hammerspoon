@@ -44,6 +44,20 @@ chain = (function(movements)
   end
 end)
 
+----------------------
+--   alpha                 = '2,2 8x8',
+--   beta                  = '3,3 6x6',
+--   gamma                 = '4,4 4x4',
+--   delta                 = '5,5 6x6',
+-- hs.hotkey.bind(right_command, '6', chain({
+--   grid.alpha,
+--   grid.beta,
+--   grid.gamma,
+--   grid.delta,
+-- }))
+----------------------
+
+
 hs.hotkey.bind(right_command, 'a', chain({
   grid.leftHalf,
   grid.leftThird,
@@ -101,6 +115,34 @@ hs.hotkey.bind(right_command, ',', chain({
   grid.tallHorizontal,
 }))
 
+
+-- https://github.com/Hammerspoon/hammerspoon/issues/835
+
+hs.hotkey.bind(right_command, "u", function ()
+    focusScreen(hs.window.focusedWindow():screen():next())
+end)
+
+--Predicate that checks if a window belongs to a screen
+function isInScreen(screen, win)
+    return win:screen() == screen
+end
+
+function focusScreen(screen)
+    --Get windows within screen, ordered from front to back.
+    --If no windows exist, bring focus to desktop. Otherwise, set focus on
+    --front-most application window.
+    local windows = hs.fnutils.filter(
+    hs.window.orderedWindows(),
+    hs.fnutils.partial(isInScreen, screen))
+    local windowToFocus = #windows > 0 and windows[1] or hs.window.desktop()
+    windowToFocus:focus()
+
+    -- Move mouse to center of screen
+    local pt = hs.geometry.rectMidPoint(screen:fullFrame())
+    hs.mouse.setAbsolutePosition(pt)
+end
+
+
 -- stolen and modified from https://github.com/cmsj/hammerspoon-config/blob/master/init.lua
 function toggleWindowMaximized()
     local win = hs.window.focusedWindow()
@@ -128,7 +170,8 @@ function toggleCenterWindow()
             snapBack()
         else
             centeredFrameCache[win:id()] = win:frame()
-            win:centerOnScreen('Color LCD')
+            -- win:centerOnScreen('Color LCD')
+            win:centerOnScreen(hs.screen.mainScreen())
         end
     else
         snapBack()
@@ -281,13 +324,20 @@ function changeSizeTowardTop()
 end
 
 function changeSizeTowardRight()
-    local rect = identifyFocusedWindowLocation()
-    if rect.right then
-        decreaseWindowWidthAndHugRightSide()
+    local amethyst = hs.execute("ps aux | grep Amethyst | wc -l | tr -d ' '")
+
+    if (tonumber(amethyst) < 3) then
+        local rect = identifyFocusedWindowLocation()
+        if rect.right then
+            decreaseWindowWidthAndHugRightSide()
+        else
+            increaseWindowWidth()
+        end
+        redrawBorder()
     else
-        increaseWindowWidth()
+        hs.eventtap.keyStroke({'alt', 'shift'}, 'l')
     end
-    redrawBorder()
+
 end
 
 function changeSizeTowardBottom()
@@ -301,15 +351,23 @@ function changeSizeTowardBottom()
 end
 
 function changeSizeTowardLeft()
-    local rect = identifyFocusedWindowLocation()
-    if rect.left then
-        decreaseWindowWidth()
-    elseif rect.right then
-        increaseWindowWidthAndHugRightSide()
+
+    local amethyst = hs.execute("ps aux | grep Amethyst | wc -l | tr -d ' '")
+
+    if (tonumber(amethyst) < 3) then
+        local rect = identifyFocusedWindowLocation()
+        if rect.left then
+            decreaseWindowWidth()
+        elseif rect.right then
+            increaseWindowWidthAndHugRightSide()
+        else
+            decreaseWindowWidth()
+        end
+        redrawBorder()
     else
-        decreaseWindowWidth()
+        hs.eventtap.keyStroke({'alt', 'shift'}, 'h')
     end
-    redrawBorder()
+
 end
 
 

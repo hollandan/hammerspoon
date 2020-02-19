@@ -1,7 +1,7 @@
 local key_one
 local key_two
 
-function applicationWatcherCallback(appName, eventType, appObject)
+function gameWatcherCallback(appName, eventType, appObject)
     if (appName == 'Risk of Rain') then
         if (eventType == hs.application.watcher.activated) then
             key_one = hs.hotkey.bind({}, '1', function() ROR_zoomTo3X() end)
@@ -11,9 +11,23 @@ function applicationWatcherCallback(appName, eventType, appObject)
             key_two:delete()
         end
     end
+    if (appName == 'CavesOfQud') then
+        if (eventType == hs.application.watcher.activated) then
+            key_one = hs.hotkey.bind({}, '[', function()
+                hs.eventtap.keyStroke({}, 'pad7')
+            end)
+
+            key_two = hs.hotkey.bind({}, ']', function()
+                hs.eventtap.keyStroke({}, 'pad9')
+            end)
+        else
+        key_one:delete()
+        key_two:delete()
+        end
+    end
 end
 
-gameTime = hs.application.watcher.new(applicationWatcherCallback)
+gameTime = hs.application.watcher.new(gameWatcherCallback)
 gameTime:start()
 
 -- ROR ------------------------------------------------------------------------
@@ -39,5 +53,5 @@ function ROR_zoomTo1X()
     hs.eventtap.keyStroke({}, 'escape')
 end
 
-UnEpic ------------------------------------------------------------------------
+-- UnEpic ------------------------------------------------------------------------
 

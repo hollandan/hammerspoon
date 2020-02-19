@@ -36,13 +36,13 @@ if clocktimer == nil then
         local remindfile = hs.execute("/bin/ls -tr /Users/dan/.config/remindme/ | head -n 1 | tr -d '\n'")
         local remindme  = hs.execute("cat /Users/dan/.config/remindme/".. remindfile .. " | tr -d '\n'")
         local stamp = hs.execute("date +'%I:%M:%S %p %a %m/%d' | tr -d '\n'")
+        local battery = hs.execute("pmset -g batt | tail -1 | awk '{print $3,$4}' | sed 's/;/ :/' | sed 's/;//'")
 
         -- local denmark = hs.execute("date -v +'21600S' +'%I:%M:%S %p' | tr -d '\n'")
         -- local japan = hs.execute("date -v +'50400S' +'%I:%M:%S %p %a %m/%d' | tr -d '\n'")
         -- local portland = hs.execute("date -v -'10800S' +'%I:%M:%S %p %a %m/%d' | tr -d '\n'")
 
         local text = stamp
-
         -- local text = denmark .. " | " .. stamp
         -- local text = japan .. " | " .. stamp
         -- local text = portland .. " | " .. stamp
@@ -50,6 +50,13 @@ if clocktimer == nil then
         if string.len(remindme) > 0 then
             text = remindme .. " ┃ " .. text
         end
+
+        local percentage, powersource = battery:match("%s*(%d+)%%%s*:%s*(%a+)%s*")
+        if powersource == "AC" and lastpercentage < percentage then
+            dashboard[2].textColor = {hex="#ff0000"}
+        end
+        text = text .. " ┃ " .. battery
+        lastpercentage = percentage
 
         dashboard[2].text = text
 
@@ -66,7 +73,6 @@ else
     dashboard:show()
 end
 
--- Show/hide dashboard
 hs.hotkey.bind(double_command, "'", function()
     if (dashboard:isVisible()) then
         dashboard:hide()

@@ -11,30 +11,57 @@
 -- Windows
     -- next window in app
     hs.hotkey.bind(right_command, 'l', function()
-        local currentapp = hs.application.frontmostApplication()
-        if (string.match(currentapp:name(), 'iTerm2')) then
-            hs.eventtap.keyStroke({'ctrl'}, 'tab')
+
+        local amethyst = hs.execute("ps aux | grep Amethyst | wc -l | tr -d ' '")
+
+        if (tonumber(amethyst) < 3) then
+            local currentapp = hs.application.frontmostApplication()
+            if (string.match(currentapp:name(), 'iTerm2')) then
+                hs.eventtap.keyStroke({'ctrl'}, 'tab')
+            else
+                fastKeyStroke({'cmd'}, '`')
+            end
         else
-            fastKeyStroke({'cmd'}, '`')
+            hs.eventtap.keyStroke({'alt', 'shift'}, 'a')
         end
+
     end)
         -- previous window in app
     hs.hotkey.bind(right_command, 41, function()
-        local currentapp = hs.application.frontmostApplication()
-        if (string.match(currentapp:name(), 'iTerm2')) then
-            hs.eventtap.keyStroke({'ctrl', 'shift'}, 'tab')
+
+        local amethyst = hs.execute("ps aux | grep Amethyst | wc -l | tr -d ' '")
+
+        if (tonumber(amethyst) < 3) then
+            local currentapp = hs.application.frontmostApplication()
+            if (string.match(currentapp:name(), 'iTerm2')) then
+                hs.eventtap.keyStroke({'ctrl', 'shift'}, 'tab')
+            else
+                fastKeyStroke({'cmd', 'shift'}, '`')
+            end
         else
-            fastKeyStroke({'cmd', 'shift'}, '`')
+            hs.eventtap.keyStroke({'alt', 'shift'}, 's')
         end
+
     end)
         -- next window in space
     hs.hotkey.bind(right_command, 'j', function()
-        fastKeyStroke({'ctrl', 'fn'}, 'f4')
+        local amethyst = hs.execute("ps aux | grep Amethyst | wc -l | tr -d ' '")
+
+        if (tonumber(amethyst) < 3) then
+            fastKeyStroke({'ctrl', 'fn'}, 'f4')
+        else
+            hs.eventtap.keyStroke({'alt', 'shift'}, 'j')
+        end
     end)
         -- previous window in space
-    hs.hotkey.bind(right_command, 'k', function()
-        fastKeyStroke({'ctrl', 'shift', 'fn'}, 'f4')
-    end)
+        hs.hotkey.bind(right_command, 'k', function()
+            local amethyst = hs.execute("ps aux | grep Amethyst | wc -l | tr -d ' '")
+            if (tonumber(amethyst) < 3) then
+                fastKeyStroke({'ctrl', 'shift', 'fn'}, 'f4')
+            else
+                hs.eventtap.keyStroke({'alt', 'shift'}, 'k')
+            end
+        end)
 
 -- Convenient Zoom
     hs.hotkey.bind(right_command, 'i', function()
