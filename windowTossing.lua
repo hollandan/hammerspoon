@@ -170,7 +170,6 @@ function toggleCenterWindow()
             snapBack()
         else
             centeredFrameCache[win:id()] = win:frame()
-            -- win:centerOnScreen('Color LCD')
             win:centerOnScreen(hs.screen.mainScreen())
         end
     else
@@ -555,6 +554,7 @@ function showDesktop()
 end
 
 function identifyFocusedWindowLocation()
+    local externalmonitor
     local f = hs.window.focusedWindow():frame()
     local max = win:screen():frame()
 
@@ -570,23 +570,38 @@ function identifyFocusedWindowLocation()
     p["rightoffset"] = 0
     p["bottomoffset"] = 0
 
-    if f.x == 0.0              then p["left"]   = true end
-    if f.y == 0.0              then p["top"]    = true end
-    if f.x + f.w >= max.w - 5  then p["right"]  = true end
-    if f.y + f.h >= max.h - 5  then p["bottom"] = true end
-    -- subtracting 5 above because, sometimes windows won't quite reach
-    -- max.w and max.h
-    if f.x < 0.0               then p["tooleft"] = true end
-    if f.x + f.w > max.w       then p["tooright"] = true end
-    if f.y + f.h > max.h       then p["toolow"]  = true end
+    if f.x < 0 or f.y < 0 then
+        externalmonitor  = TRUE
+        local falsewidth = 1690.0
+        local falseleft  = -230.0
+        local falsetop   = -1080.0
 
-    if f.x < 0.0               then p["leftoffset"] = f.x end
-    if f.x + f.w > max.w       then p["rightoffset"] = max.w - (f.x + f.w) end
-    if f.y + f.h > max.h       then p["bottomoffset"] = max.h - (f.y + f.h) end
+        if f.x == falseleft        then p["left"]   = true end
+        if f.y == falsetop         then p["top"]    = true end
+        if math.abs(f.x) + math.abs(f.w) == falsewidth then p["right"] = true end
+        if math.abs(math.abs(f.h) - math.abs(f.y)) <= 5 then p["bottom"] = true end
 
-    if p["top"] and p["bottom"]           then p["fullheight"] = true end
-    if p["left"] and p["right"]           then p["fullwidth"]  = true end
-    if p["fullwidth"] and p["fullheight"] then p["fullscreen"] = true end
+    else
+        externalmonitor = FALSE
+
+        if f.x == 0.0              then p["left"]   = true end
+        if f.y == 0.0              then p["top"]    = true end
+        if f.x + f.w >= max.w - 5  then p["right"]  = true end
+        if f.y + f.h >= max.h - 5  then p["bottom"] = true end
+        -- subtracting 5 above because, sometimes windows won't quite reach
+        -- max.w and max.h
+        if f.x < 0.0               then p["tooleft"] = true end
+        if f.x + f.w > max.w       then p["tooright"] = true end
+        if f.y + f.h > max.h       then p["toolow"]  = true end
+
+        if f.x < 0.0               then p["leftoffset"] = f.x end
+        if f.x + f.w > max.w       then p["rightoffset"] = max.w - (f.x + f.w) end
+        if f.y + f.h > max.h       then p["bottomoffset"] = max.h - (f.y + f.h) end
+
+        if p["top"] and p["bottom"]           then p["fullheight"] = true end
+        if p["left"] and p["right"]           then p["fullwidth"]  = true end
+        if p["fullwidth"] and p["fullheight"] then p["fullscreen"] = true end
+    end
 
     return p;
 end
@@ -602,7 +617,7 @@ function windowInfo()
     hs.alert.show(win:application():name())
     hs.alert.show("Max   : " .. max.w .. "W x " .. max.h .."H")
     hs.alert.show("Window: " .. f.w .. "W x " .. f.h .. "H")
-    hs.alert.show("Pos   : " .. f.x .. "W x " .. f.y .. "H")
+    hs.alert.show("Pos   : " .. f.x .. "X x " .. f.y .. "Y")
 
     local rect = identifyFocusedWindowLocation()
     if rect.top then hs.alert.show("top") end
@@ -616,20 +631,22 @@ function windowInfo()
     -- if rect.tooleft then hs.alert.show("tooLeft") end
     -- if rect.tooright then hs.alert.show("tooRight") end
 
-    if rect.toolow then hs.alert.show(rect.bottomoffset) end
-    if rect.tooleft then hs.alert.show(rect.leftoffset) end
-    if rect.tooright then hs.alert.show(rect.rightoffset) end
+    if rect.toolow then hs.alert.show("low: " .. rect.bottomoffset) end
+    if rect.tooleft then hs.alert.show("left: " .. rect.leftoffset) end
+    if rect.tooright then hs.alert.show("right: " .. rect.rightoffset) end
+
+    if f.x < 0 or f.y < 0 then hs.alert.show("top monitor") end
+    if f.x > 0 and f.y > 0 then hs.alert.show("lap monitor") end
 
 end
 
-hs.hotkey.bind(right_command, '2', function()
+-- hs.hotkey.bind(right_command, '2', function()
     -- hs.grid.resizeWindowShorter(hs.window.focusedWindow())
     -- hs.grid.pushWindowUp(hs.window.focusedWindow())
     -- hs.grid.snap(hs.window.focusedWindow())
-
-    hs.grid.show()
+    -- hs.grid.show()
     -- hs.grid.adjustWidth(10)
-end)
+-- end)
 
 -- command list
 

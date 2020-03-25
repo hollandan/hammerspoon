@@ -19,7 +19,7 @@ local chooser            = require 'chooser'
 local missionControlMode = require 'missionControlMode'
 local editinvim          = require 'editinvim'
 local alacritty          = require 'alacritty'
--- local scrap              = require 'scrap'
+local scrap              = require 'scrap'
 -- local gaming             = require 'gaming'
 
 -- -- Perhaps an easy way to toggle configs
@@ -38,10 +38,6 @@ hs.hotkey.bind({'shift'}, 'f1', function()
     end
 end)
 
--- hs.hotkey.bind({'ctrl'}, 'q', function()
---     fastKeyStroke({'ctrl'}, 'q')
---     -- fastKeyStroke({'ctrl'}, 'q')
--- end)
 
 -- local reloadbrowser      = require 'reloadbrowser'
 -- local playground         = require 'playground'
