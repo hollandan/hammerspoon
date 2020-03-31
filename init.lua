@@ -5,6 +5,9 @@
 -- karabiner logs located in:
 -- /Users/dan/.local/share/karabiner/log
 
+-- Learn Lua in 15 Minutes
+-- http://tylerneylon.com/a/learn-lua/
+
       globals            = require 'globals'
 local autoload           = require 'autoload'
 local dashboard          = require 'dashboard'

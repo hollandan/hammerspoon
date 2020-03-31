@@ -163,6 +163,7 @@ function toggleWindowMaximized()
 end
 function toggleCenterWindow()
     local win = hs.window.focusedWindow()
+    -- win:centerOnScreen(hs.screen.mainScreen())
 
     w = identifyFocusedWindowLocation()
     if w.left or w.right then

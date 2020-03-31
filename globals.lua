@@ -92,7 +92,8 @@ pasteboard = ""
 
 showborders      = true
 -- for color ideas: http://www.rapidtables.com/web/color/RGB_Color.htm
-focusedColor        = {["red"]=0,["blue"]=.6,["green"]=.1,["alpha"]=0.5}
+-- focusedColor        = {["red"]=0,["blue"]=.6,["green"]=.1,["alpha"]=0.5}
+focusedColor        = {["red"]=0,["blue"]=.8,["green"]=0,["alpha"]=0.9}
 navigationColor     = {["red"]=1,["blue"]=0,["green"]=0,["alpha"]=0.9}
 functionColor       = {['red']=0,['blue']=1,['green']=0,['alpha']=0.9}
 missionControlColor = {['red']=0,['blue']=0,['green']=1,['alpha']=0.9}
@@ -164,6 +165,7 @@ function redrawBorder()
 
             -- TODO: Grab may not be needed anymore after os upgrade
             if winapp   == 'iTerm2'    or
+               -- winapp   == 'Alacritty' or
                winapp   == 'Grab'      or
                wintitle == 'Spotlight' then
                if currentIndicator ~= nil then
