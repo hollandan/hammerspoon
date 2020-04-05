@@ -78,8 +78,8 @@ grid = {
   allPad                 = '1,1 10x10',
 }
 
-hs.grid.MARGINX = 0
-hs.grid.MARGINY = 0
+hs.grid.MARGINX = 20
+hs.grid.MARGINY = 20
 hs.window.animationDuration = 0
 
 -- Store window frames (by id) so we can toggle window size
@@ -204,17 +204,6 @@ allwindows:subscribe(hs.window.filter.windowVisible, function () redrawBorder() 
 hs.hotkey.bind({'ctrl'}, 'g', function()
     fastKeyStroke({}, 'forwarddelete')
 end)
-
--- -- How do we hide iTerm's hotkey window when we swithch apps...?
--- hs.hotkey.bind({'cmd'}, 'tab', function()
---     if string.match(win:application():name() , 'iTerm2') then
---         hs.eventtap.keyStroke({'ctrl'} , 'space')
---         hs.eventtap.keyStroke({'cmd'} , 'tab')
---         hs.alert.show("!")
---     else
---         hs.eventtap.keyStroke({'cmd'} , 'tab')
---     end
--- end)
 
 -- clever way to prevent system beeps from tapping right_command when not in navigationMode
 hs.hotkey.bind({}, 'f17', function()

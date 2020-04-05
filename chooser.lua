@@ -55,9 +55,25 @@ local apps = {
       ["action"]  = "e"
     },
     { ["text"]    = "K",
-        ["subText"] = "open -a '/Applications/Karabiner-Elements.app'",
+      ["subText"] = "open -a '/Applications/Karabiner-Elements.app'",
       ["action"]  = "e"
     },
+    {
+        ["text"]    = "Karate Camera 1",
+        ["subText"] = "open -a '/Applications/Google Chrome.app' https://drive.google.com/drive/folders/1bgtgZ_XKjPIfnk2tWfbR6n8_dp6Pskhj",
+        ["action"]  = "e"
+    },
+    {
+        ["text"]    = "Karate Camera 2",
+        ["subText"] = "open -a '/Applications/Google Chrome.app' https://drive.google.com/drive/folders/1w5azDERsZzYPuDG9NEuAmcNWZP3XSRXk",
+        ["action"]  = "e"
+    },
+    {
+        ["text"]    = "Karate Camera 3",
+        ["subText"] = "open -a '/Applications/Google Chrome.app' https://drive.google.com/drive/folders/1Idae6v7sJ3u8MOu-mwQy5UGCU3f-flVW",
+        ["action"]  = "e"
+    },
+
     { ["text"]    = "L",
       ["subText"] = "Calendar",
       ["action"]  = "l"
@@ -107,9 +123,29 @@ local apps = {
       ["subText"] = "Safari",
       ["action"]  = "l"
     },
+    {
+        ["text"]    = "SEO",
+        ["subText"] = "open -a '/Applications/Safari.app' https://us04web.zoom.us/j/260636668?pwd=QUtNTkxUVUNiNjJvUEU1Q0xQOHVMZz09",
+        ["action"]  = "e"
+    },
     { ["text"]    = "SHUFFLE",
       ["subText"] = "~/dotfiles/mac/scripts/itunes shuffle",
       ["action"]  = "e"
+    },
+    {
+        ["text"]    = "Stream Karate",
+        ["subText"] = "open -a '/Applications/Safari.app' https://us04web.zoom.us/j/491767877?pwd=NHRzcGY5Y1VrZWF2ZDQ3NXV6ejNGQT09",
+        ["action"]  = "e"
+    },
+    {
+        ["text"]    = "Stream Iaido",
+        ["subText"] = "open -a '/Applications/Safari.app' https://us04web.zoom.us/j/135327455?pwd=cmtBWWFkVGxQNmliYkRHZmFSdkhVUT09",
+        ["action"]  = "e"
+    },
+    {
+        ["text"]    = "Stream Judo/Jujutsu",
+        ["subText"] = "open -a '/Applications/Safari.app' https://us04web.zoom.us/j/333957545?pwd=azBOUGJpNTNacFo3Sk8xbkppSGRkUT09",
+        ["action"]  = "e"
     },
     { ["text"]    = "T",
       ["subText"] = "iTerm",

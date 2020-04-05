@@ -41,7 +41,6 @@ hs.hotkey.bind({'shift'}, 'f1', function()
     end
 end)
 
-
 -- local reloadbrowser      = require 'reloadbrowser'
 -- local playground         = require 'playground'
 

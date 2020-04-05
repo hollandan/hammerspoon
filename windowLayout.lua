@@ -23,7 +23,7 @@ local rightQuarter          = hs.geometry.rect(1125 , 0  , 375 , 900)
 
 local centeredThreeQuarters = hs.geometry.rect(150 , 75  , 1150 , 725)
 
-local laptopScreen = 'Color LCD'
+-- local laptopScreen = 'Color LCD'
 
 local balanceFlag = false
 local alterFlag = false
@@ -85,9 +85,12 @@ function balanceWindows()
     balanceFlag = true
     alterFlag = false
 
+    local laptopScreen = hs.screen.mainScreen()
     local appWindows = getLayoutWindowList()
     local count = #appWindows
     hs.eventtap.keyStroke({'ctrl', 'fn'}, 'f4')
+
+    hs.alert.show(laptopScreen)
  
     -- local appWindows = getAppWindows()
     -- local count = #appWindows
@@ -164,7 +167,7 @@ function alterWindows()
     balanceFlag = false
     alterFlag   = true
 
-
+    local laptopScreen = hs.screen.mainScreen()
     local appWindows = getLayoutWindowList()
     local count = #appWindows
     hs.eventtap.keyStroke({'ctrl', 'fn'}, 'f4')
