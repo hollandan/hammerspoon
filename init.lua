@@ -41,6 +41,18 @@ hs.hotkey.bind({'shift'}, 'f1', function()
     end
 end)
 
+-- What to do with these!
+-- hold caps, hit enter
+hs.hotkey.bind({'command', 'control'}, 'return', function()
+    hs.alert.show("!")
+end)
+-- hold enter, hit caps
+hs.hotkey.bind({'alt', 'control'}, 'escape', function()
+    hs.alert.show("?")
+end)
+
+
+
 -- local reloadbrowser      = require 'reloadbrowser'
 -- local playground         = require 'playground'
 

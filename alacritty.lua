@@ -6,6 +6,8 @@ hs.hotkey.bind(return_modifier, 'space', function()
             alacritty:hide()
         else
             hs.application.open("Alacritty", 0, true)
+            hs.window.frontmostWindow():raise()
+            -- hs.window
         end
     end
 end)

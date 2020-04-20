@@ -41,22 +41,10 @@ chain = (function(movements)
     hs.grid.set(win, movements[sequenceNumber], screen)
     sequenceNumber = sequenceNumber % cycleLength + 1
     redrawBorder()
+    -- make cursor center in active window 
+    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
   end
 end)
-
-----------------------
---   alpha                 = '2,2 8x8',
---   beta                  = '3,3 6x6',
---   gamma                 = '4,4 4x4',
---   delta                 = '5,5 6x6',
--- hs.hotkey.bind(right_command, '6', chain({
---   grid.alpha,
---   grid.beta,
---   grid.gamma,
---   grid.delta,
--- }))
-----------------------
-
 
 hs.hotkey.bind(right_command, 'a', chain({
   grid.leftHalf,
@@ -165,17 +153,20 @@ function toggleCenterWindow()
     local win = hs.window.focusedWindow()
     -- win:centerOnScreen(hs.screen.mainScreen())
 
-    w = identifyFocusedWindowLocation()
-    if w.left or w.right then
-        if w.fullwidth and (not w.top and not w.bottom) then
-            snapBack()
-        else
+    -- w = identifyFocusedWindowLocation()
+    -- if w.left or w.right then
+    --     if w.fullwidth and (not w.top and not w.bottom) then
+    --         snapBack()
+    --     else
+
             centeredFrameCache[win:id()] = win:frame()
             win:centerOnScreen(hs.screen.mainScreen())
-        end
-    else
-        snapBack()
-    end
+            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
+
+    --     end
+    -- else
+    --     snapBack()
+    -- end
 
     redrawBorder()
 end

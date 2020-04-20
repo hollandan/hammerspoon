@@ -28,25 +28,37 @@ local centeredThreeQuarters = hs.geometry.rect(150 , 75  , 1150 , 725)
 local balanceFlag = false
 local alterFlag = false
 
-hs.hotkey.bind({}, 'pad2', function()
-    balanceWindows()
-end)
-hs.hotkey.bind({}, 'pad1', function()
-    alterWindows()
-end)
-
-hs.hotkey.bind({}, 'pad2', function()
-    balanceWindows()
-end)
-hs.hotkey.bind({}, 'pad1', function()
-    alterWindows()
-end)
+-- hs.hotkey.bind({}, 'pad2', function()
+--     balanceWindows()
+-- end)
+-- hs.hotkey.bind({}, 'pad1', function()
+--     alterWindows()
+-- end)
+--
+-- hs.hotkey.bind({}, 'pad2', function()
+--     balanceWindows()
+-- end)
+-- hs.hotkey.bind({}, 'pad1', function()
+--     alterWindows()
+-- end)
 
 hs.hotkey.bind(double_command, '1', function()
     balanceWindows()
 end)
 hs.hotkey.bind(double_command, '2', function()
     alterWindows()
+end)
+
+hs.hotkey.bind(right_command, '3', function()
+    showLayoutWindowList()
+end)
+
+hs.hotkey.bind({'cmd', 'ctrl'}, 'a', function()
+    resizeLayout()
+end)
+
+hs.hotkey.bind({'cmd', 'ctrl'}, 's', function()
+    resizeLayoutReverse()
 end)
 
 function getLayoutWindowList()
@@ -63,7 +75,9 @@ function getLayoutWindowList()
         elseif (win:title() == 'MiniPlayer') then
             -- hs.alert.show('miniplayer')
         else
-            table.insert(windowlist, win)
+            if win:isStandard() then
+                table.insert(windowlist, win)
+            end
         end
     end
 
@@ -76,9 +90,6 @@ function showLayoutWindowList()
     end
 end
 
-hs.hotkey.bind(right_command, '3', function()
-    showLayoutWindowList()
-end)
 
 function balanceWindows()
 
@@ -227,13 +238,6 @@ function alterWindows()
 end
 
 
-hs.hotkey.bind({'cmd', 'ctrl'}, 'a', function()
-    resizeLayout()
-end)
-
-hs.hotkey.bind({'cmd', 'ctrl'}, 's', function()
-    resizeLayoutReverse()
-end)
 
 function resizeLayout()
     local count = 0
@@ -399,3 +403,78 @@ end
 --         y: right window height
 --         h: screen height - left window height
 --         w: screen width  - left widow width
+--
+
+hs.hotkey.bind(right_command, '5', function()
+    testWindows()
+end)
+
+function testWindows()
+
+    -- local appWindows = getAppWindows()
+    -- local count = #appWindows
+
+    local appWindows = getLayoutWindowList()
+    local count = #appWindows
+    -- hs.eventtap.keyStroke({'cmd'}, '`')
+
+    hs.alert.show("test windows")
+    hs.alert.show(hs.grid.getGridFrame(grid.topHalf))
+
+    balanceFlag = true
+    alterFlag = false
+
+    -- local laptopscreen = hs.screen("Color LCD")
+    local laptopscreen = hs.screen.allScreens()[1]
+
+    local bigscreen = nil
+    if (#hs.screen.allScreens() == 2) then
+        -- local bigscreen = hs.screen("HP VH240a")
+        bigscreen = hs.screen.allScreens()[2]
+        hs.alert.show("bigscreen: " .. bigscreen:name() )
+    end
+    hs.alert.show("mainscreen: " .. hs.screen.mainScreen():name())
+    hs.alert.show("primaryscreen: " .. hs.screen.primaryScreen():name())
+
+    -- hs.alert.show(hs.grid.getCell(grid.topHalf, laptopscreen).y)
+    -- hs.alert.show(hs.grid.getCell(grid.topHalf, bigscreen).y)
+
+
+
+    if (count == 1) then
+        hs.alert.show("1 window")
+
+        local oneWindow = {
+            {thisapp, nil, hs.screen.mainScreen(), nil, nil, hs.grid.getGridFrame(grid.bottomHalf)}
+        }
+        hs.layout.apply(oneWindow)
+
+    elseif (count == 2) then
+        hs.alert.show("!")
+        hs.alert.show("2 windows: " .. appWindows[1]:title() .. " | " .. appWindows[2]:title())
+        hs.alert.show(hs.screen.mainScreen())
+
+        hs.alert.show("---------")
+        hs.alert.show(appWindows[1])
+        hs.alert.show(appWindows[2])
+        hs.alert.show(hs.screen.mainScreen())
+        hs.alert.show(hs.screen.mainScreen())
+        hs.alert.show("..")
+        hs.alert.show("..")
+        hs.alert.show("x: " .. hs.grid.getCell(grid.topHalf, hs.screen.mainScreen()).x)
+        hs.alert.show("y: " .. hs.grid.getCell(grid.topHalf, hs.screen.mainScreen()).y)
+        hs.alert.show("w: " .. hs.grid.getCell(grid.topHalf, hs.screen.mainScreen()).w)
+        hs.alert.show("h: " .. hs.grid.getCell(grid.topHalf, hs.screen.mainScreen()).h)
+
+        hs.alert.show("---------")
+
+        local twoWindows = {
+            {nil, appWindows[1], hs.screen.mainScreen(), nil, nil, hs.grid.getCell(grid.topHalf, hs.screen.mainScreen())},
+            {nil, appWindows[2], hs.screen.mainScreen(), nil, nil, hs.grid.getCell(grid.bottomHalf, hs.screen.mainScreen())},
+        }
+        hs.layout.apply(twoWindows)
+    else
+        hs.alert.show("MORE THAN 2")
+    end
+
+end

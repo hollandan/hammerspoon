@@ -147,6 +147,11 @@ local apps = {
         ["subText"] = "open -a '/Applications/Safari.app' https://us04web.zoom.us/j/333957545?pwd=azBOUGJpNTNacFo3Sk8xbkppSGRkUT09",
         ["action"]  = "e"
     },
+    {
+        ["text"]    = "Stream Jujutsu",
+        ["subText"] = "open -a '/Applications/Safari.app' https://us04web.zoom.us/j/965511687?pwd=dnk0bFhaL2NSTE9oQ05rb3RYV1hrQT09",
+        ["action"]  = "e"
+    },
     { ["text"]    = "T",
       ["subText"] = "iTerm",
       ["action"]  = "l"

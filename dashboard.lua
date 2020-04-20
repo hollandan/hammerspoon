@@ -20,7 +20,8 @@ dashboard[2] = {
 }
 
 local mainScreen = hs.screen.mainScreen()
-local mainRes = mainScreen:fullFrame()
+-- local mainRes = mainScreen:fullFrame()
+local mainRes = hs.screen("Color LCD"):fullFrame()
 
 local dashlength = 220
 local dashheight = 24
