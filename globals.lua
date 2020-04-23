@@ -188,6 +188,9 @@ function redrawBorder()
             end
         end
     end
+    -- make cursor center in active window; fast, so call it twice to make sure it doesn't fire before the focus is changed
+    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
+    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
 end
 
 redrawBorder()

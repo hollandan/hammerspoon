@@ -21,9 +21,6 @@
             else
                 fastKeyStroke({'cmd'}, '`')
             end
-            -- make cursor center in active window; fast, so call it twice to make sure it doesn't fire before the focus is changed
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
         else
             hs.eventtap.keyStroke({'alt', 'shift'}, 'a')
         end
@@ -41,9 +38,6 @@
             else
                 fastKeyStroke({'cmd', 'shift'}, '`')
             end
-            -- make cursor center in active window; fast, so call it twice to make sure it doesn't fire before the focus is changed
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
         else
             hs.eventtap.keyStroke({'alt', 'shift'}, 's')
         end
@@ -58,9 +52,6 @@
         if (tonumber(amethyst) < 3) then
             -- amethyst isn't running
             fastKeyStroke({'ctrl', 'fn'}, 'f4')
-            -- make cursor center in active window; fast, so call it twice to make sure it doesn't fire before the focus is changed
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
         else
             -- amethyst is running
             hs.eventtap.keyStroke({'alt', 'shift'}, 'j')
@@ -71,9 +62,6 @@
         local amethyst = hs.execute("ps aux | grep Amethyst | wc -l | tr -d ' '")
         if (tonumber(amethyst) < 3) then
             fastKeyStroke({'ctrl', 'shift', 'fn'}, 'f4')
-            -- make cursor center in active window; fast, so call it twice to make sure it doesn't fire before the focus is changed
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
         else
             hs.eventtap.keyStroke({'alt', 'shift'}, 'k')
         end

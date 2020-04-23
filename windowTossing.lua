@@ -42,7 +42,6 @@ chain = (function(movements)
     sequenceNumber = sequenceNumber % cycleLength + 1
     redrawBorder()
     -- make cursor center in active window 
-    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
   end
 end)
 
@@ -161,7 +160,6 @@ function toggleCenterWindow()
 
             centeredFrameCache[win:id()] = win:frame()
             win:centerOnScreen(hs.screen.mainScreen())
-            os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
 
     --     end
     -- else
@@ -494,7 +492,6 @@ hs.hotkey.bind(double_command, 'space', function()
         centeredFrameCache[win:id()] = win:frame()
         hs.grid.set(win, grid.centeredBig, win:screen())
     end
-    os.execute('/Applications/Karabiner.app/Contents/Library/utilities/bin/warp-mouse-cursor-position front_window middle 0 center 0')
     hs.eventtap.keyStroke({'cmd', 'alt'}, '8')
 end)
 
@@ -578,10 +575,11 @@ function identifyFocusedWindowLocation()
 
         if f.x == 0.0              then p["left"]   = true end
         if f.y == 0.0              then p["top"]    = true end
-        if f.x + f.w >= max.w - 5  then p["right"]  = true end
-        if f.y + f.h >= max.h - 5  then p["bottom"] = true end
-        -- subtracting 5 above because, sometimes windows won't quite reach
-        -- max.w and max.h
+        if f.x + f.w >= max.w - hs.grid.MARGINX  then p["right"]  = true end
+        if f.y + f.h >= max.h - hs.grid.MARGINY  then p["bottom"] = true end
+        -- may need to subtract another 5 above because sometimes windows
+        -- won't quite reach the edge...
+
         if f.x < 0.0               then p["tooleft"] = true end
         if f.x + f.w > max.w       then p["tooright"] = true end
         if f.y + f.h > max.h       then p["toolow"]  = true end
